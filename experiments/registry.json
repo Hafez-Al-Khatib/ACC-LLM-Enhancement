@@ -1,0 +1,113 @@
+{
+  "schema_version": "1.0",
+  "description": "Master experiment registry for multi-vertical LLM fine-tuning ablations.",
+  "verticals": [
+    {
+      "id": "medical",
+      "name": "Medical / Clinical",
+      "status": "planned",
+      "datasets": [
+        "pubmedqa",
+        "medmcqa",
+        "medalpaca"
+      ],
+      "tasks": ["qa", "summarization", "reasoning"],
+      "baseline_model": "mistralai/Mistral-7B-Instruct-v0.3",
+      "target_metrics": ["accuracy", "bleu", "rouge_l", "bertscore"],
+      "notes": "Start with PubMedQA (closed-book medical QA). Small dataset (~1K samples) fits Jetson memory."
+    },
+    {
+      "id": "legal",
+      "name": "Legal / Regulatory",
+      "status": "planned",
+      "datasets": [
+        "pile-of-law",
+        "legal-qa"
+      ],
+      "tasks": ["classification", "summarization", "generation"],
+      "baseline_model": "mistralai/Mistral-7B-Instruct-v0.3",
+      "target_metrics": ["f1", "rouge_l", "exact_match"],
+      "notes": "Use subsets of Pile of Law (~10GB raw). Need preprocessing pipeline."
+    },
+    {
+      "id": "finance",
+      "name": "Financial / Economic",
+      "status": "planned",
+      "datasets": [
+        "fiqa",
+        "financial_phrasebank"
+      ],
+      "tasks": ["sentiment", "qa", "classification"],
+      "baseline_model": "mistralai/Mistral-7B-Instruct-v0.3",
+      "target_metrics": ["accuracy", "f1", "mae"],
+      "notes": "FiQA 2018 is small (~17K). Good for quick ablations."
+    },
+    {
+      "id": "stem",
+      "name": "STEM / Technical",
+      "status": "planned",
+      "datasets": [
+        "sciq",
+        "openbookqa",
+        "scienceqa"
+      ],
+      "tasks": ["qa", "reasoning", "explanation"],
+      "baseline_model": "mistralai/Mistral-7B-Instruct-v0.3",
+      "target_metrics": ["accuracy", "exact_match", "bleu"],
+      "notes": "ScienceQA with image captions (text-only). Multi-modal later."
+    },
+    {
+      "id": "general",
+      "name": "General Instruction Following",
+      "status": "planned",
+      "datasets": [
+        "alpaca",
+        "dolly",
+        "openassistant"
+      ],
+      "tasks": ["instruction_following", "conversation"],
+      "baseline_model": "mistralai/Mistral-7B-Instruct-v0.3",
+      "target_metrics": ["mt_bench", "alpaca_eval", "human_eval"],
+      "notes": "Control vertical — measures catastrophic forgetting vs. base instruct model."
+    }
+  ],
+  "ablation_dimensions": {
+    "rank": [4, 8, 16, 32, 64],
+    "alpha": [8, 16, 32, 64, 128],
+    "target_modules": [
+      ["q_proj", "v_proj"],
+      ["q_proj", "k_proj", "v_proj", "o_proj"],
+      ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"]
+    ],
+    "quantization": ["4bit_nf4", "4bit_fp4", "8bit"],
+    "max_seq_length": [256, 512, 1024, 2048],
+    "learning_rate": [1e-4, 2e-4, 5e-4],
+    "warmup_ratio": [0.0, 0.03, 0.1],
+    "packing": [true, false]
+  },
+  "hardware_targets": {
+    "desktop_rtx3080": {
+      "vram_gb": 10,
+      "supported_configs": ["desktop_qlora"],
+      "max_rank": 64,
+      "max_seq_length": 2048
+    },
+    "jetson_orin_nano": {
+      "vram_gb": 8,
+      "supported_configs": ["jetson_qlora"],
+      "max_rank": 16,
+      "max_seq_length": 1024,
+      "notes": "Use smaller datasets. Prefer packing=True."
+    }
+  },
+  "experiment_naming": "{vertical}_{dataset}_{rank}r_{seq}seq_{hardware}_{date}",
+  "results_schema": {
+    "train_loss_final": "float",
+    "eval_loss_final": "float",
+    "eval_perplexity": "float",
+    "primary_metric": "float",
+    "training_time_minutes": "float",
+    "peak_vram_mb": "int",
+    "adapter_size_mb": "float"
+  }
+}
