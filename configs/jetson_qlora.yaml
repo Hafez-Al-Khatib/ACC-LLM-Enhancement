@@ -1,0 +1,59 @@
+# Jetson Orin Nano QLoRA Config
+# 8GB unified memory — aggressive memory conservation
+
+model:
+  base_model: "models/mistral_7b"
+  trust_remote_code: false
+  torch_dtype: "float16"  # bfloat16 not supported on Jetson Ampere
+
+quantization:
+  load_in_4bit: true
+  bnb_4bit_compute_dtype: "float16"
+  bnb_4bit_use_double_quant: true  # nested quantization saves ~0.5GB
+  bnb_4bit_quant_type: "nf4"
+
+lora:
+  r: 8              # Small rank to save memory
+  lora_alpha: 16
+  lora_dropout: 0.05
+  target_modules:
+    - "q_proj"
+    - "v_proj"
+  bias: "none"
+  task_type: "CAUSAL_LM"
+  # Only train q_proj + v_proj to reduce adapter params by ~60%
+
+training:
+  output_dir: "adapters/jetson_run"
+  num_train_epochs: 3
+  per_device_train_batch_size: 1
+  per_device_eval_batch_size: 1
+  gradient_accumulation_steps: 8   # Effective batch = 8
+  learning_rate: 2.0e-4
+  warmup_steps: 50
+  logging_steps: 5
+  save_steps: 1000
+  eval_steps: 1000
+  evaluation_strategy: "steps"
+  save_strategy: "steps"
+  load_best_model_at_end: true
+  metric_for_best_model: "eval_loss"
+  greater_is_better: false
+  optim: "paged_adamw_8bit"
+  lr_scheduler_type: "cosine"
+  max_grad_norm: 0.3
+  # SFT-specific
+  max_seq_length: 512   # Shorter sequences on Jetson
+  packing: true         # Pack multiple short samples per sequence
+
+dataset:
+  path: "data/train.jsonl"
+  eval_path: "data/eval.jsonl"
+  text_column: "text"
+  format: "jsonl"
+
+# Logging
+wandb:
+  project: "acc-llm"
+  run_name: "jetson-qlora-r8"
+  tags: ["mistral-7b", "qlora", "jetson-orin-nano"]

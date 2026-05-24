@@ -1,0 +1,61 @@
+# Desktop QLoRA Config — RTX 3080 10GB
+model:
+  base_model: "models/mistral_7b"
+  trust_remote_code: false
+  torch_dtype: "bfloat16"
+
+quantization:
+  load_in_4bit: true
+  bnb_4bit_compute_dtype: "bfloat16"
+  bnb_4bit_use_double_quant: true
+  bnb_4bit_quant_type: "nf4"
+
+lora:
+  r: 32
+  lora_alpha: 64
+  lora_dropout: 0.05
+  target_modules:
+    - "q_proj"
+    - "v_proj"
+    - "k_proj"
+    - "o_proj"
+    - "gate_proj"
+    - "up_proj"
+    - "down_proj"
+  bias: "none"
+  task_type: "CAUSAL_LM"
+
+training:
+  output_dir: "adapters/desktop_run"
+  num_train_epochs: 3
+  per_device_train_batch_size: 1
+  per_device_eval_batch_size: 1
+  gradient_accumulation_steps: 4
+  learning_rate: 2.0e-4
+  warmup_steps: 100
+  logging_steps: 10
+  save_steps: 500
+  eval_steps: 500
+  evaluation_strategy: "steps"
+  save_strategy: "steps"
+  load_best_model_at_end: true
+  metric_for_best_model: "eval_loss"
+  greater_is_better: false
+  optim: "paged_adamw_8bit"
+  lr_scheduler_type: "cosine"
+  max_grad_norm: 0.3
+  # SFT-specific
+  max_seq_length: 1024
+  packing: false
+
+dataset:
+  path: "data/train.jsonl"
+  eval_path: "data/eval.jsonl"
+  text_column: "text"
+  format: "jsonl"
+
+# Logging
+wandb:
+  project: "acc-llm"
+  run_name: "desktop-qlora-r32"
+  tags: ["mistral-7b", "qlora", "rtx3080"]

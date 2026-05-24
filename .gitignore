@@ -1,0 +1,48 @@
+# Model weights, datasets, and large files
+models/
+!models/.gitkeep
+data/
+*.h5ad
+*.h5
+*.parquet
+*.csv
+*.jsonl
+*.arrow
+*.sqlite
+*.db
+
+# Adapters (checkpoints are large)
+adapters/*.bin
+adapters/*.safetensors
+adapters/*.pt
+
+# WandB
+wandb/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
