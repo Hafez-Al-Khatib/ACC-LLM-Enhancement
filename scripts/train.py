@@ -7,26 +7,22 @@ from pathlib import Path
 
 import yaml
 from datasets import Dataset
-from trl import SFTTrainer
-
-from src.model_utils import (
-    attach_lora,
-    load_model,
-    load_tokenizer,
-    make_bnb_config,
+from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
+from transformers import (
+    AutoModelForCausalLM,
+    AutoTokenizer,
+    BitsAndBytesConfig,
+    TrainingArguments,
+    Trainer,
+    DataCollatorForLanguageModeling,
 )
+import torch
 
 logger = logging.getLogger(__name__)
 
 
 def load_dataset_from_config(ds_cfg: dict):
-    """Load dataset from JSONL or HF hub.
-
-    Expected JSONL format (one dict per line):
-        {"text": "instruction\ninput\noutput"}
-    or with explicit fields:
-        {"instruction": "...", "input": "...", "output": "..."}
-    """
+    """Load dataset from JSONL or HF hub."""
     path = ds_cfg["path"]
     fmt = ds_cfg.get("format", "jsonl")
     text_col = ds_cfg.get("text_column", "text")
@@ -47,7 +43,6 @@ def load_dataset_from_config(ds_cfg: dict):
     else:
         raise ValueError(f"Unknown dataset format: {fmt}")
 
-    # If text column doesn't exist but instruction/output do, format it
     if text_col not in ds.column_names:
         logger.info("Formatting dataset from instruction/output fields")
 
@@ -63,12 +58,83 @@ def load_dataset_from_config(ds_cfg: dict):
     return ds
 
 
+def load_tokenizer(model_path: str, trust_remote_code: bool = False):
+    """Load tokenizer with padding side fix for decoder-only models."""
+    tok = AutoTokenizer.from_pretrained(
+        model_path,
+        trust_remote_code=trust_remote_code,
+        local_files_only=Path(model_path).exists(),
+    )
+    if tok.pad_token is None:
+        tok.pad_token = tok.eos_token
+        tok.pad_token_id = tok.eos_token_id
+    return tok
+
+
+def load_model(
+    model_path: str,
+    bnb_config=None,
+    torch_dtype: torch.dtype = torch.bfloat16,
+    trust_remote_code: bool = False,
+    device_map: str = "auto",
+):
+    """Load causal LM with optional 4-bit quantization."""
+    logger.info("Loading model from %s (dtype=%s, 4bit=%s)",
+                model_path, torch_dtype, bnb_config is not None)
+
+    model = AutoModelForCausalLM.from_pretrained(
+        model_path,
+        quantization_config=bnb_config,
+        torch_dtype=torch_dtype if bnb_config is None else None,
+        trust_remote_code=trust_remote_code,
+        device_map=device_map,
+        local_files_only=Path(model_path).exists(),
+    )
+    if getattr(model, "supports_gradient_checkpointing", False):
+        model.gradient_checkpointing_enable()
+        logger.info("Gradient checkpointing enabled")
+    return model
+
+
+def attach_lora(model, lora_cfg: dict):
+    """Attach LoRA adapters."""
+    model = prepare_model_for_kbit_training(
+        model,
+        use_gradient_checkpointing=True,
+    )
+    config = LoraConfig(
+        r=lora_cfg["r"],
+        lora_alpha=lora_cfg["lora_alpha"],
+        target_modules=lora_cfg["target_modules"],
+        lora_dropout=lora_cfg.get("lora_dropout", 0.05),
+        bias=lora_cfg.get("bias", "none"),
+        task_type=lora_cfg.get("task_type", "CAUSAL_LM"),
+    )
+    model = get_peft_model(model, config)
+    logger.info("LoRA attached: r=%d, alpha=%d, trainable params=%s",
+                config.r, config.lora_alpha,
+                sum(p.numel() for p in model.parameters() if p.requires_grad))
+    return model
+
+
+def make_bnb_config(quant_cfg: dict):
+    """Build BitsAndBytesConfig from YAML dict."""
+    if not quant_cfg.get("load_in_4bit", False):
+        return None
+
+    compute_dtype = getattr(torch, quant_cfg.get("bnb_4bit_compute_dtype", "bfloat16"))
+    return BitsAndBytesConfig(
+        load_in_4bit=True,
+        bnb_4bit_compute_dtype=compute_dtype,
+        bnb_4bit_use_double_quant=quant_cfg.get("bnb_4bit_use_double_quant", True),
+        bnb_4bit_quant_type=quant_cfg.get("bnb_4bit_quant_type", "nf4"),
+    )
+
+
 def build_trainer(config: dict):
-    """Build an SFTTrainer from a config dict."""
-    # --- Model ---
+    """Build a Trainer from a config dict (no TRL dependency)."""
     bnb = make_bnb_config(config["quantization"])
     dtype_name = config["model"].get("torch_dtype", "bfloat16")
-    import torch
     torch_dtype = getattr(torch, dtype_name)
 
     model = load_model(
@@ -88,9 +154,25 @@ def build_trainer(config: dict):
         eval_cfg["path"] = eval_cfg.pop("eval_path")
         eval_ds = load_dataset_from_config(eval_cfg)
 
+    # Tokenize
+    max_length = config["training"].get("max_seq_length", 512)
+    text_col = config["dataset"]["text_column"]
+
+    def tokenize_fn(examples):
+        return tokenizer(
+            examples[text_col],
+            truncation=True,
+            max_length=max_length,
+            padding="max_length",
+        )
+
+    train_ds = train_ds.map(tokenize_fn, batched=True, remove_columns=train_ds.column_names)
+    if eval_ds:
+        eval_ds = eval_ds.map(tokenize_fn, batched=True, remove_columns=eval_ds.column_names)
+
     # --- Training args ---
     tc = config["training"]
-    training_args = dict(
+    training_args = TrainingArguments(
         output_dir=tc["output_dir"],
         num_train_epochs=tc["num_train_epochs"],
         per_device_train_batch_size=tc["per_device_train_batch_size"],
@@ -101,7 +183,7 @@ def build_trainer(config: dict):
         logging_steps=tc["logging_steps"],
         save_steps=tc["save_steps"],
         eval_steps=tc.get("eval_steps", tc["save_steps"]),
-        evaluation_strategy=tc.get("evaluation_strategy", "steps"),
+        eval_strategy=tc.get("evaluation_strategy", "steps"),
         save_strategy=tc.get("save_strategy", "steps"),
         load_best_model_at_end=tc.get("load_best_model_at_end", True),
         metric_for_best_model=tc.get("metric_for_best_model", "eval_loss"),
@@ -110,25 +192,25 @@ def build_trainer(config: dict):
         lr_scheduler_type=tc.get("lr_scheduler_type", "cosine"),
         max_grad_norm=tc.get("max_grad_norm", 0.3),
         logging_dir=os.path.join(tc["output_dir"], "logs"),
-        report_to="wandb" if config.get("wandb") else None,
-        run_name=config.get("wandb", {}).get("run_name"),
+        report_to=["wandb"] if config.get("wandb") else [],
         fp16=torch_dtype == torch.float16,
         bf16=torch_dtype == torch.bfloat16,
-        # Dataloader
         dataloader_num_workers=0,
         remove_unused_columns=False,
     )
 
-    # --- SFTTrainer ---
-    trainer = SFTTrainer(
+    data_collator = DataCollatorForLanguageModeling(
+        tokenizer=tokenizer,
+        mlm=False,
+    )
+
+    trainer = Trainer(
         model=model,
         tokenizer=tokenizer,
         train_dataset=train_ds,
         eval_dataset=eval_ds,
-        max_seq_length=tc.get("max_seq_length", 512),
-        packing=tc.get("packing", False),
         args=training_args,
-        dataset_text_field=config["dataset"]["text_column"],
+        data_collator=data_collator,
     )
     return trainer
 
@@ -137,7 +219,6 @@ def main(config_path: str):
     with open(config_path, "r", encoding="utf-8") as fh:
         config = yaml.safe_load(fh)
 
-    # WandB init
     wandb_cfg = config.get("wandb")
     if wandb_cfg:
         import wandb
@@ -152,7 +233,6 @@ def main(config_path: str):
     logger.info("Starting training...")
     trainer.train()
 
-    # Save final adapter
     output_dir = config["training"]["output_dir"]
     trainer.save_model(os.path.join(output_dir, "final_adapter"))
     logger.info("Training complete. Adapter saved to %s", output_dir)
@@ -164,7 +244,6 @@ def main(config_path: str):
 
 if __name__ == "__main__":
     import argparse
-    import sys
 
     logging.basicConfig(
         level=logging.INFO,
@@ -172,7 +251,7 @@ if __name__ == "__main__":
         datefmt="%H:%M:%S",
     )
 
-    parser = argparse.ArgumentParser(description="QLoRA fine-tuning for Mistral 7B")
+    parser = argparse.ArgumentParser(description="QLoRA fine-tuning")
     parser.add_argument("--config", required=True, help="Path to YAML config")
     args = parser.parse_args()
 

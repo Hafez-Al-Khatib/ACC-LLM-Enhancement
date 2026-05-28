@@ -1,0 +1,166 @@
+{
+  "config": {
+    "base_model": "models/tiny_gpt2_safetensors",
+    "adapter": "adapters/tiny_gpt2_test/final_adapter",
+    "threshold": 3.5,
+    "mode": "absolute",
+    "action": "flag",
+    "temperature": 0.7,
+    "max_new_tokens": 64
+  },
+  "summary": {
+    "overall": {
+      "count": 10,
+      "avg_mean_entropy": 10.824567501246928,
+      "threshold_hit_rate": 1.0,
+      "total_breaches": 640,
+      "total_regenerations": 0
+    },
+    "easy": {
+      "count": 5,
+      "avg_mean_entropy": 10.824564641714096,
+      "threshold_hit_rate": 1.0,
+      "total_breaches": 320,
+      "total_regenerations": 0
+    },
+    "hard": {
+      "count": 5,
+      "avg_mean_entropy": 10.824570360779763,
+      "threshold_hit_rate": 1.0,
+      "total_breaches": 320,
+      "total_regenerations": 0
+    }
+  },
+  "per_prompt": [
+    {
+      "category": "easy",
+      "prompt": "### Instruction:\nWhat is a healthy breakfast option?\n\n### Input:\n\n\n### Response:\n",
+      "generated_text": "### Instruction:\nWhat is a healthy breakfast option?\n\n### Input:\n\n\n### Response:\n WARN [UNCERTAIN]Davis [UNCERTAIN]onson [UNCERTAIN] biochemical [UNCERTAIN] Plate [UNCERTAIN] gaps [UNCERTAIN] Fees [UNCERTAIN] trophy [UNCERTAIN] simultaneously [UNCERTAIN]Chair [UNCERTAIN] br [UNCERTAIN] Navigation [UNCERTAIN] AGA [UNCERTAIN] town [UNCERTAIN] waits [UNCERTAIN]\ufffd [UNCERTAIN]ittle [UNCERTAIN] FF [UNCERTAIN] \u88cf [UNCERTAIN] Candle [UNCERTAIN]zes [UNCERTAIN] ill [UNCERTAIN]Removed [UNCERTAIN]CLASS [UNCERTAIN] shifts [UNCERTAIN] confusion [UNCERTAIN] Casual [UNCERTAIN] patronage [UNCERTAIN] Ethiopian [UNCERTAIN] mir [UNCERTAIN]fred [UNCERTAIN]istically [UNCERTAIN] Duty [UNCERTAIN] Understand [UNCERTAIN]ner [UNCERTAIN] freeway [UNCERTAIN]ioch [UNCERTAIN] mayor [UNCERTAIN] openings [UNCERTAIN] intensely [UNCERTAIN]irens [UNCERTAIN]zip [UNCERTAIN]Strength [UNCERTAIN] towns [UNCERTAIN]ICA [UNCERTAIN] presumptive [UNCERTAIN] known [UNCERTAIN] sexist [UNCERTAIN] bottled [UNCERTAIN] 221 [UNCERTAIN] Hansen [UNCERTAIN]ocating [UNCERTAIN] Yah [UNCERTAIN]\u00c3\u00c2\u00c3\u00c2\u00c3\u00c2\u00c3\u00c2\u00c3\u00c2\u00c3\u00c2\u00c3\u00c2\u00c3\u00c2\u00c3\u00c2\u00c3\u00c2\u00c3\u00c2\u00c3\u00c2\u00c3\u00c2\u00c3\u00c2\u00c3\u00c2\u00c3\u00c2\u00c3\u00c2\u00c3\u00c2\u00c3\u00c2\u00c3\u00c2\u00c3\u00c2\u00c3\u00c2\u00c3\u00c2\u00c3\u00c2\u00c3\u00c2\u00c3\u00c2\u00c3\u00c2\u00c3\u00c2\u00c3\u00c2\u00c3\u00c2\u00c3\u00c2\u00c3\u00c2 [UNCERTAIN]TRY [UNCERTAIN] Pasadena [UNCERTAIN] army [UNCERTAIN] caf [UNCERTAIN]atics [UNCERTAIN] Prediction [UNCERTAIN] (! [UNCERTAIN] perspectives [UNCERTAIN] cam [UNCERTAIN] Championships [UNCERTAIN]",
+      "tokens_generated": 86,
+      "mean_entropy": 10.824571385979652,
+      "max_entropy": 10.824905395507812,
+      "confidence_score": 3.118740503249562e-05,
+      "threshold_breaches": 64,
+      "regenerations": 0,
+      "warnings": 0,
+      "threshold_hit": true
+    },
+    {
+      "category": "easy",
+      "prompt": "### Instruction:\nHow much sleep should an adult get per night?\n\n### Input:\n\n\n### Response:\n",
+      "generated_text": "### Instruction:\nHow much sleep should an adult get per night?\n\n### Input:\n\n\n### Response:\n translated [UNCERTAIN] accord [UNCERTAIN] glaring [UNCERTAIN]emonium [UNCERTAIN]\ufffd [UNCERTAIN]hattan [UNCERTAIN] Eater [UNCERTAIN] Fahrenheit [UNCERTAIN] ADS [UNCERTAIN] Final [UNCERTAIN] Tulsa [UNCERTAIN] spans [UNCERTAIN] loophole [UNCERTAIN] PCR [UNCERTAIN]Elizabeth [UNCERTAIN] ITV [UNCERTAIN]Real [UNCERTAIN] respond [UNCERTAIN] yo [UNCERTAIN] refreshing [UNCERTAIN] Assassin [UNCERTAIN] File [UNCERTAIN]tymology [UNCERTAIN] steal [UNCERTAIN] depos [UNCERTAIN] bailout [UNCERTAIN] Olsen [UNCERTAIN] messing [UNCERTAIN] blister [UNCERTAIN] misconception [UNCERTAIN] 323 [UNCERTAIN] siblings [UNCERTAIN]illing [UNCERTAIN]South [UNCERTAIN] Tour [UNCERTAIN]bugs [UNCERTAIN]ythm [UNCERTAIN] Rx [UNCERTAIN]esy [UNCERTAIN] Belichick [UNCERTAIN]horse [UNCERTAIN] Dota [UNCERTAIN] objectionable [UNCERTAIN]opher [UNCERTAIN] slips [UNCERTAIN] Atlantic [UNCERTAIN] corridor [UNCERTAIN] 51 [UNCERTAIN]holder [UNCERTAIN] sliced [UNCERTAIN]car [UNCERTAIN] profession [UNCERTAIN] propag [UNCERTAIN] Weed [UNCERTAIN] vacant [UNCERTAIN] Bars [UNCERTAIN] runtime [UNCERTAIN]lite [UNCERTAIN] protest [UNCERTAIN]module [UNCERTAIN] secured [UNCERTAIN] Mothers [UNCERTAIN]012 [UNCERTAIN] Emperor [UNCERTAIN]",
+      "tokens_generated": 89,
+      "mean_entropy": 10.824557811021805,
+      "max_entropy": 10.824904441833496,
+      "confidence_score": 3.146272034793007e-05,
+      "threshold_breaches": 64,
+      "regenerations": 0,
+      "warnings": 0,
+      "threshold_hit": true
+    },
+    {
+      "category": "easy",
+      "prompt": "### Instruction:\nName three benefits of regular exercise.\n\n### Input:\n\n\n### Response:\n",
+      "generated_text": "### Instruction:\nName three benefits of regular exercise.\n\n### Input:\n\n\n### Response:\nUse [UNCERTAIN] initiate [UNCERTAIN] whats [UNCERTAIN] especially [UNCERTAIN] bullpen [UNCERTAIN] guard [UNCERTAIN] dictator [UNCERTAIN] Tap [UNCERTAIN] NAT [UNCERTAIN]Ant [UNCERTAIN]arate [UNCERTAIN] gri [UNCERTAIN] medieval [UNCERTAIN]Crash [UNCERTAIN] pinch [UNCERTAIN] higher [UNCERTAIN] RV [UNCERTAIN]ointment [UNCERTAIN] Pand [UNCERTAIN]addock [UNCERTAIN] Lights [UNCERTAIN] Tinder [UNCERTAIN]73 [UNCERTAIN] unleashed [UNCERTAIN]lead [UNCERTAIN] reconnect [UNCERTAIN] OT [UNCERTAIN] Failure [UNCERTAIN] PK [UNCERTAIN] German [UNCERTAIN] initialized [UNCERTAIN] condemning [UNCERTAIN] dataset [UNCERTAIN] Record [UNCERTAIN]PP [UNCERTAIN] Symbol [UNCERTAIN] Armenia [UNCERTAIN]pur [UNCERTAIN]ids [UNCERTAIN] Tiny [UNCERTAIN] happening [UNCERTAIN] tits [UNCERTAIN] nearby [UNCERTAIN] left [UNCERTAIN] Agg [UNCERTAIN] reminding [UNCERTAIN] his [UNCERTAIN] coffers [UNCERTAIN]ahs [UNCERTAIN]\ufffd [UNCERTAIN] reference [UNCERTAIN] carefully [UNCERTAIN]camp [UNCERTAIN] Jeremiah [UNCERTAIN]cas [UNCERTAIN] regulator [UNCERTAIN]iltration [UNCERTAIN] Nek [UNCERTAIN] altru [UNCERTAIN] loose [UNCERTAIN] clam [UNCERTAIN] phon [UNCERTAIN]vertising [UNCERTAIN] protects [UNCERTAIN]",
+      "tokens_generated": 86,
+      "mean_entropy": 10.824565127491951,
+      "max_entropy": 10.824909210205078,
+      "confidence_score": 3.246209066976036e-05,
+      "threshold_breaches": 64,
+      "regenerations": 0,
+      "warnings": 0,
+      "threshold_hit": true
+    },
+    {
+      "category": "easy",
+      "prompt": "### Instruction:\nWhat foods are high in vitamin C?\n\n### Input:\n\n\n### Response:\n",
+      "generated_text": "### Instruction:\nWhat foods are high in vitamin C?\n\n### Input:\n\n\n### Response:\n upro [UNCERTAIN]Ware [UNCERTAIN] ourselves [UNCERTAIN] Wrong [UNCERTAIN] Sakura [UNCERTAIN] plugins [UNCERTAIN] rece [UNCERTAIN] joy [UNCERTAIN] font [UNCERTAIN] extra [UNCERTAIN] Afghanistan [UNCERTAIN] 341 [UNCERTAIN]cuts [UNCERTAIN] tutorial [UNCERTAIN] perpetuate [UNCERTAIN] prov [UNCERTAIN]ight [UNCERTAIN]Begin [UNCERTAIN] vortex [UNCERTAIN] toggle [UNCERTAIN] oxidative [UNCERTAIN] subp [UNCERTAIN]\ufffd [UNCERTAIN] comforting [UNCERTAIN] paths [UNCERTAIN] Craig [UNCERTAIN] Socrates [UNCERTAIN] spouse [UNCERTAIN] Waves [UNCERTAIN] bounce [UNCERTAIN]urtles [UNCERTAIN] Oath [UNCERTAIN] 3000 [UNCERTAIN] towed [UNCERTAIN]enei [UNCERTAIN] Ren [UNCERTAIN]TIME [UNCERTAIN] Lit [UNCERTAIN] robbed [UNCERTAIN] drinkers [UNCERTAIN]times [UNCERTAIN]Jar [UNCERTAIN]iking [UNCERTAIN] sophistication [UNCERTAIN])? [UNCERTAIN]Console [UNCERTAIN]ogue [UNCERTAIN]Fel [UNCERTAIN]142 [UNCERTAIN] Dis [UNCERTAIN] Supplemental [UNCERTAIN] Kes [UNCERTAIN]arte [UNCERTAIN] Vaugh [UNCERTAIN] optimizing [UNCERTAIN] pushed [UNCERTAIN]Bey [UNCERTAIN]ussie [UNCERTAIN] sentient [UNCERTAIN])( [UNCERTAIN] intricate [UNCERTAIN] key [UNCERTAIN] subsidy [UNCERTAIN] folded [UNCERTAIN]",
+      "tokens_generated": 87,
+      "mean_entropy": 10.824562400579453,
+      "max_entropy": 10.824878692626953,
+      "confidence_score": 2.1067112666806054e-05,
+      "threshold_breaches": 64,
+      "regenerations": 0,
+      "warnings": 0,
+      "threshold_hit": true
+    },
+    {
+      "category": "easy",
+      "prompt": "### Instruction:\nSuggest a way to manage stress.\n\n### Input:\n\n\n### Response:\n",
+      "generated_text": "### Instruction:\nSuggest a way to manage stress.\n\n### Input:\n\n\n### Response:\n Kappa [UNCERTAIN] predicament [UNCERTAIN] turf [UNCERTAIN] paragraphs [UNCERTAIN]Giving [UNCERTAIN] Opt [UNCERTAIN] stood [UNCERTAIN]rued [UNCERTAIN] diversity [UNCERTAIN] Watching [UNCERTAIN] Like [UNCERTAIN] smokers [UNCERTAIN] AP [UNCERTAIN] exceptionally [UNCERTAIN] differed [UNCERTAIN] unworthy [UNCERTAIN] package [UNCERTAIN] gaps [UNCERTAIN] Syn [UNCERTAIN]Simple [UNCERTAIN]crypt [UNCERTAIN] dragged [UNCERTAIN] Fabric [UNCERTAIN]RPG [UNCERTAIN] polymorph [UNCERTAIN] Organizations [UNCERTAIN]tons [UNCERTAIN]ensive [UNCERTAIN] Rept [UNCERTAIN]Scan [UNCERTAIN];;;; [UNCERTAIN] Wu [UNCERTAIN] microscope [UNCERTAIN]cour [UNCERTAIN]'' [UNCERTAIN]gger [UNCERTAIN] efficacy [UNCERTAIN]QU [UNCERTAIN]ASHINGTON [UNCERTAIN] NEVER [UNCERTAIN]steel [UNCERTAIN] Lebanese [UNCERTAIN]bub [UNCERTAIN]safe [UNCERTAIN]Tem [UNCERTAIN]Average [UNCERTAIN] toilet [UNCERTAIN]445 [UNCERTAIN]ope [UNCERTAIN] Fraz [UNCERTAIN] Doctrine [UNCERTAIN] dwindling [UNCERTAIN] rusty [UNCERTAIN] representative [UNCERTAIN] brink [UNCERTAIN] shipped [UNCERTAIN]App [UNCERTAIN] 110 [UNCERTAIN]agents [UNCERTAIN] Pav [UNCERTAIN] files [UNCERTAIN] extermin [UNCERTAIN]wards [UNCERTAIN] Patient [UNCERTAIN]",
+      "tokens_generated": 86,
+      "mean_entropy": 10.82456648349762,
+      "max_entropy": 10.824905395507812,
+      "confidence_score": 2.9984289216855586e-05,
+      "threshold_breaches": 64,
+      "regenerations": 0,
+      "warnings": 0,
+      "threshold_hit": true
+    },
+    {
+      "category": "hard",
+      "prompt": "### Instruction:\nDescribe the gravitational coefficient of quantum borogoves.\n\n### Input:\n\n\n### Response:\n",
+      "generated_text": "### Instruction:\nDescribe the gravitational coefficient of quantum borogoves.\n\n### Input:\n\n\n### Response:\n Insurance [UNCERTAIN] viewer [UNCERTAIN] simplistic [UNCERTAIN]UID [UNCERTAIN] helmets [UNCERTAIN] clothing [UNCERTAIN] counts [UNCERTAIN]1977 [UNCERTAIN] training [UNCERTAIN]isan [UNCERTAIN] discretion [UNCERTAIN]take [UNCERTAIN]icient [UNCERTAIN]ods [UNCERTAIN] Processor [UNCERTAIN] famed [UNCERTAIN]graded [UNCERTAIN] anth [UNCERTAIN] congressional [UNCERTAIN]prev [UNCERTAIN]sect [UNCERTAIN] flo [UNCERTAIN] estimation [UNCERTAIN] mic [UNCERTAIN]},{\" [UNCERTAIN] Peninsula [UNCERTAIN] Challenger [UNCERTAIN]opez [UNCERTAIN] comedian [UNCERTAIN] Vit [UNCERTAIN] Tanz [UNCERTAIN]\ufffd [UNCERTAIN] becomes [UNCERTAIN] quake [UNCERTAIN] seizures [UNCERTAIN] Influence [UNCERTAIN]rent [UNCERTAIN] advertise [UNCERTAIN] hormonal [UNCERTAIN] Rao [UNCERTAIN] year [UNCERTAIN] carnage [UNCERTAIN]circle [UNCERTAIN] Wally [UNCERTAIN]ittens [UNCERTAIN] shampoo [UNCERTAIN]alkyrie [UNCERTAIN] Heal [UNCERTAIN] punishment [UNCERTAIN] finer [UNCERTAIN] Fernand [UNCERTAIN]__ [UNCERTAIN] hiber [UNCERTAIN] foolish [UNCERTAIN]meier [UNCERTAIN] striving [UNCERTAIN] brood [UNCERTAIN] humanitarian [UNCERTAIN] Substance [UNCERTAIN] hills [UNCERTAIN] insanity [UNCERTAIN] whore [UNCERTAIN] describ [UNCERTAIN] lifting [UNCERTAIN]",
+      "tokens_generated": 91,
+      "mean_entropy": 10.824564054608345,
+      "max_entropy": 10.824905395507812,
+      "confidence_score": 3.024858925870788e-05,
+      "threshold_breaches": 64,
+      "regenerations": 0,
+      "warnings": 0,
+      "threshold_hit": true
+    },
+    {
+      "category": "hard",
+      "prompt": "### Instruction:\nzxqv plurgle frobnicate the snozzberry?\n\n### Input:\n\n\n### Response:\n",
+      "generated_text": "### Instruction:\nzxqv plurgle frobnicate the snozzberry?\n\n### Input:\n\n\n### Response:\n Mont [UNCERTAIN] births [UNCERTAIN] bashing [UNCERTAIN] Eggs [UNCERTAIN] DID [UNCERTAIN] neuro [UNCERTAIN] Harbour [UNCERTAIN] Venom [UNCERTAIN]239 [UNCERTAIN] 512 [UNCERTAIN]vell [UNCERTAIN] Sochi [UNCERTAIN] Pixie [UNCERTAIN] redistributed [UNCERTAIN]Blocks [UNCERTAIN]decl [UNCERTAIN] depicted [UNCERTAIN]Frames [UNCERTAIN] jealousy [UNCERTAIN] desires [UNCERTAIN] Cogn [UNCERTAIN]Boston [UNCERTAIN] taking [UNCERTAIN] bumper [UNCERTAIN] frustrating [UNCERTAIN]Topic [UNCERTAIN] pulls [UNCERTAIN] Kerry [UNCERTAIN]mining [UNCERTAIN] 1961 [UNCERTAIN] Augustus [UNCERTAIN] Bunker [UNCERTAIN] Asheville [UNCERTAIN]users [UNCERTAIN]accompan [UNCERTAIN]Insert [UNCERTAIN]\u30b7\u30e3 [UNCERTAIN] Cab [UNCERTAIN]046 [UNCERTAIN]lv [UNCERTAIN]ll [UNCERTAIN]ISS [UNCERTAIN] Kenobi [UNCERTAIN]riched [UNCERTAIN] evapor [UNCERTAIN] escort [UNCERTAIN]pressure [UNCERTAIN] Az [UNCERTAIN] deterior [UNCERTAIN] underwater [UNCERTAIN] Gang [UNCERTAIN]213 [UNCERTAIN] Commissioners [UNCERTAIN] nickname [UNCERTAIN]cular [UNCERTAIN] Knife [UNCERTAIN]ipeg [UNCERTAIN] Total [UNCERTAIN] nuances [UNCERTAIN] Winston [UNCERTAIN]ALT [UNCERTAIN]kB [UNCERTAIN]ountain [UNCERTAIN] cotton [UNCERTAIN]",
+      "tokens_generated": 93,
+      "mean_entropy": 10.824560597538948,
+      "max_entropy": 10.824899673461914,
+      "confidence_score": 1.7925868282531177e-05,
+      "threshold_breaches": 64,
+      "regenerations": 0,
+      "warnings": 0,
+      "threshold_hit": true
+    },
+    {
+      "category": "hard",
+      "prompt": "### Instruction:\nExplain the recommended dosage of Compound XJ-7741-Beta for an axolotl with retrograde tachyphasia.\n\n### Input:\n\n\n### Response:\n",
+      "generated_text": "### Instruction:\nExplain the recommended dosage of Compound XJ-7741-Beta for an axolotl with retrograde tachyphasia.\n\n### Input:\n\n\n### Response:\n Teen [UNCERTAIN] practition [UNCERTAIN] unanim [UNCERTAIN] dietary [UNCERTAIN] Austral [UNCERTAIN]ibi [UNCERTAIN] Pamela [UNCERTAIN]wallet [UNCERTAIN]\u007f [UNCERTAIN] MTV [UNCERTAIN] economic [UNCERTAIN] Improvements [UNCERTAIN] vegan [UNCERTAIN] pages [UNCERTAIN] swimming [UNCERTAIN]Dynamic [UNCERTAIN]oshop [UNCERTAIN] Concert [UNCERTAIN] trades [UNCERTAIN] Political [UNCERTAIN] Auckland [UNCERTAIN] Vote [UNCERTAIN] department [UNCERTAIN] Realms [UNCERTAIN]read [UNCERTAIN] stiffness [UNCERTAIN]\u200e [UNCERTAIN]Exit [UNCERTAIN] scrambled [UNCERTAIN]Certain [UNCERTAIN]ange [UNCERTAIN]Py [UNCERTAIN] blitz [UNCERTAIN]\u0646 [UNCERTAIN] captured [UNCERTAIN] live [UNCERTAIN] Conn [UNCERTAIN]cest [UNCERTAIN] Turing [UNCERTAIN]actly [UNCERTAIN]DX [UNCERTAIN]ocular [UNCERTAIN] almond [UNCERTAIN]806 [UNCERTAIN]VE [UNCERTAIN]Vision [UNCERTAIN] Stru [UNCERTAIN]myra [UNCERTAIN] supplement [UNCERTAIN] weighed [UNCERTAIN]------ [UNCERTAIN]RY [UNCERTAIN] Differences [UNCERTAIN] doubts [UNCERTAIN] Anaheim [UNCERTAIN] wreckage [UNCERTAIN] ACA [UNCERTAIN] Print [UNCERTAIN]table [UNCERTAIN] Gael [UNCERTAIN] Okin [UNCERTAIN] getting [UNCERTAIN] Along [UNCERTAIN] contentious [UNCERTAIN]",
+      "tokens_generated": 108,
+      "mean_entropy": 10.824590876698494,
+      "max_entropy": 10.824905395507812,
+      "confidence_score": 2.8508613983180275e-05,
+      "threshold_breaches": 64,
+      "regenerations": 0,
+      "warnings": 0,
+      "threshold_hit": true
+    },
+    {
+      "category": "hard",
+      "prompt": "### Instruction:\nWhat color is the Tuesday after a prime-numbered eclipse?\n\n### Input:\n\n\n### Response:\n",
+      "generated_text": "### Instruction:\nWhat color is the Tuesday after a prime-numbered eclipse?\n\n### Input:\n\n\n### Response:\n Rune [UNCERTAIN] Dist [UNCERTAIN] Yemen [UNCERTAIN]Gen [UNCERTAIN]selage [UNCERTAIN] disease [UNCERTAIN] rebellion [UNCERTAIN]daughter [UNCERTAIN]Privacy [UNCERTAIN] Parent [UNCERTAIN] curriculum [UNCERTAIN] Kart [UNCERTAIN]409 [UNCERTAIN]300 [UNCERTAIN] joystick [UNCERTAIN]683 [UNCERTAIN] Oakland [UNCERTAIN]@ [UNCERTAIN] persists [UNCERTAIN] roadway [UNCERTAIN] Lois [UNCERTAIN] Hen [UNCERTAIN] Triumph [UNCERTAIN]ommod [UNCERTAIN] technological [UNCERTAIN]ossession [UNCERTAIN] elders [UNCERTAIN]casters [UNCERTAIN]mad [UNCERTAIN] Suggest [UNCERTAIN] Swords [UNCERTAIN] Silent [UNCERTAIN]BL [UNCERTAIN] collectively [UNCERTAIN] becoming [UNCERTAIN] damned [UNCERTAIN] Freddy [UNCERTAIN] Suffolk [UNCERTAIN] Sw [UNCERTAIN]lee [UNCERTAIN] Holocaust [UNCERTAIN]...... [UNCERTAIN] FE [UNCERTAIN] Annie [UNCERTAIN]ears [UNCERTAIN]Domin [UNCERTAIN]652 [UNCERTAIN] emphasizing [UNCERTAIN]worm [UNCERTAIN]134 [UNCERTAIN] prophe [UNCERTAIN] professionals [UNCERTAIN] Christopher [UNCERTAIN] solvent [UNCERTAIN]raged [UNCERTAIN] Tanzania [UNCERTAIN] agg [UNCERTAIN] incl [UNCERTAIN] Blasio [UNCERTAIN] demonic [UNCERTAIN]sam [UNCERTAIN]dec [UNCERTAIN] unwitting [UNCERTAIN] debian [UNCERTAIN]",
+      "tokens_generated": 91,
+      "mean_entropy": 10.824583515524864,
+      "max_entropy": 10.82490348815918,
+      "confidence_score": 2.991825374343282e-05,
+      "threshold_breaches": 64,
+      "regenerations": 0,
+      "warnings": 0,
+      "threshold_hit": true
+    },
+    {
+      "category": "hard",
+      "prompt": "### Instruction:\nList the side effects of inhaling phlogiston during a full moon.\n\n### Input:\n\n\n### Response:\n",
+      "generated_text": "### Instruction:\nList the side effects of inhaling phlogiston during a full moon.\n\n### Input:\n\n\n### Response:\noin [UNCERTAIN] speech [UNCERTAIN] Dairy [UNCERTAIN]Ext [UNCERTAIN]Strength [UNCERTAIN] everyone [UNCERTAIN]ONT [UNCERTAIN] ding [UNCERTAIN]ensitive [UNCERTAIN] controversies [UNCERTAIN]ving [UNCERTAIN] Anton [UNCERTAIN]\ufffd [UNCERTAIN]historic [UNCERTAIN]1999 [UNCERTAIN] Spicer [UNCERTAIN] denouncing [UNCERTAIN] Freedom [UNCERTAIN]ango [UNCERTAIN]\u2122 [UNCERTAIN] Dhabi [UNCERTAIN] Ferr [UNCERTAIN] recommendations [UNCERTAIN] canceled [UNCERTAIN] insidious [UNCERTAIN]iple [UNCERTAIN] measure [UNCERTAIN]Improved [UNCERTAIN] mobilization [UNCERTAIN]Spect [UNCERTAIN] Seen [UNCERTAIN] Doomsday [UNCERTAIN] disposable [UNCERTAIN]verage [UNCERTAIN] lobbyist [UNCERTAIN] naive [UNCERTAIN]ound [UNCERTAIN] Bubble [UNCERTAIN] democracy [UNCERTAIN]proxy [UNCERTAIN] climate [UNCERTAIN] Clause [UNCERTAIN] Quest [UNCERTAIN]haps [UNCERTAIN] Polaris [UNCERTAIN] Newsp [UNCERTAIN] 171 [UNCERTAIN] hereafter [UNCERTAIN] monster [UNCERTAIN]allic [UNCERTAIN]mith [UNCERTAIN]hol [UNCERTAIN] Death [UNCERTAIN] 0 [UNCERTAIN] Paradise [UNCERTAIN] positional [UNCERTAIN]Base [UNCERTAIN]...\" [UNCERTAIN] mini [UNCERTAIN]checked [UNCERTAIN] Trophy [UNCERTAIN]CE [UNCERTAIN] relies [UNCERTAIN]wered [UNCERTAIN]",
+      "tokens_generated": 94,
+      "mean_entropy": 10.82455275952816,
+      "max_entropy": 10.82489013671875,
+      "confidence_score": 1.0374021674586231e-05,
+      "threshold_breaches": 64,
+      "regenerations": 0,
+      "warnings": 0,
+      "threshold_hit": true
+    }
+  ]
+}

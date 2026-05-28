@@ -49,13 +49,13 @@ training:
   packing: false
 
 dataset:
-  path: "data/train.jsonl"
-  eval_path: "data/eval.jsonl"
+  path: "data/medical/train.jsonl"
+  eval_path: "data/medical/val.jsonl"
   text_column: "text"
   format: "jsonl"
 
 # Logging
-wandb:
-  project: "acc-llm"
-  run_name: "desktop-qlora-r32"
-  tags: ["mistral-7b", "qlora", "rtx3080"]
+# wandb:
+#   project: "acc-llm"
+#   run_name: "desktop-qlora-r32"
+#   tags: ["mistral-7b", "qlora", "rtx3080"]

@@ -1,0 +1,50 @@
+# DistilGPT-2 test config — real HuggingFace model with safetensors
+# ~300MB download, proven architecture for PEFT + TRL
+
+model:
+  base_model: "distilgpt2"
+  trust_remote_code: false
+  torch_dtype: "float32"
+
+quantization:
+  load_in_4bit: false  # Small model doesn't need quantization
+
+lora:
+  r: 8
+  lora_alpha: 16
+  lora_dropout: 0.05
+  target_modules:
+    - "c_attn"      # GPT-2 attention QKV projection
+    - "c_proj"      # GPT-2 attention output projection  
+    - "c_fc"        # GPT-2 MLP up-projection
+  bias: "none"
+  task_type: "CAUSAL_LM"
+  # DistilGPT-2 uses same architecture as GPT-2, PEFT handles Conv1D automatically
+
+training:
+  output_dir: "adapters/distilgpt2_test"
+  num_train_epochs: 10
+  per_device_train_batch_size: 8
+  per_device_eval_batch_size: 8
+  gradient_accumulation_steps: 1
+  learning_rate: 5.0e-4
+  warmup_steps: 10
+  logging_steps: 10
+  save_steps: 50
+  eval_steps: 50
+  evaluation_strategy: "steps"
+  save_strategy: "steps"
+  load_best_model_at_end: true
+  metric_for_best_model: "eval_loss"
+  greater_is_better: false
+  optim: "adamw_torch"
+  lr_scheduler_type: "cosine"
+  max_grad_norm: 1.0
+  max_seq_length: 128
+  packing: false
+
+dataset:
+  path: "data/synthetic/train.jsonl"
+  eval_path: "data/synthetic/val.jsonl"
+  text_column: "text"
+  format: "jsonl"

@@ -1,0 +1,48 @@
+# Tiny model test config — for QLoRA pipeline verification
+# Uses a 1.1M parameter model, no downloads needed
+
+model:
+  base_model: "models/tiny_gpt"
+  trust_remote_code: false
+  torch_dtype: "float32"
+
+quantization:
+  load_in_4bit: false  # Tiny model doesn't need quantization
+
+lora:
+  r: 8
+  lora_alpha: 16
+  lora_dropout: 0.05
+  target_modules:
+    - "lm_head"
+    - "wte"
+  bias: "none"
+  task_type: "CAUSAL_LM"
+
+training:
+  output_dir: "adapters/tiny_test"
+  num_train_epochs: 3
+  per_device_train_batch_size: 4
+  per_device_eval_batch_size: 4
+  gradient_accumulation_steps: 1
+  learning_rate: 5.0e-4
+  warmup_steps: 10
+  logging_steps: 5
+  save_steps: 50
+  eval_steps: 50
+  evaluation_strategy: "steps"
+  save_strategy: "steps"
+  load_best_model_at_end: true
+  metric_for_best_model: "eval_loss"
+  greater_is_better: false
+  optim: "adamw_torch"
+  lr_scheduler_type: "cosine"
+  max_grad_norm: 1.0
+  max_seq_length: 128
+  packing: false
+
+dataset:
+  path: "data/synthetic/train.jsonl"
+  eval_path: "data/synthetic/val.jsonl"
+  text_column: "text"
+  format: "jsonl"
