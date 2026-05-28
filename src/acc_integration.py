@@ -5,10 +5,14 @@ Uses a custom LogitsProcessor injected into the standard transformers
 because it delegates KV-cache management, attention masking, and beam
 search support to the well-tested HuggingFace generator.
 
-Three intervention strategies are supported:
+Intervention strategies:
   - "flag":       mark uncertain spans with a [UNCERTAIN] token.
-  - "regenerate": re-sample at higher temperature when entropy is high.
+  - "regenerate": re-sample at lower temperature when entropy is high.
   - "warning":    prefix uncertain spans with a warning string.
+
+Self-consistency checking (optional):
+  Generates N candidate continuations and compares their semantic
+  embeddings. Low pairwise similarity signals internal contradiction.
 """
 
 from __future__ import annotations
@@ -40,6 +44,9 @@ class ACCGenerationOutput:
     events: List[List[dict]] = field(default_factory=list)
     regenerations: List[int] = field(default_factory=list)
     confidence_score: List[float] = field(default_factory=list)
+    consistency_score: List[Optional[float]] = field(default_factory=list)
+    contradiction_detected: List[Optional[bool]] = field(default_factory=list)
+    scores: Optional[Tuple[torch.FloatTensor, ...]] = None
 
 
 class _EntropyLogitsProcessor(LogitsProcessor):
@@ -47,7 +54,7 @@ class _EntropyLogitsProcessor(LogitsProcessor):
 
     This is called *inside* the HF .generate() loop, after the model forward
     pass but before token selection. It has access to the raw logits for the
-    current position and can modify them (e.g. by forcing a resample).
+    current position and can modify them (e.g., by forcing a resample).
     """
 
     def __init__(
@@ -55,13 +62,13 @@ class _EntropyLogitsProcessor(LogitsProcessor):
         monitor: EntropyMonitor,
         tokenizer,
         action: Action = "flag",
-        regen_temperature_multiplier: float = 1.5,
+        regen_multiplier: float = 2.0,
         max_regenerations: int = 3,
     ):
         self.monitor = monitor
         self.tokenizer = tokenizer
         self.action: Action = action
-        self.regen_temperature_multiplier = float(regen_temperature_multiplier)
+        self.regen_multiplier = float(regen_multiplier)
         self.max_regenerations = int(max_regenerations)
         # Per-batch-row tracking
         self.per_token_entropy: List[List[float]] = []
@@ -97,10 +104,13 @@ class _EntropyLogitsProcessor(LogitsProcessor):
             if breached:
                 self.uncertain_steps[b].append(gen_step)
                 if self.action == "regenerate" and self.regen_counts[b] < self.max_regenerations:
-                    # Re-sample at higher temperature by scaling logits down
-                    # (lower logits = higher effective temperature)
-                    multiplier = self.regen_temperature_multiplier ** (self.regen_counts[b] + 1)
-                    next_scores[b] = row_logits / max(multiplier, 1e-5)
+                    # Re-sample at lower temperature by scaling logits UP.
+                    # HF applies temperature as logits / temperature.
+                    # Multiplying logits here is equivalent to dividing the
+                    # final temperature by the same factor:
+                    #   effective_temperature = base_temperature / multiplier
+                    multiplier = self.regen_multiplier ** (self.regen_counts[b] + 1)
+                    next_scores[b] = row_logits * multiplier
                     self.regen_counts[b] += 1
                 elif self.action == "flag":
                     # Marker position is prompt_len + gen_step + 1 (after the token)
@@ -112,11 +122,135 @@ class _EntropyLogitsProcessor(LogitsProcessor):
         return next_scores
 
 
+class SelfConsistencyChecker:
+    """Semantic self-consistency checker using multiple sampled continuations.
+
+    Generates N candidates for a prompt, embeds each continuation via
+    mean-pooled hidden states from the base model, and checks for
+    outlier clusters that indicate contradiction or hallucination.
+    """
+
+    def __init__(
+        self,
+        model,
+        tokenizer,
+        n_candidates: int = 5,
+        similarity_threshold: float = 0.75,
+        max_new_tokens: int = 50,
+    ):
+        self.model = model
+        self.tokenizer = tokenizer
+        self.n_candidates = int(n_candidates)
+        self.similarity_threshold = float(similarity_threshold)
+        self.max_new_tokens = int(max_new_tokens)
+        self.device = getattr(model, "device", None) or next(model.parameters()).device
+
+    def generate_candidates(self, prompt: str, **gen_kwargs) -> List[str]:
+        """Generate N diverse continuation strings for *prompt*."""
+        inputs = self.tokenizer(prompt, return_tensors="pt").to(self.device)
+        prompt_len = inputs.input_ids.shape[1]
+
+        # Ensure do_sample is True for diversity
+        gen_kwargs.setdefault("do_sample", True)
+        gen_kwargs.setdefault("temperature", gen_kwargs.get("temperature", 0.7))
+        gen_kwargs.setdefault("top_p", gen_kwargs.get("top_p", 0.9))
+
+        with torch.no_grad():
+            outputs = self.model.generate(
+                inputs.input_ids,
+                attention_mask=inputs.attention_mask,
+                max_new_tokens=gen_kwargs.get("max_new_tokens", self.max_new_tokens),
+                num_return_sequences=self.n_candidates,
+                do_sample=gen_kwargs["do_sample"],
+                temperature=gen_kwargs["temperature"],
+                top_p=gen_kwargs["top_p"],
+                pad_token_id=self.tokenizer.pad_token_id,
+            )
+
+        # Strip prompt to keep only continuations
+        continuations = []
+        for seq in outputs:
+            continuation_ids = seq[prompt_len:]
+            text = self.tokenizer.decode(continuation_ids, skip_special_tokens=True)
+            continuations.append(text)
+        return continuations
+
+    def embed_texts(self, texts: List[str]) -> torch.Tensor:
+        """Return L2-normalized, mean-pooled token embeddings."""
+        inputs = self.tokenizer(
+            texts, return_tensors="pt", padding=True, truncation=True
+        ).to(self.device)
+        with torch.no_grad():
+            outputs = self.model(**inputs, output_hidden_states=True)
+        last_hidden = outputs.hidden_states[-1]  # (batch, seq, hidden)
+
+        # Mean pool with attention mask
+        mask = inputs.attention_mask.unsqueeze(-1).float()
+        sum_embeddings = (last_hidden * mask).sum(dim=1)
+        mean_embeddings = sum_embeddings / mask.sum(dim=1).clamp(min=1e-9)
+        mean_embeddings = F.normalize(mean_embeddings, p=2, dim=1)
+        return mean_embeddings
+
+    def check(self, prompt: str, **gen_kwargs) -> Dict[str, Union[float, bool, List[int], List[str]]]:
+        """Run self-consistency check on *prompt*.
+
+        Returns
+        -------
+        dict with keys:
+            consistency_score : float
+                Mean pairwise cosine similarity within the largest cluster.
+            contradiction_detected : bool
+                True if at least one candidate is an outlier w.r.t. the cluster.
+            outlier_indices : List[int]
+                Indices of outlier candidates.
+            candidates : List[str]
+                The generated continuation strings.
+        """
+        candidates = self.generate_candidates(prompt, **gen_kwargs)
+        n = len(candidates)
+        if n < 2:
+            return {
+                "consistency_score": 1.0,
+                "contradiction_detected": False,
+                "outlier_indices": [],
+                "candidates": candidates,
+            }
+
+        embeddings = self.embed_texts(candidates)
+        sim_matrix = embeddings @ embeddings.T  # (n, n)
+
+        # Identify the largest cluster: for each candidate count how many
+        # others exceed the similarity threshold.
+        counts = (sim_matrix > self.similarity_threshold).sum(dim=1) - 1  # exclude self
+        best_idx = int(counts.argmax())
+        best_cluster_mask = sim_matrix[best_idx] > self.similarity_threshold
+
+        # Outliers are candidates whose maximum similarity to any member
+        # of the best cluster is below threshold.
+        best_cluster_embs = embeddings[best_cluster_mask]
+        max_sims_to_cluster = (embeddings @ best_cluster_embs.T).max(dim=1).values
+        outlier_mask = max_sims_to_cluster < self.similarity_threshold
+
+        if best_cluster_mask.sum() > 1:
+            cluster_sims = sim_matrix[best_cluster_mask][:, best_cluster_mask]
+            consistency_score = float(cluster_sims.mean())
+        else:
+            consistency_score = float(max_sims_to_cluster[best_idx])
+
+        return {
+            "consistency_score": consistency_score,
+            "contradiction_detected": bool(outlier_mask.any().item()),
+            "outlier_indices": outlier_mask.nonzero(as_tuple=True)[0].tolist(),
+            "candidates": candidates,
+        }
+
+
 class ACCEnhancedGenerator:
     """Wrap a HF CausalLM with per-token entropy monitoring.
 
     Internally uses a LogitsProcessor injected into the standard
-    transformers .generate() pipeline.
+    transformers .generate() pipeline. Optionally enables semantic
+    self-consistency checking across multiple sampled continuations.
     """
 
     def __init__(
@@ -129,15 +263,19 @@ class ACCEnhancedGenerator:
         mode: ThresholdMode = "absolute",
         window_size: int = 32,
         warmup: int = 4,
-        regen_temperature_multiplier: float = 1.5,
+        regen_multiplier: float = 2.0,
         max_regenerations: int = 3,
+        use_self_consistency: bool = False,
+        self_consistency_candidates: int = 5,
+        self_consistency_threshold: float = 0.75,
+        self_consistency_max_new_tokens: Optional[int] = None,
     ):
         if action not in ("flag", "regenerate", "warning"):
             raise ValueError(f"unknown action: {action}")
         self.model = model
         self.tokenizer = tokenizer
         self.action: Action = action
-        self.regen_temperature_multiplier = float(regen_temperature_multiplier)
+        self.regen_multiplier = float(regen_multiplier)
         self.max_regenerations = int(max_regenerations)
         self.monitor = monitor or EntropyMonitor(
             threshold=threshold,
@@ -147,6 +285,17 @@ class ACCEnhancedGenerator:
             warmup=warmup,
         )
         self.device = getattr(model, "device", None) or next(model.parameters()).device
+
+        self.use_self_consistency = bool(use_self_consistency)
+        self.self_consistency_checker: Optional[SelfConsistencyChecker] = None
+        if self.use_self_consistency:
+            self.self_consistency_checker = SelfConsistencyChecker(
+                model=model,
+                tokenizer=tokenizer,
+                n_candidates=self_consistency_candidates,
+                similarity_threshold=self_consistency_threshold,
+                max_new_tokens=self_consistency_max_new_tokens or 50,
+            )
 
     # ------------------------------------------------------------------ public
 
@@ -175,7 +324,7 @@ class ACCEnhancedGenerator:
             monitor=self.monitor,
             tokenizer=self.tokenizer,
             action=self.action,
-            regen_temperature_multiplier=self.regen_temperature_multiplier,
+            regen_multiplier=self.regen_multiplier,
             max_regenerations=self.max_regenerations,
         )
 
@@ -203,6 +352,25 @@ class ACCEnhancedGenerator:
         # Decode with markers
         text = self._decode_with_markers(sequences, prompt_len, processor.text_inserts)
 
+        # Self-consistency check
+        consistency_scores: List[Optional[float]] = [None] * batch_size
+        contradiction_flags: List[Optional[bool]] = [None] * batch_size
+        if self.use_self_consistency and self.self_consistency_checker is not None:
+            for b in range(batch_size):
+                prompt_text = self.tokenizer.decode(input_ids[b], skip_special_tokens=True)
+                try:
+                    sc_result = self.self_consistency_checker.check(
+                        prompt_text,
+                        max_new_tokens=max_new_tokens,
+                        temperature=temperature,
+                        top_p=top_p,
+                        do_sample=do_sample,
+                    )
+                    consistency_scores[b] = sc_result["consistency_score"]
+                    contradiction_flags[b] = sc_result["contradiction_detected"]
+                except Exception as exc:
+                    logger.warning("Self-consistency check failed for batch item %d: %s", b, exc)
+
         if not return_dict_in_generate:
             return sequences
 
@@ -214,6 +382,9 @@ class ACCEnhancedGenerator:
             events=[[asdict(e) for e in self.monitor.events]] * batch_size,
             regenerations=processor.regen_counts,
             confidence_score=[self.monitor.get_confidence_score()] * batch_size,
+            consistency_score=consistency_scores,
+            contradiction_detected=contradiction_flags,
+            scores=outputs.scores,
         )
 
     def generate_from_prompt(

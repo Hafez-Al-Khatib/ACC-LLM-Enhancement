@@ -41,13 +41,28 @@ def generate_config(base_config: dict, ablate_key: str, value, exp_name: str) ->
         "batch_size": ("training", "per_device_train_batch_size"),
         "accum": ("training", "gradient_accumulation_steps"),
         "dropout": ("lora", "lora_dropout"),
+        "acc_threshold": ("acc", "threshold"),
+        "acc_mode": ("acc", "mode"),
+        "self_consistency_samples": ("acc", "self_consistency_samples"),
     }
 
     if ablate_key not in key_map:
         raise ValueError(f"Unknown ablation key: {ablate_key!r}. Available: {list(key_map)}")
 
     section, param = key_map[ablate_key]
-    cfg[section][param] = value
+
+    def _infer_type(v):
+        try:
+            return int(v)
+        except ValueError:
+            pass
+        try:
+            return float(v)
+        except ValueError:
+            pass
+        return v
+
+    cfg[section][param] = _infer_type(value)
 
     # Update output dir and run name
     cfg["training"]["output_dir"] = f"adapters/{exp_name}"
@@ -114,6 +129,7 @@ def main():
     parser.add_argument("--dataset-dir", default=None, help="Pre-built dataset dir")
     parser.add_argument("--max-samples", type=int, default=None)
     parser.add_argument("--epochs", type=int, default=None, help="Override epochs")
+    parser.add_argument("--eval-after-train", action="store_true", help="Run compare_baselines.py after each successful training run")
     args = parser.parse_args()
 
     # Load base config
@@ -136,6 +152,7 @@ def main():
     base_cfg["dataset"] = {
         "path": str(Path(dataset_dir) / "train.jsonl"),
         "eval_path": str(Path(dataset_dir) / "val.jsonl"),
+        "test_path": str(Path(dataset_dir) / "test.jsonl"),
         "text_column": "text",
         "format": "jsonl",
     }
@@ -164,6 +181,25 @@ def main():
 
         logger.info("\n[%d/%d] %s = %s", i + 1, len(args.values), args.ablate, val)
         success = run_single_experiment(str(cfg_path), str(results_file))
+
+        if success and args.eval_after_train:
+            logger.info("Running post-training evaluation...")
+            test_path = str(Path(dataset_dir) / "test.jsonl")
+            eval_dir = results_dir / f"{exp_name}_eval"
+            try:
+                subprocess.run(
+                    [sys.executable, "experiments/compare_baselines.py",
+                     "--config", str(cfg_path),
+                     "--prompts", test_path,
+                     "--output_dir", str(eval_dir),
+                     "--max_new_tokens", str(base_cfg.get("inference", {}).get("max_new_tokens", 128)),
+                     "--temperature", str(base_cfg.get("inference", {}).get("temperature", 0.7))],
+                    check=True,
+                    timeout=3600,
+                )
+                logger.info("Evaluation complete → %s", eval_dir)
+            except Exception as exc:
+                logger.warning("Evaluation failed for %s: %s", exp_name, exc)
 
         if not success:
             logger.warning("Run failed — continuing to next value...")

@@ -1,0 +1,54 @@
+# Integrated ACC experiment config
+# Ties together model, adapter, ACC settings, and evaluation dataset.
+
+model:
+  base_model: "models/mistral_7b"
+  trust_remote_code: false
+  torch_dtype: "bfloat16"
+
+adapter:
+  path: "adapters/desktop_run/final_adapter"
+
+# ACC layer configuration
+acc:
+  threshold: 3.5            # overwritten by calibrate() if calibration_prompts provided
+  mode: "absolute"          # absolute | moving_average | percentile
+  action: "flag"            # flag | regenerate | warning
+  window_size: 32
+  warmup: 4
+  regen_multiplier: 2.0     # logits multiplier on regeneration (lower effective temperature)
+  max_regenerations: 2
+  use_self_consistency: true
+  self_consistency_candidates: 5
+  self_consistency_threshold: 0.75
+  self_consistency_max_new_tokens: 50
+
+  # Optional: list of factual prompts for empirical threshold calibration
+  calibration_prompts:
+    - "The capital of France is Paris."
+    - "Water freezes at 0 degrees Celsius."
+    - "The Earth orbits the Sun."
+    - "Humans have 23 pairs of chromosomes."
+    - "Oxygen is essential for human respiration."
+
+# Conflict detector (Approach B) configuration
+conflict_detector:
+  path: "adapters/acc_conflict_detector"
+  hidden_dim: 4096          # Mistral 7B hidden size
+  layer_idx: -4
+
+# Inference settings
+inference:
+  temperature: 0.7
+  top_p: 0.9
+  max_new_tokens: 128
+
+# Evaluation dataset
+dataset:
+  path: "experiments/datasets/pubmedqa/test.jsonl"
+  text_column: "text"
+  format: "jsonl"
+
+# Output
+output:
+  report_dir: "experiments/results/medical_qa"

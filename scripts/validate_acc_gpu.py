@@ -6,7 +6,7 @@ import torch
 import torch.nn.functional as F
 from transformers import AutoModelForCausalLM, AutoTokenizer
 import sys
-sys.path.insert(0, 'D:/ACC LLM Enhancement')
+sys.path.insert(0, '.')
 from src.acc_integration import ACCEnhancedGenerator
 
 def main():
@@ -16,7 +16,7 @@ def main():
         print(f"GPU: {torch.cuda.get_device_name(0)}")
         print(f"Memory: {torch.cuda.get_device_properties(0).total_memory / 1024**3:.1f} GB")
     
-    model_path = 'D:/ACC LLM Enhancement/models/tiny_gpt2_safetensors'
+    model_path = './models/tiny_gpt2_safetensors'
     print(f"\nLoading model from {model_path}...")
     
     model = AutoModelForCausalLM.from_pretrained(model_path, local_files_only=True)
@@ -95,7 +95,7 @@ def main():
                 print(f"    ✓ Detected uncertainty on hard prompt (correct)")
     
     # Save results
-    output_path = 'D:/ACC LLM Enhancement/results/acc_gpu_validation.json'
+    output_path = './results/acc_gpu_validation.json'
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     with open(output_path, 'w') as f:
         json.dump(results, f, indent=2)

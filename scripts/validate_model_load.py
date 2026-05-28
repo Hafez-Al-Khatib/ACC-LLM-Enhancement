@@ -19,13 +19,16 @@ def main():
     dtype_name = cfg["model"].get("torch_dtype", "bfloat16")
     torch_dtype = getattr(torch, dtype_name)
 
+    # Always allow HF to download missing files. Using Path.exists() is dangerous
+    # because an empty directory would return True and block the download.
     model = load_model(
         cfg["model"]["base_model"],
         bnb_config=bnb,
         torch_dtype=torch_dtype,
         trust_remote_code=cfg["model"].get("trust_remote_code", False),
+        local_files_only=False,
     )
-    tok = load_tokenizer(cfg["model"]["base_model"])
+    tok = load_tokenizer(cfg["model"]["base_model"], local_files_only=False)
     total_params = sum(p.numel() for p in model.parameters())
     trainable = sum(p.numel() for p in model.parameters() if p.requires_grad)
     print(f"MODEL_LOAD_OK params={total_params:,} trainable={trainable:,}")

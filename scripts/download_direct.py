@@ -7,7 +7,7 @@ import requests
 from tqdm import tqdm
 
 REPO_ID = "mistralai/Mistral-7B-Instruct-v0.3"
-LOCAL_DIR = Path("D:/ACC LLM Enhancement/models/mistral_7b")
+LOCAL_DIR = Path("models/mistral_7b")
 BASE_URL = f"https://huggingface.co/{REPO_ID}/resolve/main"
 
 SHARDS = [

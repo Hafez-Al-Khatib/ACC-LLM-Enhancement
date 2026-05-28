@@ -6,7 +6,7 @@ import requests
 from tqdm import tqdm
 
 BASE_URL = "https://huggingface.co/distilgpt2/resolve/main"
-LOCAL_DIR = Path("D:/ACC LLM Enhancement/models/distilgpt2")
+LOCAL_DIR = Path("models/distilgpt2")
 CHUNK_SIZE = 8192
 
 FILES = [

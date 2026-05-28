@@ -263,6 +263,10 @@ def load_and_format(
         records = [formatter(row) for row in split_ds]
         # Add the unified "text" field for SFTTrainer
         for r in records:
+            # Preserve ground-truth fields explicitly so eval scripts can compare generations
+            r["instruction"] = r.get("instruction", "")
+            r["input"] = r.get("input", "")
+            r["output"] = r.get("output", "")
             r["text"] = (
                 f"### Instruction:\n{r['instruction']}\n\n"
                 f"### Input:\n{r['input']}\n\n"

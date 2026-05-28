@@ -27,6 +27,10 @@ def load_dataset_from_config(ds_cfg: dict):
     fmt = ds_cfg.get("format", "jsonl")
     text_col = ds_cfg.get("text_column", "text")
 
+    if fmt in ("jsonl", "json"):
+        if not Path(path).exists():
+            raise FileNotFoundError(f"Dataset file not found: {path}")
+
     if fmt == "jsonl":
         records = []
         with open(path, "r", encoding="utf-8") as fh:
@@ -58,12 +62,12 @@ def load_dataset_from_config(ds_cfg: dict):
     return ds
 
 
-def load_tokenizer(model_path: str, trust_remote_code: bool = False):
+def load_tokenizer(model_path: str, trust_remote_code: bool = False, local_files_only: bool = False):
     """Load tokenizer with padding side fix for decoder-only models."""
     tok = AutoTokenizer.from_pretrained(
         model_path,
         trust_remote_code=trust_remote_code,
-        local_files_only=Path(model_path).exists(),
+        local_files_only=local_files_only,
     )
     if tok.pad_token is None:
         tok.pad_token = tok.eos_token
@@ -77,6 +81,7 @@ def load_model(
     torch_dtype: torch.dtype = torch.bfloat16,
     trust_remote_code: bool = False,
     device_map: str = "auto",
+    local_files_only: bool = False,
 ):
     """Load causal LM with optional 4-bit quantization."""
     logger.info("Loading model from %s (dtype=%s, 4bit=%s)",
@@ -88,7 +93,7 @@ def load_model(
         torch_dtype=torch_dtype if bnb_config is None else None,
         trust_remote_code=trust_remote_code,
         device_map=device_map,
-        local_files_only=Path(model_path).exists(),
+        local_files_only=local_files_only,
     )
     if getattr(model, "supports_gradient_checkpointing", False):
         model.gradient_checkpointing_enable()
@@ -196,9 +201,9 @@ def build_trainer(config: dict):
         fp16=torch_dtype == torch.float16,
         bf16=torch_dtype == torch.bfloat16,
         dataloader_num_workers=0,
-        remove_unused_columns=False,
     )
 
+    # mlm=False tells the collator to create labels = input_ids shifted by 1 for causal LM.
     data_collator = DataCollatorForLanguageModeling(
         tokenizer=tokenizer,
         mlm=False,

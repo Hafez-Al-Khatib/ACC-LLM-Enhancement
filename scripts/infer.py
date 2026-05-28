@@ -62,7 +62,7 @@ def generate_with_acc(
     threshold: float,
     action: str,
     mode: str,
-    temperature_adjustment: float,
+    regen_multiplier: float,
 ):
     gen = ACCEnhancedGenerator(
         model=model,
@@ -70,7 +70,7 @@ def generate_with_acc(
         threshold=threshold,
         action=action,
         mode=mode,
-        regen_temperature_multiplier=1.0 + temperature_adjustment,
+        regen_multiplier=regen_multiplier,
     )
     out = gen.generate_from_prompt(
         prompt=prompt,
@@ -151,10 +151,10 @@ if __name__ == "__main__":
         help="Threshold strategy for the entropy monitor",
     )
     parser.add_argument(
-        "--acc-temp-adjustment",
+        "--acc-regen-multiplier",
         type=float,
-        default=0.3,
-        help="Temperature reduction applied on 'regenerate' action",
+        default=2.0,
+        help="Logits multiplier on 'regenerate' action (equivalent to lowering temperature)",
     )
     args = parser.parse_args()
 
@@ -170,7 +170,7 @@ if __name__ == "__main__":
             args.acc_threshold,
             args.acc_action,
             args.acc_mode,
-            args.acc_temp_adjustment,
+            args.acc_regen_multiplier,
         )
         _print_acc_report(result)
     else:

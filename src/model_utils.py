@@ -17,12 +17,12 @@ from transformers import (
 logger = logging.getLogger(__name__)
 
 
-def load_tokenizer(model_path: str, trust_remote_code: bool = False):
+def load_tokenizer(model_path: str, trust_remote_code: bool = False, local_files_only: bool = False):
     """Load tokenizer with padding side fix for decoder-only models."""
     tok = AutoTokenizer.from_pretrained(
         model_path,
         trust_remote_code=trust_remote_code,
-        local_files_only=True,
+        local_files_only=local_files_only,
     )
     if tok.pad_token is None:
         tok.pad_token = tok.eos_token
@@ -36,6 +36,7 @@ def load_model(
     torch_dtype: torch.dtype = torch.bfloat16,
     trust_remote_code: bool = False,
     device_map: str = "auto",
+    local_files_only: bool = False,
 ):
     """Load causal LM with optional 4-bit quantization.
 
@@ -49,6 +50,10 @@ def load_model(
         Compute dtype. Use float16 on Jetson (no bfloat16 support).
     device_map : str
         "auto" for multi-GPU, "cuda:0" for single GPU, "cpu" for CPU-only.
+    local_files_only : bool
+        If False (default), allows HF to download missing files. Safer than
+        ``Path(model_path).exists()`` because an empty directory would otherwise
+        block downloads.
     """
     logger.info("Loading model from %s (dtype=%s, 4bit=%s)",
                 model_path, torch_dtype, bnb_config is not None)
@@ -59,7 +64,7 @@ def load_model(
         torch_dtype=torch_dtype if bnb_config is None else None,
         trust_remote_code=trust_remote_code,
         device_map=device_map,
-        local_files_only=Path(model_path).exists(),
+        local_files_only=local_files_only,
     )
     # Gradient checkpointing saves ~30% activation memory
     if getattr(model, "supports_gradient_checkpointing", False):

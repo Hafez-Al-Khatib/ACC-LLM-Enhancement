@@ -15,8 +15,10 @@ acc:
   action: "flag"            # flag | regenerate | warning
   window_size: 32
   warmup: 4
-  temperature_adjustment: 0.3   # applied on 'regenerate'
+  regen_multiplier: 2.0     # logits boost on regeneration (equiv. lower temp)
   max_regenerations: 2
+  self_consistency_candidates: 5
+  self_consistency_threshold: 0.75
 
 inference:
   temperature: 0.7

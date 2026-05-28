@@ -6,7 +6,7 @@ from huggingface_hub import snapshot_download
 from tqdm.auto import tqdm
 
 REPO_ID = "mistralai/Mistral-7B-Instruct-v0.3"
-LOCAL_DIR = Path("D:/ACC LLM Enhancement/models/mistral_7b")
+LOCAL_DIR = Path("models/mistral_7b")
 
 def download_with_progress():
     """Download model with explicit progress reporting."""

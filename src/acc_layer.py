@@ -24,6 +24,7 @@ from collections import deque
 from dataclasses import dataclass, field
 from typing import Deque, List, Literal, Optional
 
+import numpy as np
 import torch
 import torch.nn.functional as F
 
@@ -252,6 +253,76 @@ class EntropyMonitor:
     @property
     def events(self) -> List[EntropyEvent]:
         return list(self._events)
+
+    def calibrate(
+        self,
+        model,
+        tokenizer,
+        calibration_prompts: List[str],
+        max_new_tokens: int = 50,
+        method: Literal["percentile", "mean_std", "max"] = "percentile",
+    ) -> None:
+        """Empirically set the entropy threshold using in-domain factual prompts.
+
+        Runs greedy generation on each calibration prompt, collects per-token
+        entropies, and sets ``self.threshold`` based on the chosen method.
+
+        Parameters
+        ----------
+        model : transformers.PreTrainedModel
+            The base causal language model.
+        tokenizer : transformers.PreTrainedTokenizer
+            Tokenizer matching ``model``.
+        calibration_prompts : List[str]
+            Factual, in-domain prompts that should *not* trigger high entropy.
+        max_new_tokens : int
+            Number of new tokens to generate for each calibration prompt.
+        method : {"percentile", "mean_std", "max"}
+            - ``percentile``: 95th percentile of observed entropies.
+            - ``mean_std``: mean + 2 * std.
+            - ``max``: maximum observed entropy.
+        """
+        model.eval()
+        device = next(model.parameters()).device
+        all_entropies: List[float] = []
+
+        with torch.no_grad():
+            for prompt in calibration_prompts:
+                inputs = tokenizer(prompt, return_tensors="pt").to(device)
+                outputs = model.generate(
+                    **inputs,
+                    max_new_tokens=max_new_tokens,
+                    return_dict_in_generate=True,
+                    output_scores=True,
+                    do_sample=False,  # greedy to get a deterministic path
+                )
+                # scores is a tuple of length max_new_tokens; each tensor is (batch, vocab)
+                for score in outputs.scores:
+                    h = self.compute_entropy(score[0])
+                    all_entropies.append(h)
+
+        if not all_entropies:
+            logger.warning("No entropies collected during calibration.")
+            return
+
+        arr = np.array(all_entropies)
+        if method == "percentile":
+            self.threshold = float(np.percentile(arr, 95))
+        elif method == "mean_std":
+            self.threshold = float(arr.mean() + 2 * arr.std())
+        elif method == "max":
+            self.threshold = float(arr.max())
+        else:
+            raise ValueError(f"Unknown calibration method: {method}")
+
+        self.max_calibrated_entropy = float(arr.max())
+        logger.info(
+            "Calibrated threshold=%.4f (method=%s) over %d tokens from %d prompts",
+            self.threshold,
+            method,
+            len(arr),
+            len(calibration_prompts),
+        )
 
     def reset(self) -> None:
         self.window.reset()
