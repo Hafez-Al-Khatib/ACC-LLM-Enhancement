@@ -24,7 +24,7 @@ logger = logging.getLogger(__name__)
 VERTICAL_DATASETS = {
     "pubmedqa": {
         "hub_id": "pubmed_qa",
-        "subset": "pubmedqa_pqal_labeled",
+        "subset": "pqa_labeled",
         "splits": {"train": "train", "val": "validation", "test": "test"},
         "formatter": "pubmedqa",
     },
@@ -35,7 +35,7 @@ VERTICAL_DATASETS = {
         "formatter": "medmcqa",
     },
     "fiqa": {
-        "hub_id": "ibm/fiqa",
+        "hub_id": "google/fiqa",
         "subset": None,
         "splits": {"train": "train", "val": "validation", "test": "test"},
         "formatter": "fiqa",

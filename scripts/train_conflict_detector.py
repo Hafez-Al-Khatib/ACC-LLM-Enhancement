@@ -228,6 +228,17 @@ def main():
         type=str,
         default="cuda" if torch.cuda.is_available() else "cpu",
     )
+    parser.add_argument(
+        "--wandb_project",
+        type=str,
+        default=None,
+        help="WandB project name (disabled if omitted)",
+    )
+    parser.add_argument(
+        "--wandb_run_name",
+        type=str,
+        default="conflict-detector",
+    )
     args = parser.parse_args()
 
     # ------------------------------------------------------------------
@@ -240,6 +251,17 @@ def main():
 
     device = torch.device(args.device)
     print(f"Device: {device}")
+
+    # ------------------------------------------------------------------
+    # WandB setup
+    # ------------------------------------------------------------------
+    if args.wandb_project:
+        import wandb
+        wandb.init(
+            project=args.wandb_project,
+            name=args.wandb_run_name,
+            config={k: v for k, v in vars(args).items() if k not in ("wandb_project", "wandb_run_name")},
+        )
 
     # ------------------------------------------------------------------
     # Load data
@@ -313,7 +335,7 @@ def main():
     )
     criterion = nn.CrossEntropyLoss()
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
-        optimizer, mode="max", factor=0.5, patience=3, verbose=True
+        optimizer, mode="max", factor=0.5, patience=3
     )
 
     # ------------------------------------------------------------------
@@ -337,12 +359,24 @@ def main():
         )
 
         # Per-class metrics
+        per_class_metrics = {}
         for name in label_names:
             p = report[name]["precision"]
             r = report[name]["recall"]
             f1 = report[name]["f1-score"]
             support = int(report[name]["support"])
             print(f"  {name:12s}  P={p:.3f}  R={r:.3f}  F1={f1:.3f}  n={support}")
+            per_class_metrics[name] = {"precision": p, "recall": r, "f1": f1, "support": support}
+
+        if args.wandb_project:
+            import wandb
+            wandb.log({
+                "epoch": epoch,
+                "train_loss": train_loss,
+                "val_loss": val_loss,
+                "macro_f1": macro_f1,
+                **{f"{k}_f1": v["f1"] for k, v in per_class_metrics.items()},
+            })
 
         # Checkpointing
         if macro_f1 > best_macro_f1:
@@ -379,6 +413,11 @@ def main():
     # ------------------------------------------------------------------
     # Finalise
     # ------------------------------------------------------------------
+    if args.wandb_project:
+        import wandb
+        wandb.summary["best_macro_f1"] = best_macro_f1
+        wandb.finish()
+
     print(f"\n{'='*60}")
     print(f"Training complete. Best validation macro-F1: {best_macro_f1:.4f}")
     print(f"Checkpoint saved to: {args.save_dir}")

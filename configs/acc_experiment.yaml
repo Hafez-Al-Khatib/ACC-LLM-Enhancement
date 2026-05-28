@@ -49,6 +49,12 @@ dataset:
   text_column: "text"
   format: "jsonl"
 
+# WandB logging
+wandb:
+  project: "acc-llm"
+  run_name: "medical_mistral7b_acc"
+  tags: ["mistral-7b", "qlora", "medical", "acc-layer"]
+
 # Output
 output:
   report_dir: "experiments/results/medical_qa"

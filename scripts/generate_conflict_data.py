@@ -414,7 +414,10 @@ def main():
     # ------------------------------------------------------------------
     # Setup extractor
     # ------------------------------------------------------------------
-    extractor = GenerationHiddenStateExtractor(model, layer_idx=-4)
+    num_layers = len(model.transformer.h) if hasattr(model, 'transformer') and hasattr(model.transformer, 'h') else len(model.model.layers)
+    layer_idx = -4 if num_layers >= 4 else -2
+    print(f"Using layer_idx={layer_idx} (model has {num_layers} layers)")
+    extractor = GenerationHiddenStateExtractor(model, layer_idx=layer_idx)
 
     # ------------------------------------------------------------------
     # Generation loops per category
