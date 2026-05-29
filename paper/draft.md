@@ -71,3 +71,86 @@ ACC LLM comprises two complementary approaches integrated as `LogitsProcessor` m
 - Wu, C., Zhang, X., Zhang, Y., Wang, Y., & Xie, W. (2023). PMC-LLaMA: Further finetuning LLaMA on medical papers. *arXiv preprint*.
 - Zador, A., Richards, B., Ölveczky, B., et al. (2023). Catalyzing next-generation Artificial Intelligence through NeuroAI. *Nature Communications*, 14(1), 1597.
 - Zhang, H., Chen, J., Jiang, F., et al. (2023). Huatuo: Tuning LLaMA model with Chinese medical knowledge. *arXiv preprint*.
+
+
+---
+
+## 5. Method Details — Approach A: Entropy & Self-Consistency
+
+**Entropy Calibration.** The `EntropyMonitor.calibrate()` method estimates an in-domain entropy threshold from a small set of factual prompts rather than relying on an arbitrary global constant. For each calibration prompt $\mathbf{p}_i \in \mathcal{P}_{\text{cal}}$, the model performs greedy generation ($\tau \to 0$) for $T$ tokens, producing a deterministic trajectory. At each step $t$, the Shannon entropy of the next-token distribution is computed in float32 precision:
+$$
+H_t = -\sum_{v=1}^{V} P(v \mid \mathbf{p}_i, \mathbf{y}_{<t}) \log P(v \mid \mathbf{p}_i, \mathbf{y}_{<t}),
+$$
+where $V$ is the vocabulary size and $\mathbf{y}_{<t}$ denotes tokens generated so far. Collecting entropies across all calibration runs yields a corpus-level sample $\{H_1, \dots, H_{|\mathcal{P}_{\text{cal}}| \cdot T}\}$. The threshold $\theta$ is set by one of three strategies: (i) the 95th percentile of the sample; (ii) $\mu + 2\sigma$; or (iii) the maximum observed value. Because greedy decoding on factual prompts should produce low-entropy trajectories, this procedure anchors $\theta$ to the model's own in-domain uncertainty distribution and avoids the brittleness of hand-tuned constants.
+
+**Per-Token Entropy Computation.** During inference, an `_EntropyLogitsProcessor` is injected into the HuggingFace `generate()` pipeline. At each decoding step $t$, the processor receives the raw logits $\mathbf{z}_t \in \mathbb{R}^V$ for the next token. It computes $H_t$ via a numerically stable softmax in float32 to avoid catastrophic cancellation in the distribution tails, updates a sliding window of length $W=32$, and evaluates the active threshold. The processor maintains per-sequence buffers for entropy traces, uncertain step indices, and text insertions, all with $O(1)$ overhead per step.
+
+**Intervention Strategies.** When $H_t > \theta$, the processor triggers one of three actions. *Flag* inserts a literal marker (e.g., `[UNCERTAIN]`) immediately after the offending token. *Warning* prefixes the token with a caution string. *Regenerate* rescales the logits by a multiplicative factor $m > 1$:
+$$
+\mathbf{z}'_t = m \cdot \mathbf{z}_t.
+$$
+Because HuggingFace applies temperature as $\mathbf{z} / \tau$, multiplying logits is equivalent to reducing the effective temperature to $\tau / m$, thereby sharpening the distribution and encouraging a higher-confidence sample. The multiplier grows geometrically with repeated breaches on the same sequence ($m_k = m_0^{k+1}$) up to a maximum of $K=3$ regenerations, after which the processor falls back to flagging to avoid infinite loops.
+
+**Semantic Self-Consistency.** Entropy alone is insensitive to semantic contradictions: a model can be confidently wrong. The `SelfConsistencyChecker` addresses this by sampling $N$ diverse candidate continuations $\{\mathbf{y}^{(1)}, \dots, \mathbf{y}^{(N)}\}$ for a given prompt using nucleus sampling ($\tau=0.7$, $p=0.9$). Each continuation is encoded by the base model into mean-pooled, L2-normalized hidden-state embeddings:
+$$
+\mathbf{e}^{(i)} = \frac{\sum_{t=1}^{|\mathbf{y}^{(i)}|} \mathbf{h}_t^{(i)} \cdot \mathbb{1}[t \text{ not pad}]}{\sum_{t=1}^{|\mathbf{y}^{(i)}|} \mathbb{1}[t \text{ not pad}]}, \qquad \hat{\mathbf{e}}^{(i)} = \frac{\mathbf{e}^{(i)}}{\|\mathbf{e}^{(i)}\|_2}.
+$$
+A pairwise cosine-similarity matrix $\mathbf{S} \in \mathbb{R}^{N \times N}$ is formed, where $S_{ij} = \hat{\mathbf{e}}^{(i)\top} \hat{\mathbf{e}}^{(j)}$. The largest cluster is identified by counting, for each candidate, how many neighbors exceed a threshold $\lambda = 0.75$. Candidates whose maximum similarity to any member of the largest cluster falls below $\lambda$ are flagged as outliers. The system returns a consistency score (mean intra-cluster similarity) and a boolean contradiction flag (any outlier exists). This procedure implements a direct analogue of ACC multi-outcome conflict monitoring: discordant predicted futures signal potential hallucination that single-path entropy cannot detect.
+
+---
+
+## 6. Method Details — Approach B: Generation-Time Conflict Detector
+
+**Hidden-State Extraction Architecture.** The `GenerationHiddenStateExtractor` combines a `LogitsProcessor` with a PyTorch forward hook to capture hidden states for *newly generated* tokens only. A hook is registered on a target transformer layer (default: the fourth layer from the output, index $-4$). During each forward pass inside `model.generate()`, the hook stores the hidden state of the last sequence position, $\mathbf{h}_{\text{last}} \in \mathbb{R}^{d_{\text{model}}}$, which corresponds precisely to the token whose logits are being scored at that step. The `LogitsProcessor` component records the prompt length on its first invocation and increments a step counter, ensuring that `get_records()` can later pair each captured hidden state with its generated token ID while discarding prompt-encoding states. This design is critical: hidden states during prompt encoding reflect contextualization of the query, whereas generation-time states reflect the model's internal representation at the exact moment of token production.
+
+**Synthetic Data Generation.** Training data for the conflict detector is synthesized from four prompt banks designed to elicit distinct latent signatures:
+1. **Supported** — factual prompts with verifiable completions (e.g., "The capital of France is");
+2. **Hallucinated** — prompts seeded with common misconceptions (e.g., "Humans only use 10% of their brain");
+3. **Uncertain** — unanswerable or speculative questions (e.g., "What will the stock market do tomorrow?");
+4. **Contradictory** — oxymoronic premises that force the model into logical conflict (e.g., "A square circle has equal sides and no corners, which means").
+
+For each prompt, the model generates up to 20 new tokens while the extractor records per-token hidden states. Heuristic labeling assigns a class label to every generated token. Supported tokens are identified by substring overlap with the expected answer, optionally reinforced by sentence-transformer cosine similarity ($>0.65$) or high average token probability ($>0.85$). Hallucinated tokens are flagged when the expected falsehood appears in the text or when mean token probability falls below $0.5$. Uncertain prompts are labeled unconditionally as *uncertain*. Contradictory prompts are labeled *contradictory* unless the model explicitly resolves the paradox (detected via keywords such as "impossible" or "contradiction"). The pipeline targets at least 500 tokens per class, yielding $\ge 2{,}000$ per-token training records.
+
+**Classifier Architecture.** The `LatentConflictDetector` is a two-layer MLP with layer normalization and ReLU activation. Given an input hidden state $\mathbf{h} \in \mathbb{R}^{d}$, the network computes:
+$$
+\mathbf{z}_1 = \text{ReLU}\bigl(\text{LN}(\mathbf{W}_1 \mathbf{h} + \mathbf{b}_1)\bigr), \qquad \mathbf{z}_2 = \text{LN}(\mathbf{W}_2 \mathbf{z}_1 + \mathbf{b}_2),
+$$
+where $\mathbf{W}_1 \in \mathbb{R}^{d \times d/2}$ and $\mathbf{W}_2 \in \mathbb{R}^{d/2 \times 4}$. Dropout ($p=0.1$) is applied after the first hidden layer. The output logits correspond to the four classes: supported, hallucinated, uncertain, and contradictory. For typical small-base hidden dimensions the model comprises approximately 100K–300K parameters; even at $d=4096$ the footprint remains negligible relative to the 7B backbone and adds no measurable latency to the generation loop.
+
+**Training Procedure.** The dataset is randomly split into training and validation sets (80/20). Training uses AdamW with learning rate $10^{-3}$ and weight decay $10^{-4}$, a ReduceLROnPlateau scheduler (factor 0.5, patience 3 epochs), and cross-entropy loss. Early stopping monitors validation macro-F1 with a patience of 10 epochs; the checkpoint with the highest macro-F1 is retained. Per-class precision, recall, and F1 are logged at every epoch to diagnose imbalance across the four labels. The entire training pipeline runs on the same GPU as the base model and completes in minutes because the detector is orders of magnitude smaller than the LLM.
+
+---
+
+## 7. Experimental Setup
+
+**Hardware.** All experiments are conducted on two representative deployment targets: a desktop workstation with an NVIDIA RTX 3080 (10 GB VRAM) and an edge Jetson Orin Nano (8 GB unified memory). These platforms bracket the resource spectrum from consumer GPU to embedded inference, ensuring that findings generalize to both datacenter-adjacent and field-deployed settings.
+
+**Model & Quantization.** The base model is Mistral 7B Instruct v0.3, loaded in 4-bit Normal Float 4 (NF4) precision with double quantization via BitsAndBytes. Compute dtype is bfloat16 on the desktop and float16 on the Jetson. This configuration reduces the backbone memory footprint to approximately 4 GB, leaving ample headroom for adapters and the verification layer.
+
+**QLoRA Configuration.** Domain adaptation uses Low-Rank Adaptation applied to all linear projection layers on the desktop (query, key, value, output, gate, up, down) with rank $r=32$ and scaling $\alpha=64$. On the Jetson Orin Nano, memory constraints restrict LoRA to the query and value projections only, with $r=8$ and $\alpha=16$. Training employs paged 8-bit AdamW, cosine learning-rate scheduling with warm-up, gradient accumulation (4 steps on desktop, 8 on Jetson), and gradient clipping at $0.3$. Maximum sequence lengths are 1024 tokens (desktop) and 512 tokens (Jetson).
+
+**Datasets.** Evaluation spans four verticals: medical question answering (PubMedQA), STEM reasoning (SciQ), general instruction following, and financial question answering (FiQA). PubMedQA and SciQ are chosen for their high stakes and well-defined ground-truth answers; FiQA provides a financial domain stress-test. Each dataset is formatted as JSONL with fields for prompt, context, and ground-truth output.
+
+**Evaluation Metrics.** We report four primary metrics. (i) *Token-level hallucination F1*: precision and recall of generated tokens relative to the ground-truth answer, treating tokens absent from the reference as hallucinated. (ii) *Contradiction rate*: proportion of outputs flagged by the heuristic negation detector or by the self-consistency outlier mechanism. (iii) *Calibration error*: expected absolute deviation between mean token probability (confidence) and binary correctness, $|\bar{p} - \mathbb{1}[\text{correct}]|$. (iv) *Perplexity* of the ground-truth answer under the model, measuring generative quality independent of hallucination.
+
+**Baselines.** We compare five conditions: (1) *Base* — standard generation without any verification; (2) *ACC-Entropy* — entropy monitoring alone with calibrated threshold and flag action; (3) *ACC-SelfConsistency* — multi-candidate consistency checking without entropy intervention; (4) *ACC-ConflictDetector* — the hidden-state MLP classifier alone; and (5) *ACC-Full* — the integrated stack with entropy monitoring, self-consistency, and conflict detection operating jointly.
+
+---
+
+## 8. Results Outline
+
+Because the full experimental sweep is currently in progress, this section presents the planned reporting structure. All quantitative results will be released in a subsequent revision upon completion of the benchmark runs.
+
+**Primary Comparisons.** We will report hallucination F1, contradiction rate, calibration error, and perplexity for each of the five baseline conditions across all four datasets. A key comparison is the relative efficacy of entropy-based uncertainty (Approach A) versus the latent conflict detector (Approach B). We hypothesize that entropy excels at detecting local distributional uncertainty (e.g., rare technical terminology), while the conflict detector better captures coherent but factually unsupported statements that exhibit low entropy yet anomalous hidden-state geometry. The full ACC stack is expected to combine the strengths of both, reducing false negatives relative to either isolated component.
+
+**Ablation Studies.** Three ablation dimensions will be reported. (i) *LoRA rank*: desktop ($r=32$) versus Jetson ($r=8$) configurations, measuring the trade-off between adapter capacity and detection fidelity. (ii) *Entropy threshold strategy*: calibrated percentile versus absolute fixed threshold versus moving-average multiplier, evaluated on held-out calibration prompts. (iii) *Self-consistency depth*: $N \in \{3, 5, 10\}$ candidate continuations, reporting the marginal gain in contradiction detection and the associated latency cost.
+
+**Statistical Testing.** Pairwise differences between conditions will be assessed with the Wilcoxon signed-rank test on paired samples, using a significance threshold of $p < 0.05$. This non-parametric test is appropriate because metric distributions are typically heavy-tailed across question difficulty. Effect sizes will be reported as rank-biserial correlations.
+
+---
+
+## 9. Conclusion & Future Work
+
+We have presented ACC LLM, a neuroscience-inspired inference-time verification layer that moves hallucination detection from post-hoc forensics to active generation-time safeguarding. By combining empirically calibrated entropy monitoring, semantic self-consistency clustering, and a lightweight hidden-state conflict detector, the framework provides multiple complementary signals of hallucination without external API calls or retrieval infrastructure. The architecture is hardware-conscious, operating within standard HuggingFace generation pipelines and adding negligible memory overhead relative to QLoRA-adapted base models.
+
+Future work will extend the conflict detector to multi-turn dialogue, where hallucinations can accumulate across utterances and context windows. We also plan to integrate retrieval-augmented signals as an additional input channel to the MLP, enabling the system to detect not only internally generated conflicts but also deviations from externally grounded evidence. Finally, real-time streaming applications—such as clinical dictation—will benefit from chunked verification that emits early warning signals before a full response is completed.

@@ -331,6 +331,10 @@ def label_contradictory(
 # ---------------------------------------------------------------------------
 
 def main():
+    import sys
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+
     parser = argparse.ArgumentParser(
         description="Generate per-token conflict-detector training data"
     )

@@ -197,7 +197,7 @@ def build_trainer(config: dict):
         lr_scheduler_type=tc.get("lr_scheduler_type", "cosine"),
         max_grad_norm=tc.get("max_grad_norm", 0.3),
         logging_dir=os.path.join(tc["output_dir"], "logs"),
-        report_to=["wandb"] if config.get("wandb") else [],
+        report_to=[],
         fp16=torch_dtype == torch.float16,
         bf16=torch_dtype == torch.bfloat16,
         dataloader_num_workers=0,
@@ -211,7 +211,6 @@ def build_trainer(config: dict):
 
     trainer = Trainer(
         model=model,
-        tokenizer=tokenizer,
         train_dataset=train_ds,
         eval_dataset=eval_ds,
         args=training_args,
@@ -225,14 +224,19 @@ def main(config_path: str):
         config = yaml.safe_load(fh)
 
     wandb_cfg = config.get("wandb")
+    wandb_active = False
     if wandb_cfg:
-        import wandb
-        wandb.init(
-            project=wandb_cfg["project"],
-            name=wandb_cfg.get("run_name"),
-            tags=wandb_cfg.get("tags", []),
-            config=config,
-        )
+        try:
+            import wandb
+            wandb.init(
+                project=wandb_cfg["project"],
+                name=wandb_cfg.get("run_name"),
+                tags=wandb_cfg.get("tags", []),
+                config=config,
+            )
+            wandb_active = True
+        except Exception as exc:
+            logger.warning("WandB init failed (%s). Continuing without WandB logging.", exc)
 
     trainer = build_trainer(config)
     logger.info("Starting training...")
@@ -242,7 +246,7 @@ def main(config_path: str):
     trainer.save_model(os.path.join(output_dir, "final_adapter"))
     logger.info("Training complete. Adapter saved to %s", output_dir)
 
-    if wandb_cfg:
+    if wandb_active:
         import wandb
         wandb.finish()
 
