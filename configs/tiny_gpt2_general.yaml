@@ -1,0 +1,52 @@
+# Tiny GPT-2 overnight training config — verifies full pipeline on CPU/low-VRAM
+model:
+  base_model: "sshleifer/tiny-gpt2"
+  trust_remote_code: false
+  torch_dtype: "float32"
+
+quantization:
+  load_in_4bit: false
+
+lora:
+  r: 4
+  lora_alpha: 8
+  lora_dropout: 0.05
+  target_modules:
+    - "c_attn"
+    - "c_proj"
+    - "c_fc"
+  bias: "none"
+  task_type: "CAUSAL_LM"
+
+training:
+  output_dir: "adapters/tiny_gpt2_general"
+  num_train_epochs: 5
+  per_device_train_batch_size: 4
+  per_device_eval_batch_size: 4
+  gradient_accumulation_steps: 1
+  learning_rate: 1.0e-3
+  warmup_steps: 10
+  logging_steps: 5
+  save_steps: 50
+  eval_steps: 50
+  evaluation_strategy: "steps"
+  save_strategy: "steps"
+  load_best_model_at_end: true
+  metric_for_best_model: "eval_loss"
+  greater_is_better: false
+  optim: "adamw_torch"
+  lr_scheduler_type: "cosine"
+  max_grad_norm: 1.0
+  max_seq_length: 128
+  packing: false
+
+dataset:
+  path: "experiments/datasets/general_instruction/train.jsonl"
+  eval_path: "experiments/datasets/general_instruction/val.jsonl"
+  text_column: "text"
+  format: "jsonl"
+
+wandb:
+  project: "acc-llm"
+  run_name: "tiny-gpt2-general-overnight"
+  tags: ["tiny-gpt2", "pipeline-verification", "overnight"]

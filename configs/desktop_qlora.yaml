@@ -49,8 +49,8 @@ training:
   packing: false
 
 dataset:
-  path: "data/medical/train.jsonl"
-  eval_path: "data/medical/val.jsonl"
+  path: "experiments/datasets/pubmedqa/train.jsonl"
+  eval_path: "experiments/datasets/pubmedqa/val.jsonl"
   text_column: "text"
   format: "jsonl"
 
