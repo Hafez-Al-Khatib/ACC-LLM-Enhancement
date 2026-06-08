@@ -1,0 +1,18 @@
+# ACC LLM — Intel Arc / XPU Requirements
+# For ASUS Zenbook Duo, Intel Core Ultra with Arc 140T, etc.
+#
+# Install order:
+#   1. Ensure latest Intel Arc GPU driver is installed
+#   2. python -m venv .venv
+#   3. .venv\Scripts\activate
+#   4. pip install -r requirements-xpu.txt
+#
+# The torch-2.8.0+xpu wheel (~1.2 GB) includes the Intel GPU runtime.
+# On a slow connection this may take 20-40 minutes.
+
+-r requirements.txt
+
+# PyTorch with native Intel XPU support (no IPEX needed)
+torch==2.8.0+xpu
+
+--index-url https://download.pytorch.org/whl/xpu

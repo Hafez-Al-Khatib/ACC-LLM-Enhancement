@@ -1,0 +1,98 @@
+======================================================================
+CONTROLLED EVALUATION (same seed=42, N=10)
+======================================================================
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/338 [00:00<?, ?it/s]Loading weights:   0%|          | 1/338 [00:00<01:15,  4.48it/s]Loading weights:  61%|######1   | 207/338 [00:00<00:00, 787.95it/s]Loading weights:  95%|#########5| 322/338 [00:00<00:00, 630.85it/s]Loading weights: 100%|##########| 338/338 [00:00<00:00, 582.98it/s]
+Model on xpu:0
+
+
+--- Config: absolute_0.5 ---
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+  Baseline: 50% | Entropy: 50% | ACC: 0% (int=0%)
+    factual: Base=100% Ent=100% ACC=0%
+    hallucination: Base=25% Ent=25% ACC=0%
+    uncertain: Base=0% Ent=0% ACC=0%
+
+--- Config: absolute_0.7 ---
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+  Baseline: 50% | Entropy: 50% | ACC: 0% (int=0%)
+    factual: Base=100% Ent=100% ACC=0%
+    hallucination: Base=25% Ent=25% ACC=0%
+    uncertain: Base=0% Ent=0% ACC=0%
+
+--- Config: absolute_0.9 ---
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+  Baseline: 50% | Entropy: 50% | ACC: 0% (int=0%)
+    factual: Base=100% Ent=100% ACC=0%
+    hallucination: Base=25% Ent=25% ACC=0%
+    uncertain: Base=0% Ent=0% ACC=0%
+
+--- Config: relative_1.5 ---
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+  Baseline: 50% | Entropy: 50% | ACC: 0% (int=0%)
+    factual: Base=100% Ent=100% ACC=0%
+    hallucination: Base=25% Ent=25% ACC=0%
+    uncertain: Base=0% Ent=0% ACC=0%
+
+--- Config: relative_2.0 ---
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+ACC failed: scatter(): Expected self.dtype to be equal to src.dtype
+  Baseline: 50% | Entropy: 50% | ACC: 0% (int=0%)
+    factual: Base=100% Ent=100% ACC=0%
+    hallucination: Base=25% Ent=25% ACC=0%
+    uncertain: Base=0% Ent=0% ACC=0%
+
+======================================================================
+SUMMARY ACROSS CONFIGURATIONS
+======================================================================
+absolute_0.5         | Base=50% | Ent=50% | ACC=0% | Int=0%
+absolute_0.7         | Base=50% | Ent=50% | ACC=0% | Int=0%
+absolute_0.9         | Base=50% | Ent=50% | ACC=0% | Int=0%
+relative_1.5         | Base=50% | Ent=50% | ACC=0% | Int=0%
+relative_2.0         | Base=50% | Ent=50% | ACC=0% | Int=0%
+
+Saved to results\controlled_eval.json

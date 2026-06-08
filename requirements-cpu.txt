@@ -1,0 +1,9 @@
+# ACC LLM — CPU-Only Requirements
+# Use only for tiny-model testing or when no GPU is available.
+# NOT recommended for Mistral 7B training or large-scale evaluation.
+#
+# Install: pip install -r requirements-cpu.txt
+
+-r requirements.txt
+
+--index-url https://download.pytorch.org/whl/cpu

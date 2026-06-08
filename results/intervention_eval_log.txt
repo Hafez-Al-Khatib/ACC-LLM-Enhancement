@@ -1,0 +1,12 @@
+======================================================================
+MEDIUM EVALUATION: Baseline vs Entropy vs ACC-Intervention
+Samples: 30 (10 factual, 10 hallucination, 5 uncertain, 5 math)
+======================================================================
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/338 [00:00<?, ?it/s]Loading weights:  25%|##5       | 85/338 [00:00<00:00, 833.44it/s]Loading weights:  50%|#####     | 169/338 [00:00<00:00, 815.88it/s]Loading weights:  74%|#######4  | 251/338 [00:00<00:00, 801.86it/s]Loading weights: 100%|##########| 338/338 [00:00<00:00, 837.39it/s]
+Model loaded on xpu:0
+
+
+======================================================================
+THRESHOLD = 0.3
+======================================================================

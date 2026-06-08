@@ -1,10 +1,8 @@
-# ACC LLM — Python Dependencies
-# Install: pip install -r requirements.txt
-
-# Core ML (CUDA 12.1 on desktop, Jetson-specific on aarch64)
-torch>=2.4.0
-torchvision
-torchaudio
+# ACC LLM — Common Python Dependencies (platform-agnostic)
+# Pick your platform and install the matching requirements file:
+#   Intel Arc GPU (XPU):  pip install -r requirements-xpu.txt
+#   NVIDIA GPU (CUDA):    pip install -r requirements-cuda.txt
+#   CPU only:             pip install -r requirements-cpu.txt
 
 # Hugging Face ecosystem
 transformers>=4.40.0
@@ -25,13 +23,10 @@ scikit-learn
 tensorboard
 wandb
 tqdm
+matplotlib
 
 # Optional: sentence embeddings for self-consistency checks
-# sentence-transformers  # Uncomment if using semantic similarity in generate_conflict_data.py
-
-# Optional: quantization alternatives for Jetson
-# auto-gptq          # Only if needed
-# optimum            # Only if needed
+# sentence-transformers  # Uncomment if using semantic similarity
 
 # Dev
 pytest

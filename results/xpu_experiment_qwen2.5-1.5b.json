@@ -1,0 +1,522 @@
+[
+  {
+    "prompt": "The capital of France is",
+    "output": "The capital of France is Paris [ENTROPY FLAG]. [HALLUCINATION DETECTED] The [HALLUCINATION DETECTED] capital [HALLUCINATION DETECTED] of [HALLUCINATION] [HALLUCINATION DETECTED] Russia [HALLUCINATION DETECTED] is [HALLUCINATION] [HALLUCINATION DETECTED] Moscow [HALLUCINATION DETECTED]. [HALLUCINATION] [HALLUCINATION DETECTED] The [HALLUCINATION DETECTED] capital [HALLUCINATION] [HALLUCINATION DETECTED] of [HALLUCINATION] [HALLUCINATION DETECTED] England [HALLUCINATION DETECTED] is [HALLUCINATION] [HALLUCINATION DETECTED] London [HALLUCINATION] [HALLUCINATION DETECTED]",
+    "time_sec": 13.39293909072876,
+    "n_flags": 8,
+    "n_regenerations": 7,
+    "max_conflict_score": 0.8953121900558472,
+    "decisions": [
+      {
+        "action": "flag",
+        "reason": "Entropy: 3.901 > threshold \u2192 FLAG",
+        "entropy": 3.9009854793548584,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "regenerate",
+        "reason": "Dual signal: entropy=2.159 + conflict=0.895, primary=unsupported \u2192 REGENERATE",
+        "entropy": 2.159308671951294,
+        "conflict_score": 0.8953121900558472,
+        "primary": "unsupported",
+        "secondary": "hallucinated"
+      },
+      {
+        "action": "regenerate",
+        "reason": "Dual signal: entropy=4.265 + conflict=0.894, primary=unsupported \u2192 REGENERATE",
+        "entropy": 4.264718055725098,
+        "conflict_score": 0.8944284319877625,
+        "primary": "unsupported",
+        "secondary": "hallucinated"
+      },
+      {
+        "action": "regenerate",
+        "reason": "Dual signal: entropy=4.776 + conflict=0.893, primary=unsupported \u2192 REGENERATE",
+        "entropy": 4.776144981384277,
+        "conflict_score": 0.892845094203949,
+        "primary": "unsupported",
+        "secondary": "hallucinated"
+      },
+      {
+        "action": "flag",
+        "reason": "Conflict: score=0.892, primary=unsupported, secondary=hallucinated \u2192 FLAG",
+        "entropy": 0.4443730115890503,
+        "conflict_score": 0.8920484781265259,
+        "primary": "unsupported",
+        "secondary": "hallucinated"
+      },
+      {
+        "action": "regenerate",
+        "reason": "Dual signal: entropy=3.226 + conflict=0.892, primary=unsupported \u2192 REGENERATE",
+        "entropy": 3.2261619567871094,
+        "conflict_score": 0.8923560380935669,
+        "primary": "unsupported",
+        "secondary": "hallucinated"
+      },
+      {
+        "action": "flag",
+        "reason": "Conflict: score=0.893, primary=unsupported, secondary=hallucinated \u2192 FLAG",
+        "entropy": 0.1258135885000229,
+        "conflict_score": 0.8931479454040527,
+        "primary": "unsupported",
+        "secondary": "hallucinated"
+      },
+      {
+        "action": "regenerate",
+        "reason": "Dual signal: entropy=1.899 + conflict=0.892, primary=unsupported \u2192 REGENERATE",
+        "entropy": 1.8988137245178223,
+        "conflict_score": 0.8923534750938416,
+        "primary": "unsupported",
+        "secondary": "hallucinated"
+      },
+      {
+        "action": "flag",
+        "reason": "Conflict: score=0.892, primary=unsupported, secondary=hallucinated \u2192 FLAG",
+        "entropy": 0.8691569566726685,
+        "conflict_score": 0.892283022403717,
+        "primary": "unsupported",
+        "secondary": "hallucinated"
+      },
+      {
+        "action": "regenerate",
+        "reason": "Dual signal: entropy=3.012 + conflict=0.892, primary=unsupported \u2192 REGENERATE",
+        "entropy": 3.0123751163482666,
+        "conflict_score": 0.892135739326477,
+        "primary": "unsupported",
+        "secondary": "hallucinated"
+      },
+      {
+        "action": "flag",
+        "reason": "Conflict: score=0.891, primary=unsupported, secondary=hallucinated \u2192 FLAG",
+        "entropy": 1.1369028091430664,
+        "conflict_score": 0.890775203704834,
+        "primary": "unsupported",
+        "secondary": "hallucinated"
+      },
+      {
+        "action": "flag",
+        "reason": "Conflict: score=0.891, primary=unsupported, secondary=hallucinated \u2192 FLAG",
+        "entropy": 0.0840974748134613,
+        "conflict_score": 0.8906362652778625,
+        "primary": "unsupported",
+        "secondary": "hallucinated"
+      },
+      {
+        "action": "regenerate",
+        "reason": "Dual signal: entropy=3.791 + conflict=0.892, primary=unsupported \u2192 REGENERATE",
+        "entropy": 3.790792465209961,
+        "conflict_score": 0.8921540975570679,
+        "primary": "unsupported",
+        "secondary": "hallucinated"
+      },
+      {
+        "action": "flag",
+        "reason": "Conflict: score=0.893, primary=unsupported, secondary=hallucinated \u2192 FLAG",
+        "entropy": 0.10136587917804718,
+        "conflict_score": 0.8929100036621094,
+        "primary": "unsupported",
+        "secondary": "hallucinated"
+      },
+      {
+        "action": "flag",
+        "reason": "Conflict: score=0.892, primary=unsupported, secondary=hallucinated \u2192 FLAG",
+        "entropy": 1.1881855726242065,
+        "conflict_score": 0.8918290138244629,
+        "primary": "unsupported",
+        "secondary": "hallucinated"
+      }
+    ]
+  },
+  {
+    "prompt": "In 1492, Christopher Columbus",
+    "output": "In 1492, Christopher Columbus became [ENTROPY FLAG] the [HALLUCINATION] [HALLUCINATION DETECTED] first [HALLUCINATION] [HALLUCINATION DETECTED] European [HALLUCINATION] [HALLUCINATION DETECTED] to [HALLUCINATION] [HALLUCINATION DETECTED] set [HALLUCINATION DETECTED] foot [HALLUCINATION] [HALLUCINATION DETECTED] on [HALLUCINATION] [HALLUCINATION DETECTED] the [HALLUCINATION DETECTED] American [HALLUCINATION DETECTED] continent [HALLUCINATION] [HALLUCINATION DETECTED] when [HALLUCINATION DETECTED] he [HALLUCINATION] [HALLUCINATION DETECTED] arrived [HALLUCINATION DETECTED] in [HALLUCINATION] [HALLUCINATION DETECTED]",
+    "time_sec": 4.261226654052734,
+    "n_flags": 10,
+    "n_regenerations": 5,
+    "max_conflict_score": 0.890965461730957,
+    "decisions": [
+      {
+        "action": "flag",
+        "reason": "Entropy: 3.462 > threshold \u2192 FLAG",
+        "entropy": 3.461570978164673,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "flag",
+        "reason": "Conflict: score=0.889, primary=unsupported, secondary=hallucinated \u2192 FLAG",
+        "entropy": 0.2809920907020569,
+        "conflict_score": 0.8889816999435425,
+        "primary": "unsupported",
+        "secondary": "hallucinated"
+      },
+      {
+        "action": "flag",
+        "reason": "Conflict: score=0.889, primary=unsupported, secondary=hallucinated \u2192 FLAG",
+        "entropy": 0.13141821324825287,
+        "conflict_score": 0.8887757062911987,
+        "primary": "unsupported",
+        "secondary": "hallucinated"
+      },
+      {
+        "action": "flag",
+        "reason": "Conflict: score=0.889, primary=unsupported, secondary=hallucinated \u2192 FLAG",
+        "entropy": 0.9324700832366943,
+        "conflict_score": 0.8885908722877502,
+        "primary": "unsupported",
+        "secondary": "hallucinated"
+      },
+      {
+        "action": "flag",
+        "reason": "Conflict: score=0.889, primary=unsupported, secondary=hallucinated \u2192 FLAG",
+        "entropy": 0.6794041395187378,
+        "conflict_score": 0.8893501162528992,
+        "primary": "unsupported",
+        "secondary": "hallucinated"
+      },
+      {
+        "action": "regenerate",
+        "reason": "Dual signal: entropy=2.984 + conflict=0.889, primary=unsupported \u2192 REGENERATE",
+        "entropy": 2.983987331390381,
+        "conflict_score": 0.8891123533248901,
+        "primary": "unsupported",
+        "secondary": "hallucinated"
+      },
+      {
+        "action": "flag",
+        "reason": "Conflict: score=0.888, primary=unsupported, secondary=hallucinated \u2192 FLAG",
+        "entropy": 0.24882550537586212,
+        "conflict_score": 0.8884279727935791,
+        "primary": "unsupported",
+        "secondary": "hallucinated"
+      },
+      {
+        "action": "flag",
+        "reason": "Conflict: score=0.889, primary=unsupported, secondary=hallucinated \u2192 FLAG",
+        "entropy": 0.7554727792739868,
+        "conflict_score": 0.8894742131233215,
+        "primary": "unsupported",
+        "secondary": "hallucinated"
+      },
+      {
+        "action": "regenerate",
+        "reason": "Dual signal: entropy=2.467 + conflict=0.889, primary=unsupported \u2192 REGENERATE",
+        "entropy": 2.467200756072998,
+        "conflict_score": 0.8889665007591248,
+        "primary": "unsupported",
+        "secondary": "hallucinated"
+      },
+      {
+        "action": "regenerate",
+        "reason": "Dual signal: entropy=3.704 + conflict=0.889, primary=unsupported \u2192 REGENERATE",
+        "entropy": 3.7036027908325195,
+        "conflict_score": 0.8885770440101624,
+        "primary": "unsupported",
+        "secondary": "hallucinated"
+      },
+      {
+        "action": "flag",
+        "reason": "Conflict: score=0.889, primary=unsupported, secondary=hallucinated \u2192 FLAG",
+        "entropy": 0.9377801418304443,
+        "conflict_score": 0.8888667821884155,
+        "primary": "unsupported",
+        "secondary": "hallucinated"
+      },
+      {
+        "action": "regenerate",
+        "reason": "Dual signal: entropy=1.578 + conflict=0.891, primary=unsupported \u2192 REGENERATE",
+        "entropy": 1.5777807235717773,
+        "conflict_score": 0.8905336856842041,
+        "primary": "unsupported",
+        "secondary": "hallucinated"
+      },
+      {
+        "action": "flag",
+        "reason": "Conflict: score=0.890, primary=unsupported, secondary=hallucinated \u2192 FLAG",
+        "entropy": 0.3807785212993622,
+        "conflict_score": 0.8904350399971008,
+        "primary": "unsupported",
+        "secondary": "hallucinated"
+      },
+      {
+        "action": "regenerate",
+        "reason": "Dual signal: entropy=2.069 + conflict=0.890, primary=unsupported \u2192 REGENERATE",
+        "entropy": 2.0686044692993164,
+        "conflict_score": 0.8901928067207336,
+        "primary": "unsupported",
+        "secondary": "hallucinated"
+      },
+      {
+        "action": "flag",
+        "reason": "Conflict: score=0.891, primary=unsupported, secondary=hallucinated \u2192 FLAG",
+        "entropy": 1.120154857635498,
+        "conflict_score": 0.890965461730957,
+        "primary": "unsupported",
+        "secondary": "hallucinated"
+      }
+    ]
+  },
+  {
+    "prompt": "The theory of relativity was developed by",
+    "output": "The theory of relativity was developed by Albert [ENTROPY FLAG] Einstein [HALLUCINATION] [HALLUCINATION DETECTED] in [HALLUCINATION DETECTED] the [HALLUCINATION DETECTED] early [HALLUCINATION] [HALLUCINATION DETECTED]  [HALLUCINATION] [HALLUCINATION DETECTED]2 [HALLUCINATION] [HALLUCINATION DETECTED]0 [HALLUCINATION] [HALLUCINATION DETECTED]th [HALLUCINATION] [HALLUCINATION DETECTED] century [HALLUCINATION] [HALLUCINATION DETECTED]. [HALLUCINATION] [HALLUCINATION DETECTED] It [HALLUCINATION DETECTED] is [HALLUCINATION DETECTED] one [HALLUCINATION DETECTED] of [HALLUCINATION] [HALLUCINATION DETECTED]",
+    "time_sec": 1.51149320602417,
+    "n_flags": 10,
+    "n_regenerations": 5,
+    "max_conflict_score": 0.8896141648292542,
+    "decisions": [
+      {
+        "action": "flag",
+        "reason": "Entropy: 2.978 > threshold \u2192 FLAG",
+        "entropy": 2.9775028228759766,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "flag",
+        "reason": "Conflict: score=0.888, primary=unsupported, secondary=hallucinated \u2192 FLAG",
+        "entropy": 0.10936741530895233,
+        "conflict_score": 0.8875982165336609,
+        "primary": "unsupported",
+        "secondary": "hallucinated"
+      },
+      {
+        "action": "regenerate",
+        "reason": "Dual signal: entropy=2.418 + conflict=0.889, primary=unsupported \u2192 REGENERATE",
+        "entropy": 2.4184865951538086,
+        "conflict_score": 0.8886525630950928,
+        "primary": "unsupported",
+        "secondary": "hallucinated"
+      },
+      {
+        "action": "regenerate",
+        "reason": "Dual signal: entropy=1.552 + conflict=0.889, primary=unsupported \u2192 REGENERATE",
+        "entropy": 1.5523772239685059,
+        "conflict_score": 0.8886745572090149,
+        "primary": "unsupported",
+        "secondary": "hallucinated"
+      },
+      {
+        "action": "flag",
+        "reason": "Conflict: score=0.888, primary=unsupported, secondary=hallucinated \u2192 FLAG",
+        "entropy": 1.152758240699768,
+        "conflict_score": 0.887885570526123,
+        "primary": "unsupported",
+        "secondary": "hallucinated"
+      },
+      {
+        "action": "flag",
+        "reason": "Conflict: score=0.888, primary=unsupported, secondary=hallucinated \u2192 FLAG",
+        "entropy": 0.7963892817497253,
+        "conflict_score": 0.8877254724502563,
+        "primary": "unsupported",
+        "secondary": "hallucinated"
+      },
+      {
+        "action": "flag",
+        "reason": "Conflict: score=0.889, primary=unsupported, secondary=hallucinated \u2192 FLAG",
+        "entropy": 0.5097252726554871,
+        "conflict_score": 0.8889911770820618,
+        "primary": "unsupported",
+        "secondary": "hallucinated"
+      },
+      {
+        "action": "flag",
+        "reason": "Conflict: score=0.884, primary=unsupported, secondary=hallucinated \u2192 FLAG",
+        "entropy": 0.016703356057405472,
+        "conflict_score": 0.8839772939682007,
+        "primary": "unsupported",
+        "secondary": "hallucinated"
+      },
+      {
+        "action": "flag",
+        "reason": "Conflict: score=0.884, primary=unsupported, secondary=hallucinated \u2192 FLAG",
+        "entropy": 0.03242876008152962,
+        "conflict_score": 0.8840939402580261,
+        "primary": "unsupported",
+        "secondary": "hallucinated"
+      },
+      {
+        "action": "flag",
+        "reason": "Conflict: score=0.886, primary=unsupported, secondary=hallucinated \u2192 FLAG",
+        "entropy": 0.06029383838176727,
+        "conflict_score": 0.8856762051582336,
+        "primary": "unsupported",
+        "secondary": "hallucinated"
+      },
+      {
+        "action": "flag",
+        "reason": "Conflict: score=0.889, primary=unsupported, secondary=hallucinated \u2192 FLAG",
+        "entropy": 1.2911369800567627,
+        "conflict_score": 0.8885760307312012,
+        "primary": "unsupported",
+        "secondary": "hallucinated"
+      },
+      {
+        "action": "regenerate",
+        "reason": "Dual signal: entropy=3.308 + conflict=0.889, primary=unsupported \u2192 REGENERATE",
+        "entropy": 3.3081655502319336,
+        "conflict_score": 0.8888885974884033,
+        "primary": "unsupported",
+        "secondary": "hallucinated"
+      },
+      {
+        "action": "regenerate",
+        "reason": "Dual signal: entropy=3.646 + conflict=0.889, primary=unsupported \u2192 REGENERATE",
+        "entropy": 3.6456358432769775,
+        "conflict_score": 0.8893641233444214,
+        "primary": "unsupported",
+        "secondary": "hallucinated"
+      },
+      {
+        "action": "regenerate",
+        "reason": "Dual signal: entropy=1.880 + conflict=0.890, primary=unsupported \u2192 REGENERATE",
+        "entropy": 1.8803744316101074,
+        "conflict_score": 0.8896141648292542,
+        "primary": "unsupported",
+        "secondary": "hallucinated"
+      },
+      {
+        "action": "flag",
+        "reason": "Conflict: score=0.889, primary=unsupported, secondary=hallucinated \u2192 FLAG",
+        "entropy": 0.01059897243976593,
+        "conflict_score": 0.8890236020088196,
+        "primary": "unsupported",
+        "secondary": "hallucinated"
+      }
+    ]
+  },
+  {
+    "prompt": "Water boils at a temperature of",
+    "output": "Water boils at a temperature of 212 \u00b0F or 100 \u00b0C and ice [HALLUCINATION] [HALLUCINATION DETECTED]",
+    "time_sec": 1.4581878185272217,
+    "n_flags": 1,
+    "n_regenerations": 0,
+    "max_conflict_score": 0.8418239951133728,
+    "decisions": [
+      {
+        "action": "pass",
+        "reason": "Pass: entropy=0.467, no conflict",
+        "entropy": 0.46742820739746094,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "pass",
+        "reason": "Pass: entropy=0.137, no conflict",
+        "entropy": 0.1372101604938507,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "pass",
+        "reason": "Pass: entropy=0.004, no conflict",
+        "entropy": 0.003882832359522581,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "pass",
+        "reason": "Pass: entropy=0.010, no conflict",
+        "entropy": 0.010124480351805687,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "pass",
+        "reason": "Pass: entropy=0.297, no conflict",
+        "entropy": 0.2974545359611511,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "pass",
+        "reason": "Pass: entropy=0.313, no conflict",
+        "entropy": 0.3130715787410736,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "pass",
+        "reason": "Pass: entropy=1.148, no conflict",
+        "entropy": 1.147887110710144,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "pass",
+        "reason": "Pass: entropy=0.269, no conflict",
+        "entropy": 0.269451767206192,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "pass",
+        "reason": "Pass: entropy=0.005, no conflict",
+        "entropy": 0.004763573873788118,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "pass",
+        "reason": "Pass: entropy=0.001, no conflict",
+        "entropy": 0.0008891801116988063,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "pass",
+        "reason": "Pass: entropy=0.000, no conflict",
+        "entropy": 6.83580365148373e-05,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "pass",
+        "reason": "Pass: entropy=0.137, no conflict",
+        "entropy": 0.13695606589317322,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "pass",
+        "reason": "Pass: entropy=0.005, no conflict",
+        "entropy": 0.0049793231301009655,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "pass",
+        "reason": "Pass: entropy=0.082, no conflict",
+        "entropy": 0.08191947638988495,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "flag",
+        "reason": "Conflict: score=0.842, primary=unsupported, secondary=hallucinated \u2192 FLAG",
+        "entropy": 0.9223595857620239,
+        "conflict_score": 0.8418239951133728,
+        "primary": "unsupported",
+        "secondary": "hallucinated"
+      }
+    ]
+  }
+]

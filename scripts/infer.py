@@ -28,12 +28,12 @@ def load_adapter(base_path: str, adapter_path: str, device: str = "auto"):
         base_path,
         torch_dtype=torch.float16,
         device_map=device,
-        local_files_only=True,
+        local_files_only=False,
     )
     logger.info("Loading adapter from %s", adapter_path)
     model = PeftModel.from_pretrained(model, adapter_path)
     model = model.merge_and_unload()  # optional: merge for faster inference
-    tokenizer = AutoTokenizer.from_pretrained(base_path, local_files_only=True)
+    tokenizer = AutoTokenizer.from_pretrained(base_path, local_files_only=False)
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
     return model, tokenizer

@@ -1,0 +1,762 @@
+{
+  "absolute_0.5": {
+    "baseline_acc": 0.5,
+    "entropy_acc": 0.5,
+    "acc_acc": 0.0,
+    "intervention_rate": 0.0,
+    "baseline": [
+      {
+        "correct": true,
+        "text": " Paris, and the language is French.  Given the question \"Where do"
+      },
+      {
+        "correct": true,
+        "text": " 212 \u00b0F or 100 \u00b0C and ice"
+      },
+      {
+        "correct": true,
+        "text": " George Washington. He was born on February 22, 17"
+      },
+      {
+        "correct": true,
+        "text": " what number?\n15 multiplied by 24 equals 360"
+      },
+      {
+        "correct": false,
+        "text": " Did he say anything about machine learning, or was that something that was unknown"
+      },
+      {
+        "correct": true,
+        "text": ".\nMarie Curie did not invent the smartphone. The smartphone is a"
+      },
+      {
+        "correct": false,
+        "text": "\nNapoleon I, the emperor of France, attempted to lead a"
+      },
+      {
+        "correct": false,
+        "text": " Cleopatra's rule over Egypt is largely considered a myth due to the"
+      },
+      {
+        "correct": false,
+        "text": " The exact population of Earth right now is difficult to determine because the population is"
+      },
+      {
+        "correct": false,
+        "text": " What about the next two? How about chemistry? Medicine? Literature? Economics"
+      }
+    ],
+    "entropy": [
+      {
+        "correct": true,
+        "text": " Paris, and the language is French.  Given the question \"Where do",
+        "flags": 0,
+        "max_entropy": 2.815005302429199
+      },
+      {
+        "correct": true,
+        "text": " 212 \u00b0F or 100 \u00b0C and ice",
+        "flags": 0,
+        "max_entropy": 0.5334342122077942
+      },
+      {
+        "correct": true,
+        "text": " George Washington. He was born on February 22, 17",
+        "flags": 0,
+        "max_entropy": 1.7310564517974854
+      },
+      {
+        "correct": true,
+        "text": " what number?\n15 multiplied by 24 equals 360",
+        "flags": 0,
+        "max_entropy": 1.0561268329620361
+      },
+      {
+        "correct": false,
+        "text": " Did he say anything about machine learning, or was that something that was unknown",
+        "flags": 0,
+        "max_entropy": 2.9222700595855713
+      },
+      {
+        "correct": true,
+        "text": ".\nMarie Curie did not invent the smartphone. The smartphone is a",
+        "flags": 0,
+        "max_entropy": 1.794555425643921
+      },
+      {
+        "correct": false,
+        "text": "\nNapoleon I, the emperor of France, attempted to lead a",
+        "flags": 0,
+        "max_entropy": 2.004878520965576
+      },
+      {
+        "correct": false,
+        "text": " Cleopatra's rule over Egypt is largely considered a myth due to the",
+        "flags": 0,
+        "max_entropy": 2.4288225173950195
+      },
+      {
+        "correct": false,
+        "text": " The exact population of Earth right now is difficult to determine because the population is",
+        "flags": 0,
+        "max_entropy": 1.6895601749420166
+      },
+      {
+        "correct": false,
+        "text": " What about the next two? How about chemistry? Medicine? Literature? Economics",
+        "flags": 0,
+        "max_entropy": 2.9291329383850098
+      }
+    ],
+    "acc": [
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      },
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      },
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      },
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      },
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      },
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      },
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      },
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      },
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      },
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      }
+    ]
+  },
+  "absolute_0.7": {
+    "baseline_acc": 0.5,
+    "entropy_acc": 0.5,
+    "acc_acc": 0.0,
+    "intervention_rate": 0.0,
+    "baseline": [
+      {
+        "correct": true,
+        "text": " Paris, and the language is French.  Given the question \"Where do"
+      },
+      {
+        "correct": true,
+        "text": " 212 \u00b0F or 100 \u00b0C and ice"
+      },
+      {
+        "correct": true,
+        "text": " George Washington. He was born on February 22, 17"
+      },
+      {
+        "correct": true,
+        "text": " what number?\n15 multiplied by 24 equals 360"
+      },
+      {
+        "correct": false,
+        "text": " Did he say anything about machine learning, or was that something that was unknown"
+      },
+      {
+        "correct": true,
+        "text": ".\nMarie Curie did not invent the smartphone. The smartphone is a"
+      },
+      {
+        "correct": false,
+        "text": "\nNapoleon I, the emperor of France, attempted to lead a"
+      },
+      {
+        "correct": false,
+        "text": " Cleopatra's rule over Egypt is largely considered a myth due to the"
+      },
+      {
+        "correct": false,
+        "text": " The exact population of Earth right now is difficult to determine because the population is"
+      },
+      {
+        "correct": false,
+        "text": " What about the next two? How about chemistry? Medicine? Literature? Economics"
+      }
+    ],
+    "entropy": [
+      {
+        "correct": true,
+        "text": " Paris, and the language is French.  Given the question \"Where do",
+        "flags": 0,
+        "max_entropy": 2.815005302429199
+      },
+      {
+        "correct": true,
+        "text": " 212 \u00b0F or 100 \u00b0C and ice",
+        "flags": 0,
+        "max_entropy": 0.5334342122077942
+      },
+      {
+        "correct": true,
+        "text": " George Washington. He was born on February 22, 17",
+        "flags": 0,
+        "max_entropy": 1.7310564517974854
+      },
+      {
+        "correct": true,
+        "text": " what number?\n15 multiplied by 24 equals 360",
+        "flags": 0,
+        "max_entropy": 1.0561268329620361
+      },
+      {
+        "correct": false,
+        "text": " Did he say anything about machine learning, or was that something that was unknown",
+        "flags": 0,
+        "max_entropy": 2.9222700595855713
+      },
+      {
+        "correct": true,
+        "text": ".\nMarie Curie did not invent the smartphone. The smartphone is a",
+        "flags": 0,
+        "max_entropy": 1.794555425643921
+      },
+      {
+        "correct": false,
+        "text": "\nNapoleon I, the emperor of France, attempted to lead a",
+        "flags": 0,
+        "max_entropy": 2.004878520965576
+      },
+      {
+        "correct": false,
+        "text": " Cleopatra's rule over Egypt is largely considered a myth due to the",
+        "flags": 0,
+        "max_entropy": 2.4288225173950195
+      },
+      {
+        "correct": false,
+        "text": " The exact population of Earth right now is difficult to determine because the population is",
+        "flags": 0,
+        "max_entropy": 1.6895601749420166
+      },
+      {
+        "correct": false,
+        "text": " What about the next two? How about chemistry? Medicine? Literature? Economics",
+        "flags": 0,
+        "max_entropy": 2.9291329383850098
+      }
+    ],
+    "acc": [
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      },
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      },
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      },
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      },
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      },
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      },
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      },
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      },
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      },
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      }
+    ]
+  },
+  "absolute_0.9": {
+    "baseline_acc": 0.5,
+    "entropy_acc": 0.5,
+    "acc_acc": 0.0,
+    "intervention_rate": 0.0,
+    "baseline": [
+      {
+        "correct": true,
+        "text": " Paris, and the language is French.  Given the question \"Where do"
+      },
+      {
+        "correct": true,
+        "text": " 212 \u00b0F or 100 \u00b0C and ice"
+      },
+      {
+        "correct": true,
+        "text": " George Washington. He was born on February 22, 17"
+      },
+      {
+        "correct": true,
+        "text": " what number?\n15 multiplied by 24 equals 360"
+      },
+      {
+        "correct": false,
+        "text": " Did he say anything about machine learning, or was that something that was unknown"
+      },
+      {
+        "correct": true,
+        "text": ".\nMarie Curie did not invent the smartphone. The smartphone is a"
+      },
+      {
+        "correct": false,
+        "text": "\nNapoleon I, the emperor of France, attempted to lead a"
+      },
+      {
+        "correct": false,
+        "text": " Cleopatra's rule over Egypt is largely considered a myth due to the"
+      },
+      {
+        "correct": false,
+        "text": " The exact population of Earth right now is difficult to determine because the population is"
+      },
+      {
+        "correct": false,
+        "text": " What about the next two? How about chemistry? Medicine? Literature? Economics"
+      }
+    ],
+    "entropy": [
+      {
+        "correct": true,
+        "text": " Paris, and the language is French.  Given the question \"Where do",
+        "flags": 0,
+        "max_entropy": 2.815005302429199
+      },
+      {
+        "correct": true,
+        "text": " 212 \u00b0F or 100 \u00b0C and ice",
+        "flags": 0,
+        "max_entropy": 0.5334342122077942
+      },
+      {
+        "correct": true,
+        "text": " George Washington. He was born on February 22, 17",
+        "flags": 0,
+        "max_entropy": 1.7310564517974854
+      },
+      {
+        "correct": true,
+        "text": " what number?\n15 multiplied by 24 equals 360",
+        "flags": 0,
+        "max_entropy": 1.0561268329620361
+      },
+      {
+        "correct": false,
+        "text": " Did he say anything about machine learning, or was that something that was unknown",
+        "flags": 0,
+        "max_entropy": 2.9222700595855713
+      },
+      {
+        "correct": true,
+        "text": ".\nMarie Curie did not invent the smartphone. The smartphone is a",
+        "flags": 0,
+        "max_entropy": 1.794555425643921
+      },
+      {
+        "correct": false,
+        "text": "\nNapoleon I, the emperor of France, attempted to lead a",
+        "flags": 0,
+        "max_entropy": 2.004878520965576
+      },
+      {
+        "correct": false,
+        "text": " Cleopatra's rule over Egypt is largely considered a myth due to the",
+        "flags": 0,
+        "max_entropy": 2.4288225173950195
+      },
+      {
+        "correct": false,
+        "text": " The exact population of Earth right now is difficult to determine because the population is",
+        "flags": 0,
+        "max_entropy": 1.6895601749420166
+      },
+      {
+        "correct": false,
+        "text": " What about the next two? How about chemistry? Medicine? Literature? Economics",
+        "flags": 0,
+        "max_entropy": 2.9291329383850098
+      }
+    ],
+    "acc": [
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      },
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      },
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      },
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      },
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      },
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      },
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      },
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      },
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      },
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      }
+    ]
+  },
+  "relative_1.5": {
+    "baseline_acc": 0.5,
+    "entropy_acc": 0.5,
+    "acc_acc": 0.0,
+    "intervention_rate": 0.0,
+    "baseline": [
+      {
+        "correct": true,
+        "text": " Paris, and the language is French.  Given the question \"Where do"
+      },
+      {
+        "correct": true,
+        "text": " 212 \u00b0F or 100 \u00b0C and ice"
+      },
+      {
+        "correct": true,
+        "text": " George Washington. He was born on February 22, 17"
+      },
+      {
+        "correct": true,
+        "text": " what number?\n15 multiplied by 24 equals 360"
+      },
+      {
+        "correct": false,
+        "text": " Did he say anything about machine learning, or was that something that was unknown"
+      },
+      {
+        "correct": true,
+        "text": ".\nMarie Curie did not invent the smartphone. The smartphone is a"
+      },
+      {
+        "correct": false,
+        "text": "\nNapoleon I, the emperor of France, attempted to lead a"
+      },
+      {
+        "correct": false,
+        "text": " Cleopatra's rule over Egypt is largely considered a myth due to the"
+      },
+      {
+        "correct": false,
+        "text": " The exact population of Earth right now is difficult to determine because the population is"
+      },
+      {
+        "correct": false,
+        "text": " What about the next two? How about chemistry? Medicine? Literature? Economics"
+      }
+    ],
+    "entropy": [
+      {
+        "correct": true,
+        "text": " Paris, and the language is French.  Given the question \"Where do",
+        "flags": 0,
+        "max_entropy": 2.815005302429199
+      },
+      {
+        "correct": true,
+        "text": " 212 \u00b0F or 100 \u00b0C and ice",
+        "flags": 0,
+        "max_entropy": 0.5334342122077942
+      },
+      {
+        "correct": true,
+        "text": " George Washington. He was born on February 22, 17",
+        "flags": 0,
+        "max_entropy": 1.7310564517974854
+      },
+      {
+        "correct": true,
+        "text": " what number?\n15 multiplied by 24 equals 360",
+        "flags": 0,
+        "max_entropy": 1.0561268329620361
+      },
+      {
+        "correct": false,
+        "text": " Did he say anything about machine learning, or was that something that was unknown",
+        "flags": 0,
+        "max_entropy": 2.9222700595855713
+      },
+      {
+        "correct": true,
+        "text": ".\nMarie Curie did not invent the smartphone. The smartphone is a",
+        "flags": 0,
+        "max_entropy": 1.794555425643921
+      },
+      {
+        "correct": false,
+        "text": "\nNapoleon I, the emperor of France, attempted to lead a",
+        "flags": 0,
+        "max_entropy": 2.004878520965576
+      },
+      {
+        "correct": false,
+        "text": " Cleopatra's rule over Egypt is largely considered a myth due to the",
+        "flags": 0,
+        "max_entropy": 2.4288225173950195
+      },
+      {
+        "correct": false,
+        "text": " The exact population of Earth right now is difficult to determine because the population is",
+        "flags": 0,
+        "max_entropy": 1.6895601749420166
+      },
+      {
+        "correct": false,
+        "text": " What about the next two? How about chemistry? Medicine? Literature? Economics",
+        "flags": 0,
+        "max_entropy": 2.9291329383850098
+      }
+    ],
+    "acc": [
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      },
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      },
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      },
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      },
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      },
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      },
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      },
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      },
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      },
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      }
+    ]
+  },
+  "relative_2.0": {
+    "baseline_acc": 0.5,
+    "entropy_acc": 0.5,
+    "acc_acc": 0.0,
+    "intervention_rate": 0.0,
+    "baseline": [
+      {
+        "correct": true,
+        "text": " Paris, and the language is French.  Given the question \"Where do"
+      },
+      {
+        "correct": true,
+        "text": " 212 \u00b0F or 100 \u00b0C and ice"
+      },
+      {
+        "correct": true,
+        "text": " George Washington. He was born on February 22, 17"
+      },
+      {
+        "correct": true,
+        "text": " what number?\n15 multiplied by 24 equals 360"
+      },
+      {
+        "correct": false,
+        "text": " Did he say anything about machine learning, or was that something that was unknown"
+      },
+      {
+        "correct": true,
+        "text": ".\nMarie Curie did not invent the smartphone. The smartphone is a"
+      },
+      {
+        "correct": false,
+        "text": "\nNapoleon I, the emperor of France, attempted to lead a"
+      },
+      {
+        "correct": false,
+        "text": " Cleopatra's rule over Egypt is largely considered a myth due to the"
+      },
+      {
+        "correct": false,
+        "text": " The exact population of Earth right now is difficult to determine because the population is"
+      },
+      {
+        "correct": false,
+        "text": " What about the next two? How about chemistry? Medicine? Literature? Economics"
+      }
+    ],
+    "entropy": [
+      {
+        "correct": true,
+        "text": " Paris, and the language is French.  Given the question \"Where do",
+        "flags": 0,
+        "max_entropy": 2.815005302429199
+      },
+      {
+        "correct": true,
+        "text": " 212 \u00b0F or 100 \u00b0C and ice",
+        "flags": 0,
+        "max_entropy": 0.5334342122077942
+      },
+      {
+        "correct": true,
+        "text": " George Washington. He was born on February 22, 17",
+        "flags": 0,
+        "max_entropy": 1.7310564517974854
+      },
+      {
+        "correct": true,
+        "text": " what number?\n15 multiplied by 24 equals 360",
+        "flags": 0,
+        "max_entropy": 1.0561268329620361
+      },
+      {
+        "correct": false,
+        "text": " Did he say anything about machine learning, or was that something that was unknown",
+        "flags": 0,
+        "max_entropy": 2.9222700595855713
+      },
+      {
+        "correct": true,
+        "text": ".\nMarie Curie did not invent the smartphone. The smartphone is a",
+        "flags": 0,
+        "max_entropy": 1.794555425643921
+      },
+      {
+        "correct": false,
+        "text": "\nNapoleon I, the emperor of France, attempted to lead a",
+        "flags": 0,
+        "max_entropy": 2.004878520965576
+      },
+      {
+        "correct": false,
+        "text": " Cleopatra's rule over Egypt is largely considered a myth due to the",
+        "flags": 0,
+        "max_entropy": 2.4288225173950195
+      },
+      {
+        "correct": false,
+        "text": " The exact population of Earth right now is difficult to determine because the population is",
+        "flags": 0,
+        "max_entropy": 1.6895601749420166
+      },
+      {
+        "correct": false,
+        "text": " What about the next two? How about chemistry? Medicine? Literature? Economics",
+        "flags": 0,
+        "max_entropy": 2.9291329383850098
+      }
+    ],
+    "acc": [
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      },
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      },
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      },
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      },
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      },
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      },
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      },
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      },
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      },
+      {
+        "correct": false,
+        "error": "scatter(): Expected self.dtype to be equal to src.dtype"
+      }
+    ]
+  }
+}

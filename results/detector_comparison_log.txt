@@ -1,0 +1,33 @@
+======================================================================
+DETECTOR COMPARISON: HaluEval vs Custom
+======================================================================
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/338 [00:00<?, ?it/s]Loading weights:   0%|          | 1/338 [00:00<01:48,  3.10it/s]Loading weights:  43%|####3     | 147/338 [00:00<00:00, 417.20it/s]Loading weights:  64%|######3   | 216/338 [00:00<00:00, 435.87it/s]Loading weights:  81%|########1 | 275/338 [00:00<00:00, 414.56it/s]Loading weights:  96%|#########6| 326/338 [00:00<00:00, 404.59it/s]Loading weights: 100%|##########| 338/338 [00:00<00:00, 357.01it/s]
+Model on xpu:0
+
+
+=== Old (HaluEval) (thresh=0.50, rel=1.5) ===
+  Baseline: 40% | ACC: 40% | Int: 30% | AvgConflict: 0.989
+    factual: Base=75% ACC=75% (int=50%)
+    hallucination: Base=25% ACC=25% (int=25%)
+    uncertain: Base=0% ACC=0% (int=0%)
+
+=== Old (HaluEval) (thresh=0.50, rel=2.0) ===
+  Baseline: 40% | ACC: 40% | Int: 10% | AvgConflict: 0.989
+    factual: Base=75% ACC=75% (int=25%)
+    hallucination: Base=25% ACC=25% (int=0%)
+    uncertain: Base=0% ACC=0% (int=0%)
+
+=== New (Custom) (thresh=0.50, rel=None) ===
+  Baseline: 40% | ACC: 40% | Int: 90% | AvgConflict: 0.804
+    factual: Base=75% ACC=75% (int=75%)
+    hallucination: Base=25% ACC=25% (int=100%)
+    uncertain: Base=0% ACC=0% (int=100%)
+
+=== New (Custom) (thresh=0.70, rel=None) ===
+  Baseline: 40% | ACC: 40% | Int: 70% | AvgConflict: 0.804
+    factual: Base=75% ACC=75% (int=50%)
+    hallucination: Base=25% ACC=25% (int=75%)
+    uncertain: Base=0% ACC=0% (int=100%)
+
+=== New (Custom) (thresh=0.50, rel=1.5) ===

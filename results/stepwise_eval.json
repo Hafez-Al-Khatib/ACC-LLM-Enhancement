@@ -1,0 +1,389 @@
+{
+  "abs_0.9": {
+    "baseline_acc": 0.4,
+    "acc_acc": 0.4,
+    "intervention_rate": 1.0,
+    "baseline": [
+      {
+        "correct": true,
+        "text": " Paris, and the language is French.  Given the question"
+      },
+      {
+        "correct": true,
+        "text": " 212 \u00b0F or 100 \u00b0"
+      },
+      {
+        "correct": true,
+        "text": " George Washington. He was born on February 22,"
+      },
+      {
+        "correct": false,
+        "text": " what number?\n15 multiplied by 24 equals "
+      },
+      {
+        "correct": false,
+        "text": " Could you please provide the quote in the format of a single"
+      },
+      {
+        "correct": true,
+        "text": ".\nMarie Curie did not invent the smartphone. The"
+      },
+      {
+        "correct": false,
+        "text": "\nNapoleon I, the emperor of France, attempted"
+      },
+      {
+        "correct": false,
+        "text": " Cleopatra's rule over Egypt is largely considered a myth"
+      },
+      {
+        "correct": false,
+        "text": " The exact population of Earth right now is difficult to determine because"
+      },
+      {
+        "correct": false,
+        "text": " What about the next two? How about five or ten?\n"
+      }
+    ],
+    "acc": [
+      {
+        "correct": true,
+        "text": "Wait, let me reconsider. 1)Paris2)London3)New York. Here",
+        "draft_text": " Paris, and the language is French.  Given the question",
+        "intervened": true,
+        "max_conflict": 0.9971126317977905,
+        "calibrated_threshold": 0.9
+      },
+      {
+        "correct": true,
+        "text": " 212 \u00b0F or 100 \u00b0",
+        "draft_text": " 212 \u00b0F or 100 \u00b0",
+        "intervened": true,
+        "max_conflict": 0.9507969617843628,
+        "calibrated_threshold": 0.9
+      },
+      {
+        "correct": true,
+        "text": "Wait, let me reconsider.  The first President of the United States was George Washington, right",
+        "draft_text": " George Washington. He was born on February 22,",
+        "intervened": true,
+        "max_conflict": 0.9997491240501404,
+        "calibrated_threshold": 0.9
+      },
+      {
+        "correct": false,
+        "text": " what number?\n15 multiplied by 24 equals ",
+        "draft_text": " what number?\n15 multiplied by 24 equals ",
+        "intervened": true,
+        "max_conflict": 0.9589265584945679,
+        "calibrated_threshold": 0.9
+      },
+      {
+        "correct": false,
+        "text": " Could you please provide the quote in the format of a single",
+        "draft_text": " Could you please provide the quote in the format of a single",
+        "intervened": true,
+        "max_conflict": 0.9981063604354858,
+        "calibrated_threshold": 0.9
+      },
+      {
+        "correct": true,
+        "text": "Wait, let me reconsider.  The smartphone was already invented, and Marie Curie is a",
+        "draft_text": ".\nMarie Curie did not invent the smartphone. The",
+        "intervened": true,
+        "max_conflict": 0.9994576573371887,
+        "calibrated_threshold": 0.9
+      },
+      {
+        "correct": false,
+        "text": "\nNapoleon I, the emperor of France, attempted",
+        "draft_text": "\nNapoleon I, the emperor of France, attempted",
+        "intervened": true,
+        "max_conflict": 0.9951605200767517,
+        "calibrated_threshold": 0.9
+      },
+      {
+        "correct": false,
+        "text": " Cleopatra's rule over Egypt is largely considered a myth",
+        "draft_text": " Cleopatra's rule over Egypt is largely considered a myth",
+        "intervened": true,
+        "max_conflict": 0.9963383674621582,
+        "calibrated_threshold": 0.9
+      },
+      {
+        "correct": false,
+        "text": " The exact population of Earth right now is difficult to determine because",
+        "draft_text": " The exact population of Earth right now is difficult to determine because",
+        "intervened": true,
+        "max_conflict": 0.9981495141983032,
+        "calibrated_threshold": 0.9
+      },
+      {
+        "correct": false,
+        "text": " What about the next two? How about five or ten?\n",
+        "draft_text": " What about the next two? How about five or ten?\n",
+        "intervened": true,
+        "max_conflict": 0.998104453086853,
+        "calibrated_threshold": 0.9
+      }
+    ]
+  },
+  "rel_1.5": {
+    "baseline_acc": 0.4,
+    "acc_acc": 0.4,
+    "intervention_rate": 0.3,
+    "baseline": [
+      {
+        "correct": true,
+        "text": " Paris, and the language is French.  Given the question"
+      },
+      {
+        "correct": true,
+        "text": " 212 \u00b0F or 100 \u00b0"
+      },
+      {
+        "correct": true,
+        "text": " George Washington. He was born on February 22,"
+      },
+      {
+        "correct": false,
+        "text": " what number?\n15 multiplied by 24 equals "
+      },
+      {
+        "correct": false,
+        "text": " Could you please provide the quote in the format of a single"
+      },
+      {
+        "correct": true,
+        "text": ".\nMarie Curie did not invent the smartphone. The"
+      },
+      {
+        "correct": false,
+        "text": "\nNapoleon I, the emperor of France, attempted"
+      },
+      {
+        "correct": false,
+        "text": " Cleopatra's rule over Egypt is largely considered a myth"
+      },
+      {
+        "correct": false,
+        "text": " The exact population of Earth right now is difficult to determine because"
+      },
+      {
+        "correct": false,
+        "text": " What about the next two? How about five or ten?\n"
+      }
+    ],
+    "acc": [
+      {
+        "correct": true,
+        "text": " Paris, and the language is French.  Given the question",
+        "draft_text": " Paris, and the language is French.  Given the question",
+        "intervened": false,
+        "max_conflict": 0.9971126317977905,
+        "calibrated_threshold": 1.2128143012523651
+      },
+      {
+        "correct": true,
+        "text": " 212 \u00b0F or 100 \u00b0",
+        "draft_text": " 212 \u00b0F or 100 \u00b0",
+        "intervened": true,
+        "max_conflict": 0.9507969617843628,
+        "calibrated_threshold": 0.896928459405899
+      },
+      {
+        "correct": true,
+        "text": " George Washington. He was born on February 22,",
+        "draft_text": " George Washington. He was born on February 22,",
+        "intervened": false,
+        "max_conflict": 0.9997491240501404,
+        "calibrated_threshold": 1.075351595878601
+      },
+      {
+        "correct": false,
+        "text": " what number?\n15 multiplied by 24 equals ",
+        "draft_text": " what number?\n15 multiplied by 24 equals ",
+        "intervened": true,
+        "max_conflict": 0.9589265584945679,
+        "calibrated_threshold": 0.27247258089482784
+      },
+      {
+        "correct": false,
+        "text": " Could you please provide the quote in the format of a single",
+        "draft_text": " Could you please provide the quote in the format of a single",
+        "intervened": false,
+        "max_conflict": 0.9981063604354858,
+        "calibrated_threshold": 1.494862824678421
+      },
+      {
+        "correct": true,
+        "text": ".\nMarie Curie did not invent the smartphone. The",
+        "draft_text": ".\nMarie Curie did not invent the smartphone. The",
+        "intervened": false,
+        "max_conflict": 0.9994576573371887,
+        "calibrated_threshold": 1.100496843457222
+      },
+      {
+        "correct": false,
+        "text": "\nNapoleon I, the emperor of France, attempted",
+        "draft_text": "\nNapoleon I, the emperor of France, attempted",
+        "intervened": true,
+        "max_conflict": 0.9951605200767517,
+        "calibrated_threshold": 0.9946505799889565
+      },
+      {
+        "correct": false,
+        "text": " Cleopatra's rule over Egypt is largely considered a myth",
+        "draft_text": " Cleopatra's rule over Egypt is largely considered a myth",
+        "intervened": false,
+        "max_conflict": 0.9963383674621582,
+        "calibrated_threshold": 1.1079800575971603
+      },
+      {
+        "correct": false,
+        "text": " The exact population of Earth right now is difficult to determine because",
+        "draft_text": " The exact population of Earth right now is difficult to determine because",
+        "intervened": false,
+        "max_conflict": 0.9981495141983032,
+        "calibrated_threshold": 1.453813910484314
+      },
+      {
+        "correct": false,
+        "text": " What about the next two? How about five or ten?\n",
+        "draft_text": " What about the next two? How about five or ten?\n",
+        "intervened": false,
+        "max_conflict": 0.998104453086853,
+        "calibrated_threshold": 1.4480623006820679
+      }
+    ]
+  },
+  "rel_2.0": {
+    "baseline_acc": 0.4,
+    "acc_acc": 0.4,
+    "intervention_rate": 0.1,
+    "baseline": [
+      {
+        "correct": true,
+        "text": " Paris, and the language is French.  Given the question"
+      },
+      {
+        "correct": true,
+        "text": " 212 \u00b0F or 100 \u00b0"
+      },
+      {
+        "correct": true,
+        "text": " George Washington. He was born on February 22,"
+      },
+      {
+        "correct": false,
+        "text": " what number?\n15 multiplied by 24 equals "
+      },
+      {
+        "correct": false,
+        "text": " Could you please provide the quote in the format of a single"
+      },
+      {
+        "correct": true,
+        "text": ".\nMarie Curie did not invent the smartphone. The"
+      },
+      {
+        "correct": false,
+        "text": "\nNapoleon I, the emperor of France, attempted"
+      },
+      {
+        "correct": false,
+        "text": " Cleopatra's rule over Egypt is largely considered a myth"
+      },
+      {
+        "correct": false,
+        "text": " The exact population of Earth right now is difficult to determine because"
+      },
+      {
+        "correct": false,
+        "text": " What about the next two? How about five or ten?\n"
+      }
+    ],
+    "acc": [
+      {
+        "correct": true,
+        "text": " Paris, and the language is French.  Given the question",
+        "draft_text": " Paris, and the language is French.  Given the question",
+        "intervened": false,
+        "max_conflict": 0.9971126317977905,
+        "calibrated_threshold": 1.6170857350031536
+      },
+      {
+        "correct": true,
+        "text": " 212 \u00b0F or 100 \u00b0",
+        "draft_text": " 212 \u00b0F or 100 \u00b0",
+        "intervened": false,
+        "max_conflict": 0.9507969617843628,
+        "calibrated_threshold": 1.1959046125411987
+      },
+      {
+        "correct": true,
+        "text": " George Washington. He was born on February 22,",
+        "draft_text": " George Washington. He was born on February 22,",
+        "intervened": false,
+        "max_conflict": 0.9997491240501404,
+        "calibrated_threshold": 1.4338021278381348
+      },
+      {
+        "correct": false,
+        "text": " what number?\n15 multiplied by 24 equals ",
+        "draft_text": " what number?\n15 multiplied by 24 equals ",
+        "intervened": true,
+        "max_conflict": 0.9589265584945679,
+        "calibrated_threshold": 0.3632967745264371
+      },
+      {
+        "correct": false,
+        "text": " Could you please provide the quote in the format of a single",
+        "draft_text": " Could you please provide the quote in the format of a single",
+        "intervened": false,
+        "max_conflict": 0.9981063604354858,
+        "calibrated_threshold": 1.9931504329045613
+      },
+      {
+        "correct": true,
+        "text": ".\nMarie Curie did not invent the smartphone. The",
+        "draft_text": ".\nMarie Curie did not invent the smartphone. The",
+        "intervened": false,
+        "max_conflict": 0.9994576573371887,
+        "calibrated_threshold": 1.4673291246096294
+      },
+      {
+        "correct": false,
+        "text": "\nNapoleon I, the emperor of France, attempted",
+        "draft_text": "\nNapoleon I, the emperor of France, attempted",
+        "intervened": false,
+        "max_conflict": 0.9951605200767517,
+        "calibrated_threshold": 1.3262007733186085
+      },
+      {
+        "correct": false,
+        "text": " Cleopatra's rule over Egypt is largely considered a myth",
+        "draft_text": " Cleopatra's rule over Egypt is largely considered a myth",
+        "intervened": false,
+        "max_conflict": 0.9963383674621582,
+        "calibrated_threshold": 1.4773067434628804
+      },
+      {
+        "correct": false,
+        "text": " The exact population of Earth right now is difficult to determine because",
+        "draft_text": " The exact population of Earth right now is difficult to determine because",
+        "intervened": false,
+        "max_conflict": 0.9981495141983032,
+        "calibrated_threshold": 1.9384185473124187
+      },
+      {
+        "correct": false,
+        "text": " What about the next two? How about five or ten?\n",
+        "draft_text": " What about the next two? How about five or ten?\n",
+        "intervened": false,
+        "max_conflict": 0.998104453086853,
+        "calibrated_threshold": 1.930749734242757
+      }
+    ]
+  }
+}

@@ -2,12 +2,12 @@
 # Drives scripts/validate_acc.py to exercise EntropyMonitor / ACCEnhancedGenerator.
 
 model:
-  base_model: "models/tiny_gpt2_safetensors"
+  base_model: "sshleifer/tiny-gpt2"
   trust_remote_code: false
   torch_dtype: "float32"
 
 adapter:
-  path: "adapters/tiny_gpt2_test/final_adapter"
+  path: "adapters/tiny_gpt2_general/final_adapter"
 
 acc:
   threshold: 3.5            # nats, interpreted per `mode`

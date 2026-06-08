@@ -1,0 +1,21 @@
+======================================================================
+CONTROLLED EVALUATION (same seed=42, N=10)
+======================================================================
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/338 [00:00<?, ?it/s]Loading weights:   0%|          | 1/338 [00:00<00:48,  6.88it/s]Loading weights:  18%|#8        | 61/338 [00:00<00:00, 295.49it/s]Loading weights:  28%|##8       | 96/338 [00:00<00:00, 295.18it/s]Loading weights:  38%|###8      | 129/338 [00:00<00:00, 287.33it/s]Loading weights:  47%|####7     | 160/338 [00:00<00:00, 247.22it/s]Loading weights:  55%|#####5    | 187/338 [00:00<00:00, 211.86it/s]Loading weights:  62%|######2   | 210/338 [00:00<00:00, 202.79it/s]Loading weights:  69%|######8   | 232/338 [00:01<00:00, 193.99it/s]Loading weights:  76%|#######5  | 256/338 [00:01<00:00, 201.60it/s]Loading weights:  82%|########1 | 277/338 [00:01<00:00, 200.54it/s]Loading weights:  88%|########8 | 298/338 [00:01<00:00, 153.11it/s]Loading weights:  93%|#########3| 316/338 [00:01<00:00, 135.72it/s]Loading weights:  98%|#########7| 331/338 [00:01<00:00, 113.42it/s]Loading weights: 100%|##########| 338/338 [00:01<00:00, 178.81it/s]
+Model on xpu:0
+
+
+--- Config: absolute_0.5 ---
+  Baseline: 50% | Entropy: 50% | ACC: 60% (int=100%)
+    factual: Base=100% Ent=100% ACC=100%
+    hallucination: Base=25% Ent=25% ACC=25%
+    uncertain: Base=0% Ent=0% ACC=50%
+
+--- Config: absolute_0.7 ---
+  Baseline: 50% | Entropy: 50% | ACC: 60% (int=100%)
+    factual: Base=100% Ent=100% ACC=100%
+    hallucination: Base=25% Ent=25% ACC=25%
+    uncertain: Base=0% Ent=0% ACC=50%
+
+--- Config: absolute_0.9 ---

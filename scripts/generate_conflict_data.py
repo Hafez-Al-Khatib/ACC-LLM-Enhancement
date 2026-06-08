@@ -30,7 +30,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 _PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(_PROJECT_ROOT))
 
-from src.acc_conflict_detector import GenerationHiddenStateExtractor
+from src.acc_conflict_detector import MultiLayerGenerationExtractor
 
 # ---------------------------------------------------------------------------
 # Prompt banks
@@ -184,7 +184,7 @@ def _embedding_similarity(embedder, text_a: str, text_b: str) -> float:
 def generate_tokens(
     model: AutoModelForCausalLM,
     tokenizer: AutoTokenizer,
-    extractor: GenerationHiddenStateExtractor,
+    extractor: MultiLayerGenerationExtractor,
     prompt: str,
     max_new_tokens: int = 20,
     temperature: float = 0.8,
@@ -195,7 +195,7 @@ def generate_tokens(
 
     Returns:
         records: list of dicts with keys ``step``, ``token_id``, ``token_position``,
-            ``hidden_state``.
+            ``hidden_states`` (Dict[int, List[float]] mapping layer_idx -> vector).
         sequences: (1, total_seq_len) tensor.
         token_probs: list of max-probabilities for each generated token.
     """
@@ -416,12 +416,17 @@ def main():
         print("Running without embedder (heuristic mode only).")
 
     # ------------------------------------------------------------------
-    # Setup extractor
+    # Setup extractor (multi-layer for Predictive Coding)
     # ------------------------------------------------------------------
     num_layers = len(model.transformer.h) if hasattr(model, 'transformer') and hasattr(model.transformer, 'h') else len(model.model.layers)
-    layer_idx = -4 if num_layers >= 4 else -2
-    print(f"Using layer_idx={layer_idx} (model has {num_layers} layers)")
-    extractor = GenerationHiddenStateExtractor(model, layer_idx=layer_idx)
+    if num_layers >= 12:
+        layer_indices = [-1, -4, -8, -12]
+    elif num_layers >= 4:
+        layer_indices = [-1, -2, -3, -4]
+    else:
+        layer_indices = list(range(num_layers))
+    print(f"Using layer_indices={layer_indices} (model has {num_layers} layers)")
+    extractor = MultiLayerGenerationExtractor(model, layer_indices=layer_indices)
 
     # ------------------------------------------------------------------
     # Generation loops per category
@@ -516,7 +521,7 @@ def main():
                 write_records(records, label, prompt, fout)
                 print(f"  [{counts['contradictory']:4d}] {prompt[:50]:50s} -> {gen_text[:60]}")
 
-    extractor.remove_hook()
+    extractor.remove_hooks()
 
     # ------------------------------------------------------------------
     # Summary

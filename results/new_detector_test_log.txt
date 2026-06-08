@@ -1,0 +1,16 @@
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+TESTING NEW DETECTOR (5 samples, CPU)
+Loading weights:   0%|          | 0/338 [00:00<?, ?it/s]Loading weights:  26%|##5       | 87/338 [00:00<00:00, 844.43it/s]Loading weights:  51%|#####     | 172/338 [00:00<00:00, 814.44it/s]Loading weights:  75%|#######5  | 254/338 [00:00<00:00, 803.52it/s]Loading weights: 100%|##########| 338/338 [00:00<00:00, 822.06it/s]
+
+Baseline: 20% | ACC: 60% | Int: 100%
+
+1. The capital of France is [factual]
+Traceback (most recent call last):
+  File "C:\Users\Hafez\Desktop\AUB Research\ACC LLM Enhancement\ACC-LLM-Enhancement\scripts\test_new_detector.py", line 132, in <module>
+    main()
+  File "C:\Users\Hafez\Desktop\AUB Research\ACC LLM Enhancement\ACC-LLM-Enhancement\scripts\test_new_detector.py", line 123, in main
+    print(f"   Base: {b['text'][:60]} [{'\u2713' if b['correct'] else '\u2717'}]")
+  File "C:\Users\Hafez\AppData\Local\Programs\Python\Python311\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2717' in position 42: character maps to <undefined>

@@ -1,0 +1,26 @@
+RELATIVE THRESHOLDING TEST: 8 samples
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/338 [00:00<?, ?it/s]Loading weights:   0%|          | 1/338 [00:00<01:44,  3.22it/s]Loading weights:  51%|#####     | 171/338 [00:00<00:00, 530.88it/s]Loading weights:  79%|#######8  | 267/338 [00:00<00:00, 516.88it/s]Loading weights: 100%|##########| 338/338 [00:00<00:00, 367.38it/s]
+
+=== abs_0.9 ===
+  Baseline: 75% | ACC: 62% | Int: 100%
+  Avg max conflict: 0.986 | Avg effective threshold: 0.900
+    factual: Base=50% ACC=25% (int=100%)
+    hallucination: Base=100% ACC=100% (int=100%)
+    uncertain: Base=100% ACC=100% (int=100%)
+
+=== rel_1.2 ===
+  Baseline: 75% | ACC: 62% | Int: 75%
+  Avg max conflict: 0.986 | Avg effective threshold: 0.844
+    factual: Base=50% ACC=25% (int=100%)
+    hallucination: Base=100% ACC=100% (int=67%)
+    uncertain: Base=100% ACC=100% (int=0%)
+
+=== rel_1.5 ===
+  Baseline: 75% | ACC: 75% | Int: 25%
+  Avg max conflict: 0.986 | Avg effective threshold: 1.055
+    factual: Base=50% ACC=50% (int=50%)
+    hallucination: Base=100% ACC=100% (int=0%)
+    uncertain: Base=100% ACC=100% (int=0%)
+
+=== rel_2.0 ===

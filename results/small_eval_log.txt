@@ -1,0 +1,18 @@
+======================================================================
+SMALL EVALUATION (10 samples)
+======================================================================
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/338 [00:00<?, ?it/s]Loading weights:  26%|##6       | 88/338 [00:00<00:00, 868.09it/s]Loading weights:  52%|#####2    | 177/338 [00:00<00:00, 859.07it/s]Loading weights:  78%|#######7  | 263/338 [00:00<00:00, 831.15it/s]Loading weights: 100%|##########| 338/338 [00:00<00:00, 810.55it/s]
+Model on xpu:0
+
+
+--- Threshold = 0.5 ---
+  Baseline: 70% | Entropy: 50% | ACC: 50% (int=100%)
+
+--- Threshold = 0.7 ---
+  Baseline: 50% | Entropy: 50% | ACC: 60% (int=100%)
+
+--- Threshold = 0.9 ---
+  Baseline: 40% | Entropy: 40% | ACC: 70% (int=100%)
+
+Saved to results\small_eval.json

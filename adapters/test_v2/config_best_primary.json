@@ -1,0 +1,24 @@
+{
+  "hidden_dim": 2,
+  "layer_pairs": [
+    [
+      0,
+      1
+    ]
+  ],
+  "temporal_decay": 0.7,
+  "primary_labels": [
+    "supported",
+    "unsupported",
+    "uncertain"
+  ],
+  "secondary_labels": [
+    "hallucinated",
+    "contradictory"
+  ],
+  "metrics": {
+    "epoch": 1,
+    "primary_macro_f1": 0.3684210526315789,
+    "secondary_macro_f1": 0.39655172413793105
+  }
+}

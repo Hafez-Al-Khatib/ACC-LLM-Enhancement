@@ -1,0 +1,27 @@
+======================================================================
+CONTROLLED EVALUATION (same seed=42, N=10)
+======================================================================
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/338 [00:00<?, ?it/s]Loading weights:  26%|##5       | 87/338 [00:00<00:00, 820.05it/s]Loading weights:  51%|#####     | 172/338 [00:00<00:00, 820.68it/s]Loading weights:  75%|#######5  | 255/338 [00:00<00:00, 798.58it/s]Loading weights: 100%|##########| 338/338 [00:00<00:00, 831.78it/s]
+Model on xpu:0
+
+
+--- Config: absolute_0.5 ---
+  Baseline: 50% | Entropy: 50% | ACC: 50% (int=100%)
+    factual: Base=100% Ent=100% ACC=100%
+    hallucination: Base=25% Ent=25% ACC=25%
+    uncertain: Base=0% Ent=0% ACC=0%
+
+--- Config: absolute_0.7 ---
+  Baseline: 50% | Entropy: 50% | ACC: 50% (int=100%)
+    factual: Base=100% Ent=100% ACC=100%
+    hallucination: Base=25% Ent=25% ACC=25%
+    uncertain: Base=0% Ent=0% ACC=0%
+
+--- Config: absolute_0.9 ---
+  Baseline: 50% | Entropy: 50% | ACC: 50% (int=100%)
+    factual: Base=100% Ent=100% ACC=100%
+    hallucination: Base=25% Ent=25% ACC=25%
+    uncertain: Base=0% Ent=0% ACC=0%
+
+--- Config: relative_1.5 ---

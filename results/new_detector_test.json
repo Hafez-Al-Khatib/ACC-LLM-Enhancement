@@ -1,0 +1,61 @@
+{
+  "baseline": [
+    {
+      "correct": false,
+      "text": "_______.____\nA. France\nB. New"
+    },
+    {
+      "correct": false,
+      "text": " what?\n\nTo find the product of 15 and "
+    },
+    {
+      "correct": false,
+      "text": " Isaac Newton's comments about AI were made in a letter to"
+    },
+    {
+      "correct": false,
+      "text": ".\nMarie Curie, a pioneering scientist known for her"
+    },
+    {
+      "correct": true,
+      "text": " I don't know. But I have an idea why."
+    }
+  ],
+  "acc": [
+    {
+      "correct": true,
+      "text": "Wait, let me reconsider. 1. __\nA. Paris\nB. Washington\n",
+      "intervened": true,
+      "max_conflict": 0.9456729292869568,
+      "threshold": 0.7334742974489927
+    },
+    {
+      "correct": false,
+      "text": " what?\n\nTo find the product of 15 and ",
+      "intervened": true,
+      "max_conflict": 0.9551796317100525,
+      "threshold": 0.9439538270235062
+    },
+    {
+      "correct": true,
+      "text": "Wait, let me reconsider.  I am only 12 years old.  My math",
+      "intervened": true,
+      "max_conflict": 0.8782790899276733,
+      "threshold": 0.3757484322413802
+    },
+    {
+      "correct": false,
+      "text": ".\nMarie Curie, a pioneering scientist known for her",
+      "intervened": true,
+      "max_conflict": 0.811240017414093,
+      "threshold": 0.12936990335583687
+    },
+    {
+      "correct": true,
+      "text": "Wait, let me reconsider.  I would assume that any Nobel prize-worthy work in physics has",
+      "intervened": true,
+      "max_conflict": 0.9410089254379272,
+      "threshold": 0.6671931855380535
+    }
+  ]
+}

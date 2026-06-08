@@ -1,8 +1,11 @@
-"""Model loading with QLoRA quantization."""
+"""Model loading with QLoRA quantization.
+
+Supports Intel Arc (XPU), NVIDIA CUDA, and CPU backends.
+"""
+
+from __future__ import annotations
 
 import logging
-import os
-from pathlib import Path
 from typing import Optional
 
 import torch
@@ -11,13 +14,18 @@ from transformers import (
     AutoModelForCausalLM,
     AutoTokenizer,
     BitsAndBytesConfig,
-    TrainingArguments,
 )
+
+from .device_utils import get_best_device
 
 logger = logging.getLogger(__name__)
 
 
-def load_tokenizer(model_path: str, trust_remote_code: bool = False, local_files_only: bool = False):
+def load_tokenizer(
+    model_path: str,
+    trust_remote_code: bool = False,
+    local_files_only: bool = False,
+):
     """Load tokenizer with padding side fix for decoder-only models."""
     tok = AutoTokenizer.from_pretrained(
         model_path,
@@ -35,7 +43,8 @@ def load_model(
     bnb_config: Optional[BitsAndBytesConfig] = None,
     torch_dtype: torch.dtype = torch.bfloat16,
     trust_remote_code: bool = False,
-    device_map: str = "auto",
+    device_map: Optional[str] = None,
+    device: Optional[str] = None,
     local_files_only: bool = False,
 ):
     """Load causal LM with optional 4-bit quantization.
@@ -48,28 +57,59 @@ def load_model(
         If provided, enables 4-bit (or 8-bit) quantization.
     torch_dtype : torch.dtype
         Compute dtype. Use float16 on Jetson (no bfloat16 support).
-    device_map : str
-        "auto" for multi-GPU, "cuda:0" for single GPU, "cpu" for CPU-only.
+    device_map : str | None
+        ``"auto"`` for multi-GPU, ``"cuda:0"`` for single GPU,
+        ``"cpu"`` for CPU-only. If None, the model is loaded to the
+        best available device (XPU → CUDA → CPU).
+    device : str | None
+        Explicit device override (e.g. ``"xpu"``, ``"cuda:0"``, ``"cpu"``).
+        Takes precedence over *device_map*.
     local_files_only : bool
-        If False (default), allows HF to download missing files. Safer than
-        ``Path(model_path).exists()`` because an empty directory would otherwise
-        block downloads.
+        If False (default), allows HF to download missing files.
     """
-    logger.info("Loading model from %s (dtype=%s, 4bit=%s)",
-                model_path, torch_dtype, bnb_config is not None)
-
-    model = AutoModelForCausalLM.from_pretrained(
+    logger.info(
+        "Loading model from %s (dtype=%s, 4bit=%s)",
         model_path,
-        quantization_config=bnb_config,
-        torch_dtype=torch_dtype if bnb_config is None else None,
-        trust_remote_code=trust_remote_code,
-        device_map=device_map,
-        local_files_only=local_files_only,
+        torch_dtype,
+        bnb_config is not None,
     )
+
+    # Determine target device
+    target_device = device
+    if target_device is None:
+        if device_map is not None:
+            target_device = device_map
+        else:
+            target_device = str(get_best_device())
+
+    # For XPU, load to CPU first then move (avoid device_map quirks)
+    if target_device.startswith("xpu"):
+        logger.info("XPU detected: loading to CPU first, then moving to XPU")
+        model = AutoModelForCausalLM.from_pretrained(
+            model_path,
+            quantization_config=bnb_config,
+            torch_dtype=torch_dtype if bnb_config is None else None,
+            trust_remote_code=trust_remote_code,
+            device_map="cpu",
+            local_files_only=local_files_only,
+        )
+        model = model.to(target_device)
+    else:
+        model = AutoModelForCausalLM.from_pretrained(
+            model_path,
+            quantization_config=bnb_config,
+            torch_dtype=torch_dtype if bnb_config is None else None,
+            trust_remote_code=trust_remote_code,
+            device_map=target_device if not target_device.startswith("xpu") else "cpu",
+            local_files_only=local_files_only,
+        )
+
     # Gradient checkpointing saves ~30% activation memory
     if getattr(model, "supports_gradient_checkpointing", False):
         model.gradient_checkpointing_enable()
         logger.info("Gradient checkpointing enabled")
+
+    logger.info("Model loaded on %s", next(model.parameters()).device)
     return model
 
 
@@ -92,9 +132,12 @@ def attach_lora(model, lora_cfg: dict):
         task_type=lora_cfg.get("task_type", "CAUSAL_LM"),
     )
     model = get_peft_model(model, config)
-    logger.info("LoRA attached: r=%d, alpha=%d, trainable params=%s",
-                config.r, config.lora_alpha,
-                sum(p.numel() for p in model.parameters() if p.requires_grad))
+    logger.info(
+        "LoRA attached: r=%d, alpha=%d, trainable params=%s",
+        config.r,
+        config.lora_alpha,
+        sum(p.numel() for p in model.parameters() if p.requires_grad),
+    )
     return model
 
 
@@ -106,7 +149,9 @@ def make_bnb_config(quant_cfg: dict) -> Optional[BitsAndBytesConfig]:
     if not quant_cfg.get("load_in_4bit", False):
         return None
 
-    compute_dtype = getattr(torch, quant_cfg.get("bnb_4bit_compute_dtype", "bfloat16"))
+    compute_dtype = getattr(
+        torch, quant_cfg.get("bnb_4bit_compute_dtype", "bfloat16")
+    )
     return BitsAndBytesConfig(
         load_in_4bit=True,
         bnb_4bit_compute_dtype=compute_dtype,

@@ -1,8 +1,17 @@
-"""Robust model download with per-file retry logic."""
+"""Robust model download with per-file retry logic.
 
-from huggingface_hub import hf_hub_download
+Supports HF_TOKEN environment variable for authenticated downloads.
+"""
+
+from huggingface_hub import hf_hub_download, login
 import os
 import time
+
+# Authenticate if token is available
+hf_token = os.environ.get("HF_TOKEN")
+if hf_token:
+    login(token=hf_token)
+    print("Authenticated with HF_TOKEN")
 
 repo_id = "mistralai/Mistral-7B-Instruct-v0.3"
 local_dir = "models/mistral_7b"

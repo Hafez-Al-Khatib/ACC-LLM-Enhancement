@@ -1,0 +1,55 @@
+======================================================================
+UNIFIED EVALUATION: All Methods
+Samples: 10 | Device: cpu | Max tokens: 12
+======================================================================
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/338 [00:00<?, ?it/s]Loading weights:   0%|          | 1/338 [00:00<02:45,  2.04it/s]Loading weights: 100%|##########| 338/338 [00:00<00:00, 677.97it/s]
+Model loaded on cpu
+
+Initializing detectors...
+Training SAPLMA...
+Sample 1/10: The capital of France is
+Sample 2/10: Water boils at a temperature of
+Sample 3/10: The first President of the United States was
+Sample 4/10: 15 times 24 equals
+Sample 5/10: What did Isaac Newton say about AI in 1700?
+Sample 6/10: Explain how Marie Curie invented the smartphone
+Sample 7/10: Describe the lunar landing conducted by Napoleon i
+Sample 8/10: How did Cleopatra use quantum computers to rule Eg
+Sample 9/10: What is the exact population of Earth right now?
+Sample 10/10: Who will win the next Nobel Prize in Physics?
+
+======================================================================
+RESULTS
+======================================================================
+Baseline        | Acc: 50% | Prec: 0.00 | Rec: 0.00 | F1: 0.00 | Flags: 0.0%
+Entropy         | Acc: 50% | Prec: 0.20 | Rec: 0.03 | F1: 0.06 | Flags: 4.2%
+DoLa            | Acc: 50% | Prec: 0.60 | Rec: 0.60 | F1: 0.60 | Flags: 100.0%
+SAPLMA          | Acc: 50% | Prec: 0.60 | Rec: 0.53 | F1: 0.56 | Flags: 58.3%
+ACC             | Acc: 60% | Prec: 0.50 | Rec: 0.50 | F1: 0.50 | Flags: 80.0%
+
+Per-type accuracy:
+
+  factual:
+    Baseline       : 50%
+    Entropy        : 50%
+    DoLa           : 50%
+    SAPLMA         : 50%
+    ACC            : 75%
+
+  hallucination:
+    Baseline       : 50%
+    Entropy        : 50%
+    DoLa           : 50%
+    SAPLMA         : 50%
+    ACC            : 50%
+
+  uncertain:
+    Baseline       : 50%
+    Entropy        : 50%
+    DoLa           : 50%
+    SAPLMA         : 50%
+    ACC            : 50%
+
+Saved to results\unified_evaluation.json
+======================================================================

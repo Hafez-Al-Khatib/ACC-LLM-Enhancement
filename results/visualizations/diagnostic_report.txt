@@ -1,0 +1,207 @@
+======================================================================
+PredictiveCodingDetector Diagnostic Report
+======================================================================
+Layer pairs: [(-4, -2), (-2, -1)]
+Temporal decay (alpha): 0.7
+Hidden dim: 64
+Num parameters: 0.02M
+
+--- Step 0 ---
+  Primary: supported (p=0.515)
+  Conflict score: 0.5000
+  Prediction errors:
+    (-4, -2): 0.812575
+    (-2, -1): 1.634356
+  Layer contributions (conflict_score):
+    (-4, -2): 0.000000
+    (-2, -1): 0.000000
+
+--- Step 1 ---
+  Primary: supported (p=0.515)
+  Conflict score: 0.5000
+  Prediction errors:
+    (-4, -2): 1.218890
+    (-2, -1): 1.328252
+  Layer contributions (conflict_score):
+    (-4, -2): 0.000000
+    (-2, -1): 0.000000
+
+--- Step 2 ---
+  Primary: supported (p=0.515)
+  Conflict score: 0.5000
+  Prediction errors:
+    (-4, -2): 1.460209
+    (-2, -1): 1.158091
+  Layer contributions (conflict_score):
+    (-4, -2): 0.000000
+    (-2, -1): 0.000000
+
+--- Step 3 ---
+  Primary: supported (p=0.515)
+  Conflict score: 0.5000
+  Prediction errors:
+    (-4, -2): 1.805487
+    (-2, -1): 1.900534
+  Layer contributions (conflict_score):
+    (-4, -2): 0.000000
+    (-2, -1): 0.000000
+
+--- Step 4 ---
+  Primary: supported (p=0.515)
+  Conflict score: 0.5000
+  Prediction errors:
+    (-4, -2): 1.473248
+    (-2, -1): 1.787424
+  Layer contributions (conflict_score):
+    (-4, -2): 0.000000
+    (-2, -1): 0.000000
+
+--- Step 5 ---
+  Primary: supported (p=0.515)
+  Conflict score: 0.5000
+  Prediction errors:
+    (-4, -2): 1.455127
+    (-2, -1): 1.544109
+  Layer contributions (conflict_score):
+    (-4, -2): 0.000000
+    (-2, -1): 0.000000
+
+--- Step 6 ---
+  Primary: supported (p=0.515)
+  Conflict score: 0.5000
+  Prediction errors:
+    (-4, -2): 1.343441
+    (-2, -1): 1.671902
+  Layer contributions (conflict_score):
+    (-4, -2): 0.000000
+    (-2, -1): 0.000000
+
+--- Step 7 ---
+  Primary: supported (p=0.515)
+  Conflict score: 0.5000
+  Prediction errors:
+    (-4, -2): 1.582706
+    (-2, -1): 1.646449
+  Layer contributions (conflict_score):
+    (-4, -2): 0.000000
+    (-2, -1): 0.000000
+
+--- Step 8 ---
+  Primary: supported (p=0.515)
+  Conflict score: 0.5000
+  Prediction errors:
+    (-4, -2): 1.242417
+    (-2, -1): 1.284398
+  Layer contributions (conflict_score):
+    (-4, -2): 0.000000
+    (-2, -1): 0.000000
+
+--- Step 9 ---
+  Primary: supported (p=0.515)
+  Conflict score: 0.5000
+  Prediction errors:
+    (-4, -2): 1.348693
+    (-2, -1): 1.343397
+  Layer contributions (conflict_score):
+    (-4, -2): 0.000000
+    (-2, -1): 0.000000
+
+--- Step 10 ---
+  Primary: supported (p=0.515)
+  Conflict score: 0.5000
+  Prediction errors:
+    (-4, -2): 8.374115
+    (-2, -1): 8.651791
+  Layer contributions (conflict_score):
+    (-4, -2): 0.000000
+    (-2, -1): 0.000000
+
+--- Step 11 ---
+  Primary: supported (p=0.515)
+  Conflict score: 0.5000
+  Prediction errors:
+    (-4, -2): 12.183359
+    (-2, -1): 10.560458
+  Layer contributions (conflict_score):
+    (-4, -2): 0.000000
+    (-2, -1): 0.000000
+
+--- Step 12 ---
+  Primary: supported (p=0.515)
+  Conflict score: 0.5000
+  Prediction errors:
+    (-4, -2): 10.850422
+    (-2, -1): 11.814031
+  Layer contributions (conflict_score):
+    (-4, -2): 0.000000
+    (-2, -1): 0.000000
+
+--- Step 13 ---
+  Primary: supported (p=0.515)
+  Conflict score: 0.5000
+  Prediction errors:
+    (-4, -2): 1.885715
+    (-2, -1): 1.293754
+  Layer contributions (conflict_score):
+    (-4, -2): 0.000000
+    (-2, -1): 0.000000
+
+--- Step 14 ---
+  Primary: supported (p=0.515)
+  Conflict score: 0.5000
+  Prediction errors:
+    (-4, -2): 1.480483
+    (-2, -1): 1.221357
+  Layer contributions (conflict_score):
+    (-4, -2): 0.000000
+    (-2, -1): 0.000000
+
+--- Step 15 ---
+  Primary: supported (p=0.515)
+  Conflict score: 0.5000
+  Prediction errors:
+    (-4, -2): 1.172089
+    (-2, -1): 1.313720
+  Layer contributions (conflict_score):
+    (-4, -2): 0.000000
+    (-2, -1): 0.000000
+
+--- Step 16 ---
+  Primary: supported (p=0.515)
+  Conflict score: 0.5000
+  Prediction errors:
+    (-4, -2): 1.418508
+    (-2, -1): 1.579651
+  Layer contributions (conflict_score):
+    (-4, -2): 0.000000
+    (-2, -1): 0.000000
+
+--- Step 17 ---
+  Primary: supported (p=0.515)
+  Conflict score: 0.5000
+  Prediction errors:
+    (-4, -2): 1.647561
+    (-2, -1): 1.238551
+  Layer contributions (conflict_score):
+    (-4, -2): 0.000000
+    (-2, -1): 0.000000
+
+--- Step 18 ---
+  Primary: supported (p=0.515)
+  Conflict score: 0.5000
+  Prediction errors:
+    (-4, -2): 1.299326
+    (-2, -1): 1.134922
+  Layer contributions (conflict_score):
+    (-4, -2): 0.000000
+    (-2, -1): 0.000000
+
+--- Step 19 ---
+  Primary: supported (p=0.515)
+  Conflict score: 0.5000
+  Prediction errors:
+    (-4, -2): 1.456153
+    (-2, -1): 1.576943
+  Layer contributions (conflict_score):
+    (-4, -2): 0.000000
+    (-2, -1): 0.000000

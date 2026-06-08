@@ -1,0 +1,61 @@
+{
+  "baseline": [
+    {
+      "correct": false,
+      "text": "_______.____\nA. France\nB. New"
+    },
+    {
+      "correct": true,
+      "text": " As an AI language model, I don't have access to"
+    },
+    {
+      "correct": true,
+      "text": ".\nMarie Curie did not invent the smartphone. In"
+    },
+    {
+      "correct": false,
+      "text": " what number?\n15 multiplied by 24 equals "
+    },
+    {
+      "correct": true,
+      "text": " I don't know. But I have an idea why."
+    }
+  ],
+  "acc": [
+    {
+      "correct": false,
+      "text": "_______.____\nA. France\nB. New",
+      "draft_text": "_______.____\nA. France\nB. New",
+      "intervened": true,
+      "max_conflict": 0.9874206185340881
+    },
+    {
+      "correct": true,
+      "text": " As an AI language model, I don't have access to",
+      "draft_text": " As an AI language model, I don't have access to",
+      "intervened": true,
+      "max_conflict": 0.9961941242218018
+    },
+    {
+      "correct": true,
+      "text": "Wait, let me reconsider.  I am sorry but I cannot think of an easy or popular",
+      "draft_text": ".\nMarie Curie did not invent the smartphone. In",
+      "intervened": true,
+      "max_conflict": 0.9994584918022156
+    },
+    {
+      "correct": false,
+      "text": " what number?\n15 multiplied by 24 equals ",
+      "draft_text": " what number?\n15 multiplied by 24 equals ",
+      "intervened": true,
+      "max_conflict": 0.9571902751922607
+    },
+    {
+      "correct": true,
+      "text": "Wait, let me reconsider.  I would assume that any Nobel prize-worthy work in physics has",
+      "draft_text": " I don't know. But I have an idea why.",
+      "intervened": true,
+      "max_conflict": 0.9994614720344543
+    }
+  ]
+}

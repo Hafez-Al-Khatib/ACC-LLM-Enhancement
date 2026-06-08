@@ -1,0 +1,362 @@
+[
+  {
+    "prompt": "The capital of France is",
+    "output": "The capital of France is adjud [ENTROPY FLAG] Mothers [ENTROPY FLAG] shareholder [ENTROPY FLAG]OUT [ENTROPY FLAG]Source [ENTROPY FLAG] Ray [ENTROPY FLAG]ensation [ENTROPY FLAG] NOR [ENTROPY FLAG]ensor [ENTROPY FLAG] sched [ENTROPY FLAG]",
+    "time_sec": 2.8767971992492676,
+    "n_flags": 10,
+    "n_regenerations": 0,
+    "max_conflict_score": 0.0,
+    "decisions": [
+      {
+        "action": "flag",
+        "reason": "Entropy: 10.825 > threshold \u2192 FLAG",
+        "entropy": 10.824796676635742,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "flag",
+        "reason": "Entropy: 10.825 > threshold \u2192 FLAG",
+        "entropy": 10.824504852294922,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "flag",
+        "reason": "Entropy: 10.825 > threshold \u2192 FLAG",
+        "entropy": 10.824522972106934,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "flag",
+        "reason": "Entropy: 10.825 > threshold \u2192 FLAG",
+        "entropy": 10.824518203735352,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "flag",
+        "reason": "Entropy: 10.825 > threshold \u2192 FLAG",
+        "entropy": 10.82451343536377,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "flag",
+        "reason": "Entropy: 10.825 > threshold \u2192 FLAG",
+        "entropy": 10.824515342712402,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "flag",
+        "reason": "Entropy: 10.825 > threshold \u2192 FLAG",
+        "entropy": 10.824522972106934,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "flag",
+        "reason": "Entropy: 10.825 > threshold \u2192 FLAG",
+        "entropy": 10.824527740478516,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "flag",
+        "reason": "Entropy: 10.825 > threshold \u2192 FLAG",
+        "entropy": 10.824549674987793,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "flag",
+        "reason": "Entropy: 10.825 > threshold \u2192 FLAG",
+        "entropy": 10.824530601501465,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      }
+    ]
+  },
+  {
+    "prompt": "In 1492, Christopher Columbus",
+    "output": "In 1492, Christopher Columbus constrained [ENTROPY FLAG] serotonin [ENTROPY FLAG] dictatorship [ENTROPY FLAG] emphasizes [ENTROPY FLAG]Union [ENTROPY FLAG]Capital [ENTROPY FLAG]Net [ENTROPY FLAG] trash [ENTROPY FLAG] occasional [ENTROPY FLAG]Fight [ENTROPY FLAG]",
+    "time_sec": 0.19199466705322266,
+    "n_flags": 10,
+    "n_regenerations": 0,
+    "max_conflict_score": 0.0,
+    "decisions": [
+      {
+        "action": "flag",
+        "reason": "Entropy: 10.825 > threshold \u2192 FLAG",
+        "entropy": 10.824508666992188,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "flag",
+        "reason": "Entropy: 10.825 > threshold \u2192 FLAG",
+        "entropy": 10.824517250061035,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "flag",
+        "reason": "Entropy: 10.825 > threshold \u2192 FLAG",
+        "entropy": 10.824907302856445,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "flag",
+        "reason": "Entropy: 10.825 > threshold \u2192 FLAG",
+        "entropy": 10.824516296386719,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "flag",
+        "reason": "Entropy: 10.825 > threshold \u2192 FLAG",
+        "entropy": 10.82451057434082,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "flag",
+        "reason": "Entropy: 10.825 > threshold \u2192 FLAG",
+        "entropy": 10.824509620666504,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "flag",
+        "reason": "Entropy: 10.825 > threshold \u2192 FLAG",
+        "entropy": 10.824514389038086,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "flag",
+        "reason": "Entropy: 10.825 > threshold \u2192 FLAG",
+        "entropy": 10.824512481689453,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "flag",
+        "reason": "Entropy: 10.825 > threshold \u2192 FLAG",
+        "entropy": 10.824514389038086,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "flag",
+        "reason": "Entropy: 10.825 > threshold \u2192 FLAG",
+        "entropy": 10.824546813964844,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      }
+    ]
+  },
+  {
+    "prompt": "The theory of relativity was developed by",
+    "output": "The theory of relativity was developed by rehears [ENTROPY FLAG]iera [ENTROPY FLAG] ult [ENTROPY FLAG] aged [ENTROPY FLAG] aligned [ENTROPY FLAG] Readers [ENTROPY FLAG] ab [ENTROPY FLAG] 52 [ENTROPY FLAG] RU [ENTROPY FLAG]rique [ENTROPY FLAG]",
+    "time_sec": 0.10683655738830566,
+    "n_flags": 10,
+    "n_regenerations": 0,
+    "max_conflict_score": 0.0,
+    "decisions": [
+      {
+        "action": "flag",
+        "reason": "Entropy: 10.825 > threshold \u2192 FLAG",
+        "entropy": 10.824583053588867,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "flag",
+        "reason": "Entropy: 10.825 > threshold \u2192 FLAG",
+        "entropy": 10.824515342712402,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "flag",
+        "reason": "Entropy: 10.825 > threshold \u2192 FLAG",
+        "entropy": 10.824793815612793,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "flag",
+        "reason": "Entropy: 10.825 > threshold \u2192 FLAG",
+        "entropy": 10.82451057434082,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "flag",
+        "reason": "Entropy: 10.825 > threshold \u2192 FLAG",
+        "entropy": 10.824508666992188,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "flag",
+        "reason": "Entropy: 10.825 > threshold \u2192 FLAG",
+        "entropy": 10.824674606323242,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "flag",
+        "reason": "Entropy: 10.825 > threshold \u2192 FLAG",
+        "entropy": 10.824711799621582,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "flag",
+        "reason": "Entropy: 10.825 > threshold \u2192 FLAG",
+        "entropy": 10.824567794799805,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "flag",
+        "reason": "Entropy: 10.825 > threshold \u2192 FLAG",
+        "entropy": 10.824535369873047,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "flag",
+        "reason": "Entropy: 10.825 > threshold \u2192 FLAG",
+        "entropy": 10.824528694152832,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      }
+    ]
+  },
+  {
+    "prompt": "Water boils at a temperature of",
+    "output": "Water boils at a temperature of cone [ENTROPY FLAG] embarrassing [ENTROPY FLAG]ace [ENTROPY FLAG] limitation [ENTROPY FLAG]aques [ENTROPY FLAG] Fahrenheit [ENTROPY FLAG]Ex [ENTROPY FLAG] Spark [ENTROPY FLAG]Hop [ENTROPY FLAG]ach [ENTROPY FLAG]",
+    "time_sec": 0.12884020805358887,
+    "n_flags": 10,
+    "n_regenerations": 0,
+    "max_conflict_score": 0.0,
+    "decisions": [
+      {
+        "action": "flag",
+        "reason": "Entropy: 10.825 > threshold \u2192 FLAG",
+        "entropy": 10.824520111083984,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "flag",
+        "reason": "Entropy: 10.825 > threshold \u2192 FLAG",
+        "entropy": 10.824548721313477,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "flag",
+        "reason": "Entropy: 10.825 > threshold \u2192 FLAG",
+        "entropy": 10.824517250061035,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "flag",
+        "reason": "Entropy: 10.825 > threshold \u2192 FLAG",
+        "entropy": 10.824529647827148,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "flag",
+        "reason": "Entropy: 10.825 > threshold \u2192 FLAG",
+        "entropy": 10.824908256530762,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "flag",
+        "reason": "Entropy: 10.825 > threshold \u2192 FLAG",
+        "entropy": 10.824522018432617,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "flag",
+        "reason": "Entropy: 10.825 > threshold \u2192 FLAG",
+        "entropy": 10.824516296386719,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "flag",
+        "reason": "Entropy: 10.825 > threshold \u2192 FLAG",
+        "entropy": 10.82451057434082,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "flag",
+        "reason": "Entropy: 10.825 > threshold \u2192 FLAG",
+        "entropy": 10.824514389038086,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      },
+      {
+        "action": "flag",
+        "reason": "Entropy: 10.825 > threshold \u2192 FLAG",
+        "entropy": 10.824516296386719,
+        "conflict_score": null,
+        "primary": null,
+        "secondary": null
+      }
+    ]
+  }
+]

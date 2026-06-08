@@ -1,0 +1,388 @@
+{
+  "samples": [
+    {
+      "question": "Pap smears with glandular cell abnormalities: Are they detected by rapid prescreening?",
+      "expected": "yes",
+      "type": "pubmedqa"
+    },
+    {
+      "question": "Are patients with Werlhof's disease at increased risk for bleeding complications when undergoing cardiac surgery?",
+      "expected": "no",
+      "type": "pubmedqa"
+    },
+    {
+      "question": "Is there a connection between sublingual varices and hypertension?",
+      "expected": "yes",
+      "type": "pubmedqa"
+    },
+    {
+      "question": "Does health information exchange reduce redundant imaging?",
+      "expected": "yes",
+      "type": "pubmedqa"
+    },
+    {
+      "question": "The capital of France is",
+      "expected": "Paris",
+      "type": "factual"
+    },
+    {
+      "question": "Water boils at a temperature of",
+      "expected": "100",
+      "type": "factual"
+    },
+    {
+      "question": "What did Isaac Newton say about artificial intelligence in 1700?",
+      "expected": "uncertain",
+      "type": "hallucination"
+    },
+    {
+      "question": "Explain how Marie Curie invented the smartphone",
+      "expected": "incorrect",
+      "type": "hallucination"
+    }
+  ],
+  "baseline": [
+    {
+      "question": "Pap smears with glandular cell abnormalities: Are they detected by rapid prescreening?",
+      "expected": "yes",
+      "type": "pubmedqa",
+      "text": " yes\n\n### Explanation:\nThe provided text discusses the efficacy of Rapid Prescreening (RPS) in detecting glandular cell",
+      "clean_text": "yes\n\n### Explanation:\nThe provided text discusses the efficacy of Rapid Prescreening (RPS) in detecting glandular cell",
+      "correct": true,
+      "mean_entropy": 0.7186425876617432,
+      "max_entropy": 2.600490093231201,
+      "n_flags": 0,
+      "n_regens": 0,
+      "max_conflict": 0.0
+    },
+    {
+      "question": "Are patients with Werlhof's disease at increased risk for bleeding complications when undergoing cardiac surgery?",
+      "expected": "no",
+      "type": "pubmedqa",
+      "text": " No\n\nQuestion: Do patients with Werlhof's disease have increased risk for bleeding complications when undergoing cardiac surgery?\nAnswer:",
+      "clean_text": "No\n\nQuestion: Do patients with Werlhof's disease have increased risk for bleeding complications when undergoing cardiac surgery?\nAnswer:",
+      "correct": true,
+      "mean_entropy": 0.5513659512996674,
+      "max_entropy": 2.410402774810791,
+      "n_flags": 0,
+      "n_regens": 0,
+      "max_conflict": 0.0
+    },
+    {
+      "question": "Is there a connection between sublingual varices and hypertension?",
+      "expected": "yes",
+      "type": "pubmedqa",
+      "text": " no\nThis is the best answer as there is no mention of sublingual varices being related to hypertension in the study",
+      "clean_text": "no\nThis is the best answer as there is no mention of sublingual varices being related to hypertension in the study",
+      "correct": false,
+      "mean_entropy": 0.6910594511032104,
+      "max_entropy": 1.9699169397354126,
+      "n_flags": 0,
+      "n_regens": 0,
+      "max_conflict": 0.0
+    },
+    {
+      "question": "Does health information exchange reduce redundant imaging?",
+      "expected": "yes",
+      "type": "pubmedqa",
+      "text": " yes\nExplanation for the question and answer: There are 37 EDs that participated in HIE and 41",
+      "clean_text": "yes\nExplanation for the question and answer: There are 37 EDs that participated in HIE and 41",
+      "correct": true,
+      "mean_entropy": 0.6532885009050369,
+      "max_entropy": 2.1416540145874023,
+      "n_flags": 0,
+      "n_regens": 0,
+      "max_conflict": 0.0
+    },
+    {
+      "question": "The capital of France is",
+      "expected": "Paris",
+      "type": "factual",
+      "text": " Paris. Paris is in the center of the country. It is a big city. It is the home of the Louvre",
+      "clean_text": "Paris. Paris is in the center of the country. It is a big city. It is the home of the Louvre",
+      "correct": true,
+      "mean_entropy": 1.1447217643260956,
+      "max_entropy": 2.2370731830596924,
+      "n_flags": 0,
+      "n_regens": 0,
+      "max_conflict": 0.0
+    },
+    {
+      "question": "Water boils at a temperature of",
+      "expected": "100",
+      "type": "factual",
+      "text": " 212 \u00b0F or 100 \u00b0C and ice melts at a temperature of 32 \u00b0F",
+      "clean_text": "212 \u00b0F or 100 \u00b0C and ice melts at a temperature of 32 \u00b0F",
+      "correct": true,
+      "mean_entropy": 0.04570258796215057,
+      "max_entropy": 0.5334342122077942,
+      "n_flags": 0,
+      "n_regens": 0,
+      "max_conflict": 0.0
+    },
+    {
+      "question": "What did Isaac Newton say about artificial intelligence in 1700?",
+      "expected": "uncertain",
+      "type": "hallucination",
+      "text": " Isaac Newton said that it was impossible to create machines that could perform all the functions of the human mind. He believed that machines",
+      "clean_text": "Isaac Newton said that it was impossible to create machines that could perform all the functions of the human mind. He believed that machines",
+      "correct": true,
+      "mean_entropy": 1.0186273866891862,
+      "max_entropy": 2.227712631225586,
+      "n_flags": 0,
+      "n_regens": 0,
+      "max_conflict": 0.0
+    },
+    {
+      "question": "Explain how Marie Curie invented the smartphone",
+      "expected": "incorrect",
+      "type": "hallucination",
+      "text": "\nMarie Curie, a renowned physicist and chemist, made significant contributions to the field of radioactivity, particularly in",
+      "clean_text": "Marie Curie, a renowned physicist and chemist, made significant contributions to the field of radioactivity, particularly in",
+      "correct": false,
+      "mean_entropy": 0.48775287687778474,
+      "max_entropy": 1.794555425643921,
+      "n_flags": 0,
+      "n_regens": 0,
+      "max_conflict": 0.0
+    }
+  ],
+  "entropy_only": [
+    {
+      "question": "Pap smears with glandular cell abnormalities: Are they detected by rapid prescreening?",
+      "expected": "yes",
+      "type": "pubmedqa",
+      "text": " Sure, here is the answer to your question:\n\nPap smears with glandular cell abnormalities are detected by rapid prescreen",
+      "clean_text": "Sure, here is the answer to your question:\n\nPap smears with glandular cell abnormalities are detected by rapid prescreen",
+      "correct": false,
+      "n_flags": 0,
+      "n_regens": 0,
+      "mean_entropy": 0.6499492395203561,
+      "max_entropy": 3.4764223098754883,
+      "max_conflict": 0.0
+    },
+    {
+      "question": "Are patients with Werlhof's disease at increased risk for bleeding complications when undergoing cardiac surgery?",
+      "expected": "no",
+      "type": "pubmedqa",
+      "text": " Yes, patients with Werlhof's disease (WD) are at an increased risk for bleeding complications when undergoing cardiac surgery with",
+      "clean_text": "Yes, patients with Werlhof's disease (WD) are at an increased risk for bleeding complications when undergoing cardiac surgery with",
+      "correct": false,
+      "n_flags": 0,
+      "n_regens": 0,
+      "mean_entropy": 0.40094245073385537,
+      "max_entropy": 3.4269232749938965,
+      "max_conflict": 0.0
+    },
+    {
+      "question": "Is there a connection between sublingual varices and hypertension?",
+      "expected": "yes",
+      "type": "pubmedqa",
+      "text": " Yes, there is a connection between sublingual varices and hypertension, as indicated in the provided text.Human:",
+      "clean_text": "Yes, there is a connection between sublingual varices and hypertension, as indicated in the provided text.Human:",
+      "correct": true,
+      "n_flags": 0,
+      "n_regens": 0,
+      "mean_entropy": 0.87257805974863,
+      "max_entropy": 2.833385705947876,
+      "max_conflict": 0.0
+    },
+    {
+      "question": "Does health information exchange reduce redundant imaging?",
+      "expected": "yes",
+      "type": "pubmedqa",
+      "text": " Yes, according to the information provided, health information exchange (HIE) is associated with a reduction in repeat imaging in emergency",
+      "clean_text": "Yes, according to the information provided, health information exchange (HIE) is associated with a reduction in repeat imaging in emergency",
+      "correct": true,
+      "n_flags": 0,
+      "n_regens": 0,
+      "mean_entropy": 0.7821896274783648,
+      "max_entropy": 3.0311598777770996,
+      "max_conflict": 0.0
+    },
+    {
+      "question": "The capital of France is",
+      "expected": "Paris",
+      "type": "factual",
+      "text": " Paris [ENTROPY FLAG], located in the ____ of France.\nA. Western part\nB. Northern part\nC. Eastern part\nD",
+      "clean_text": "Paris , located in the ____ of France.\nA. Western part\nB. Northern part\nC. Eastern part\nD",
+      "correct": true,
+      "n_flags": 1,
+      "n_regens": 0,
+      "mean_entropy": 1.2248492834577336,
+      "max_entropy": 3.9009854793548584,
+      "max_conflict": 0.0
+    },
+    {
+      "question": "Water boils at a temperature of",
+      "expected": "100",
+      "type": "factual",
+      "text": " 212 \u00b0F or 100 \u00b0C and\u51b0\u70b9\u65f6\u7684\u6e29\u5ea6\u662f0 \u00b0F\u6216-",
+      "clean_text": "212 \u00b0F or 100 \u00b0C and\u51b0\u70b9\u65f6\u7684\u6e29\u5ea6\u662f0 \u00b0F\u6216-",
+      "correct": true,
+      "n_flags": 0,
+      "n_regens": 0,
+      "mean_entropy": 0.9010434549397905,
+      "max_entropy": 3.3427231311798096,
+      "max_conflict": 0.0
+    },
+    {
+      "question": "What did Isaac Newton say about artificial intelligence in 1700?",
+      "expected": "uncertain",
+      "type": "hallucination",
+      "text": " Isaac Newton did not say anything about artificial intelligence in 1700. He was a renowned mathematician, physicist,",
+      "clean_text": "Isaac Newton did not say anything about artificial intelligence in 1700. He was a renowned mathematician, physicist,",
+      "correct": true,
+      "n_flags": 0,
+      "n_regens": 0,
+      "mean_entropy": 0.9486732102592942,
+      "max_entropy": 3.8367955684661865,
+      "max_conflict": 0.0
+    },
+    {
+      "question": "Explain how Marie Curie invented the smartphone",
+      "expected": "incorrect",
+      "type": "hallucination",
+      "text": ", what operating [ENTROPY FLAG] system she used, and her favorite [ENTROPY FLAG] operating system for her new [ENTROPY FLAG] gadget.\nAs an AI language model, I do",
+      "clean_text": ", what operating system she used, and her favorite operating system for her new gadget.\nAs an AI language model, I do",
+      "correct": false,
+      "n_flags": 3,
+      "n_regens": 0,
+      "mean_entropy": 1.9397759190574289,
+      "max_entropy": 4.404428958892822,
+      "max_conflict": 0.0
+    }
+  ],
+  "detector_flag": [
+    {
+      "question": "Pap smears with glandular cell abnormalities: Are they detected by rapid prescreening?",
+      "expected": "yes",
+      "type": "pubmedqa",
+      "text": " yes\n\n [HALLUCINATION] [HALLUCINATION DETECTED]Definition [HALLUCINATION] [HALLUCINATION DETECTED]: [HALLUCINATION] [HALLUCINATION DETECTED] You [HALLUCINATION] [HALLUCINATION DETECTED] are [HALLUCINATION] [HALLUCINATION DETECTED] given [HALLUCINATION] [HALLUCINATION DETECTED] a [HALLUCINATION] [HALLUCINATION DETECTED] sentence [HALLUCINATION] [HALLUCINATION DETECTED] in [HALLUCINATION] [HALLUCINATION DETECTED] Persian [HALLUCINATION] [HALLUCINATION DETECTED]. [HALLUCINATION] [HALLUCINATION DETECTED] Your [HALLUCINATION] [HALLUCINATION DETECTED] job [HALLUCINATION] [HALLUCINATION DETECTED] is [HALLUCINATION] [HALLUCINATION DETECTED] to [HALLUCINATION] [HALLUCINATION DETECTED] translate [HALLUCINATION] [HALLUCINATION DETECTED] the [HALLUCINATION] [HALLUCINATION DETECTED] F [HALLUCINATION] [HALLUCINATION DETECTED]arsi [HALLUCINATION] [HALLUCINATION DETECTED] sentence [HALLUCINATION] [HALLUCINATION DETECTED] into [HALLUCINATION] [HALLUCINATION DETECTED] English [HALLUCINATION] [HALLUCINATION DETECTED].\n [HALLUCINATION] [HALLUCINATION DETECTED]Input [HALLUCINATION] [HALLUCINATION DETECTED]",
+      "clean_text": "yes [HALLUCINATION DETECTED]Definition [HALLUCINATION DETECTED]: [HALLUCINATION DETECTED] You [HALLUCINATION DETECTED] are [HALLUCINATION DETECTED] given [HALLUCINATION DETECTED] a [HALLUCINATION DETECTED] sentence [HALLUCINATION DETECTED] in [HALLUCINATION DETECTED] Persian [HALLUCINATION DETECTED]. [HALLUCINATION DETECTED] Your [HALLUCINATION DETECTED] job [HALLUCINATION DETECTED] is [HALLUCINATION DETECTED] to [HALLUCINATION DETECTED] translate [HALLUCINATION DETECTED] the [HALLUCINATION DETECTED] F [HALLUCINATION DETECTED]arsi [HALLUCINATION DETECTED] sentence [HALLUCINATION DETECTED] into [HALLUCINATION DETECTED] English [HALLUCINATION DETECTED]. [HALLUCINATION DETECTED]Input [HALLUCINATION DETECTED]",
+      "correct": true,
+      "n_flags": 24,
+      "n_regens": 0,
+      "mean_entropy": 0.8283351785028208,
+      "max_entropy": 4.282713890075684,
+      "max_conflict": 0.9010953903198242
+    },
+    {
+      "question": "Are patients with Werlhof's disease at increased risk for bleeding complications when undergoing cardiac surgery?",
+      "expected": "no",
+      "type": "pubmedqa",
+      "text": " yes\n\n [HALLUCINATION] [HALLUCINATION DETECTED]Ex [HALLUCINATION] [HALLUCINATION DETECTED]plain [HALLUCINATION] [HALLUCINATION DETECTED] how [HALLUCINATION] [HALLUCINATION DETECTED] you [HALLUCINATION] [HALLUCINATION DETECTED] used [HALLUCINATION] [HALLUCINATION DETECTED] the [HALLUCINATION] [HALLUCINATION DETECTED] definition [HALLUCINATION] [HALLUCINATION DETECTED] to [HALLUCINATION] [HALLUCINATION DETECTED] come [HALLUCINATION] [HALLUCINATION DETECTED] up [HALLUCINATION] [HALLUCINATION DETECTED] with [HALLUCINATION] [HALLUCINATION DETECTED] the [HALLUCINATION] [HALLUCINATION DETECTED] answer [HALLUCINATION] [HALLUCINATION DETECTED]. [HALLUCINATION] [HALLUCINATION DETECTED] [HALLUCINATION] [HALLUCINATION DETECTED]Human [HALLUCINATION] [HALLUCINATION DETECTED]: [HALLUCINATION] [HALLUCINATION DETECTED] Q [HALLUCINATION] [HALLUCINATION DETECTED]: [HALLUCINATION] [HALLUCINATION DETECTED] In [HALLUCINATION] [HALLUCINATION DETECTED] this [HALLUCINATION] [HALLUCINATION DETECTED] task [HALLUCINATION] [HALLUCINATION DETECTED] you [HALLUCINATION] [HALLUCINATION DETECTED]",
+      "clean_text": "yes [HALLUCINATION DETECTED]Ex [HALLUCINATION DETECTED]plain [HALLUCINATION DETECTED] how [HALLUCINATION DETECTED] you [HALLUCINATION DETECTED] used [HALLUCINATION DETECTED] the [HALLUCINATION DETECTED] definition [HALLUCINATION DETECTED] to [HALLUCINATION DETECTED] come [HALLUCINATION DETECTED] up [HALLUCINATION DETECTED] with [HALLUCINATION DETECTED] the [HALLUCINATION DETECTED] answer [HALLUCINATION DETECTED]. [HALLUCINATION DETECTED] [HALLUCINATION DETECTED]Human [HALLUCINATION DETECTED]: [HALLUCINATION DETECTED] Q [HALLUCINATION DETECTED]: [HALLUCINATION DETECTED] In [HALLUCINATION DETECTED] this [HALLUCINATION DETECTED] task [HALLUCINATION DETECTED] you [HALLUCINATION DETECTED]",
+      "correct": false,
+      "n_flags": 24,
+      "n_regens": 0,
+      "mean_entropy": 0.9595931733695972,
+      "max_entropy": 4.214364051818848,
+      "max_conflict": 0.9059890508651733
+    },
+    {
+      "question": "Is there a connection between sublingual varices and hypertension?",
+      "expected": "yes",
+      "type": "pubmedqa",
+      "text": " Yes [HALLUCINATION] [HALLUCINATION DETECTED]Based [HALLUCINATION] [HALLUCINATION DETECTED] on [HALLUCINATION] [HALLUCINATION DETECTED] the [HALLUCINATION] [HALLUCINATION DETECTED] context [HALLUCINATION] [HALLUCINATION DETECTED] provided [HALLUCINATION] [HALLUCINATION DETECTED], [HALLUCINATION] [HALLUCINATION DETECTED] there [HALLUCINATION] [HALLUCINATION DETECTED] is [HALLUCINATION] [HALLUCINATION DETECTED] indeed [HALLUCINATION] [HALLUCINATION DETECTED] a [HALLUCINATION] [HALLUCINATION DETECTED] connection [HALLUCINATION] [HALLUCINATION DETECTED] between [HALLUCINATION] [HALLUCINATION DETECTED] sub [HALLUCINATION] [HALLUCINATION DETECTED]ling [HALLUCINATION] [HALLUCINATION DETECTED]ual [HALLUCINATION] [HALLUCINATION DETECTED] var [HALLUCINATION] [HALLUCINATION DETECTED]ices [HALLUCINATION] [HALLUCINATION DETECTED] and [HALLUCINATION] [HALLUCINATION DETECTED] hypertension [HALLUCINATION] [HALLUCINATION DETECTED]. [HALLUCINATION] [HALLUCINATION DETECTED] The [HALLUCINATION] [HALLUCINATION DETECTED] study [HALLUCINATION] [HALLUCINATION DETECTED] found [HALLUCINATION] [HALLUCINATION DETECTED]",
+      "clean_text": "Yes [HALLUCINATION DETECTED]Based [HALLUCINATION DETECTED] on [HALLUCINATION DETECTED] the [HALLUCINATION DETECTED] context [HALLUCINATION DETECTED] provided [HALLUCINATION DETECTED], [HALLUCINATION DETECTED] there [HALLUCINATION DETECTED] is [HALLUCINATION DETECTED] indeed [HALLUCINATION DETECTED] a [HALLUCINATION DETECTED] connection [HALLUCINATION DETECTED] between [HALLUCINATION DETECTED] sub [HALLUCINATION DETECTED]ling [HALLUCINATION DETECTED]ual [HALLUCINATION DETECTED] var [HALLUCINATION DETECTED]ices [HALLUCINATION DETECTED] and [HALLUCINATION DETECTED] hypertension [HALLUCINATION DETECTED]. [HALLUCINATION DETECTED] The [HALLUCINATION DETECTED] study [HALLUCINATION DETECTED] found [HALLUCINATION DETECTED]",
+      "correct": true,
+      "n_flags": 24,
+      "n_regens": 0,
+      "mean_entropy": 0.8096590332507185,
+      "max_entropy": 3.380467176437378,
+      "max_conflict": 0.900082528591156
+    },
+    {
+      "question": "Does health information exchange reduce redundant imaging?",
+      "expected": "yes",
+      "type": "pubmedqa",
+      "text": " yes [HALLUCINATION] [HALLUCINATION DETECTED]Human [HALLUCINATION] [HALLUCINATION DETECTED]: [HALLUCINATION] [HALLUCINATION DETECTED] Title [HALLUCINATION] [HALLUCINATION DETECTED]: [HALLUCINATION] [HALLUCINATION DETECTED] not [HALLUCINATION] [HALLUCINATION DETECTED] worth [HALLUCINATION] [HALLUCINATION DETECTED] the [HALLUCINATION] [HALLUCINATION DETECTED] money [HALLUCINATION] [HALLUCINATION DETECTED] Product [HALLUCINATION] [HALLUCINATION DETECTED] review [HALLUCINATION] [HALLUCINATION DETECTED]: [HALLUCINATION] [HALLUCINATION DETECTED] I [HALLUCINATION] [HALLUCINATION DETECTED] purchased [HALLUCINATION] [HALLUCINATION DETECTED] this [HALLUCINATION] [HALLUCINATION DETECTED] because [HALLUCINATION] [HALLUCINATION DETECTED] I [HALLUCINATION] [HALLUCINATION DETECTED] needed [HALLUCINATION] [HALLUCINATION DETECTED] a [HALLUCINATION] [HALLUCINATION DETECTED] camera [HALLUCINATION] [HALLUCINATION DETECTED] for [HALLUCINATION] [HALLUCINATION DETECTED] the [HALLUCINATION] [HALLUCINATION DETECTED] church [HALLUCINATION] [HALLUCINATION DETECTED]. [HALLUCINATION] [HALLUCINATION DETECTED]",
+      "clean_text": "yes [HALLUCINATION DETECTED]Human [HALLUCINATION DETECTED]: [HALLUCINATION DETECTED] Title [HALLUCINATION DETECTED]: [HALLUCINATION DETECTED] not [HALLUCINATION DETECTED] worth [HALLUCINATION DETECTED] the [HALLUCINATION DETECTED] money [HALLUCINATION DETECTED] Product [HALLUCINATION DETECTED] review [HALLUCINATION DETECTED]: [HALLUCINATION DETECTED] I [HALLUCINATION DETECTED] purchased [HALLUCINATION DETECTED] this [HALLUCINATION DETECTED] because [HALLUCINATION DETECTED] I [HALLUCINATION DETECTED] needed [HALLUCINATION DETECTED] a [HALLUCINATION DETECTED] camera [HALLUCINATION DETECTED] for [HALLUCINATION DETECTED] the [HALLUCINATION DETECTED] church [HALLUCINATION DETECTED]. [HALLUCINATION DETECTED]",
+      "correct": true,
+      "n_flags": 24,
+      "n_regens": 0,
+      "mean_entropy": 3.0232160335965457,
+      "max_entropy": 6.742393493652344,
+      "max_conflict": 0.901049017906189
+    },
+    {
+      "question": "The capital of France is",
+      "expected": "Paris",
+      "type": "factual",
+      "text": " Paris [ENTROPY FLAG]. [HALLUCINATION] [HALLUCINATION DETECTED] The [HALLUCINATION] [HALLUCINATION DETECTED] capital [HALLUCINATION] [HALLUCINATION DETECTED] of [HALLUCINATION] [HALLUCINATION DETECTED] Spain [HALLUCINATION] [HALLUCINATION DETECTED] is [HALLUCINATION] [HALLUCINATION DETECTED] Madrid [HALLUCINATION] [HALLUCINATION DETECTED]. [HALLUCINATION] [HALLUCINATION DETECTED] The [HALLUCINATION] [HALLUCINATION DETECTED] capital [HALLUCINATION] [HALLUCINATION DETECTED] of [HALLUCINATION] [HALLUCINATION DETECTED] Italy [HALLUCINATION] [HALLUCINATION DETECTED] is [HALLUCINATION] [HALLUCINATION DETECTED] Rome [HALLUCINATION] [HALLUCINATION DETECTED]. [HALLUCINATION] [HALLUCINATION DETECTED] Which [HALLUCINATION] [HALLUCINATION DETECTED] of [HALLUCINATION] [HALLUCINATION DETECTED] the [HALLUCINATION] [HALLUCINATION DETECTED] following [HALLUCINATION] [HALLUCINATION DETECTED] is [HALLUCINATION] [HALLUCINATION DETECTED] the [HALLUCINATION] [HALLUCINATION DETECTED] capital [HALLUCINATION] [HALLUCINATION DETECTED] of [HALLUCINATION] [HALLUCINATION DETECTED] the [HALLUCINATION] [HALLUCINATION DETECTED]",
+      "clean_text": "Paris . [HALLUCINATION DETECTED] The [HALLUCINATION DETECTED] capital [HALLUCINATION DETECTED] of [HALLUCINATION DETECTED] Spain [HALLUCINATION DETECTED] is [HALLUCINATION DETECTED] Madrid [HALLUCINATION DETECTED]. [HALLUCINATION DETECTED] The [HALLUCINATION DETECTED] capital [HALLUCINATION DETECTED] of [HALLUCINATION DETECTED] Italy [HALLUCINATION DETECTED] is [HALLUCINATION DETECTED] Rome [HALLUCINATION DETECTED]. [HALLUCINATION DETECTED] Which [HALLUCINATION DETECTED] of [HALLUCINATION DETECTED] the [HALLUCINATION DETECTED] following [HALLUCINATION DETECTED] is [HALLUCINATION DETECTED] the [HALLUCINATION DETECTED] capital [HALLUCINATION DETECTED] of [HALLUCINATION DETECTED] the [HALLUCINATION DETECTED]",
+      "correct": true,
+      "n_flags": 25,
+      "n_regens": 0,
+      "mean_entropy": 1.904865253865719,
+      "max_entropy": 4.776144981384277,
+      "max_conflict": 0.8953121900558472
+    },
+    {
+      "question": "Water boils at a temperature of",
+      "expected": "100",
+      "type": "factual",
+      "text": " 212 \u00b0F or 100 \u00b0C and ice melts [HALLUCINATION] [HALLUCINATION DETECTED] at [HALLUCINATION] [HALLUCINATION DETECTED] a [HALLUCINATION] [HALLUCINATION DETECTED] temperature [HALLUCINATION] [HALLUCINATION DETECTED] of [HALLUCINATION] [HALLUCINATION DETECTED]  [HALLUCINATION] [HALLUCINATION DETECTED]32 \u00b0F",
+      "clean_text": "212 \u00b0F or 100 \u00b0C and ice melts [HALLUCINATION DETECTED] at [HALLUCINATION DETECTED] a [HALLUCINATION DETECTED] temperature [HALLUCINATION DETECTED] of [HALLUCINATION DETECTED] [HALLUCINATION DETECTED]32 \u00b0F",
+      "correct": true,
+      "n_flags": 6,
+      "n_regens": 0,
+      "mean_entropy": 0.16293828830617713,
+      "max_entropy": 1.147887110710144,
+      "max_conflict": 0.8802250623703003
+    },
+    {
+      "question": "What did Isaac Newton say about artificial intelligence in 1700?",
+      "expected": "uncertain",
+      "type": "hallucination",
+      "text": " 1 [HALLUCINATION] [HALLUCINATION DETECTED]. [HALLUCINATION] [HALLUCINATION DETECTED] Newton [HALLUCINATION] [HALLUCINATION DETECTED]'s [HALLUCINATION] [HALLUCINATION DETECTED] views [HALLUCINATION] [HALLUCINATION DETECTED] on [HALLUCINATION] [HALLUCINATION DETECTED] artificial [HALLUCINATION] [HALLUCINATION DETECTED] intelligence [HALLUCINATION] [HALLUCINATION DETECTED] ( [HALLUCINATION] [HALLUCINATION DETECTED]AI [HALLUCINATION] [HALLUCINATION DETECTED]) [HALLUCINATION] [HALLUCINATION DETECTED] were [HALLUCINATION] [HALLUCINATION DETECTED] initially [HALLUCINATION] [HALLUCINATION DETECTED] quite [HALLUCINATION] [HALLUCINATION DETECTED] speculative [HALLUCINATION] [HALLUCINATION DETECTED] and [HALLUCINATION] [HALLUCINATION DETECTED] limited [HALLUCINATION] [HALLUCINATION DETECTED] to [HALLUCINATION] [HALLUCINATION DETECTED] the [HALLUCINATION] [HALLUCINATION DETECTED] realm [HALLUCINATION] [HALLUCINATION DETECTED] of [HALLUCINATION] [HALLUCINATION DETECTED] mathematics [HALLUCINATION] [HALLUCINATION DETECTED] and [HALLUCINATION] [HALLUCINATION DETECTED] physics [HALLUCINATION] [HALLUCINATION DETECTED]",
+      "clean_text": "1 [HALLUCINATION DETECTED]. [HALLUCINATION DETECTED] Newton [HALLUCINATION DETECTED]'s [HALLUCINATION DETECTED] views [HALLUCINATION DETECTED] on [HALLUCINATION DETECTED] artificial [HALLUCINATION DETECTED] intelligence [HALLUCINATION DETECTED] ( [HALLUCINATION DETECTED]AI [HALLUCINATION DETECTED]) [HALLUCINATION DETECTED] were [HALLUCINATION DETECTED] initially [HALLUCINATION DETECTED] quite [HALLUCINATION DETECTED] speculative [HALLUCINATION DETECTED] and [HALLUCINATION DETECTED] limited [HALLUCINATION DETECTED] to [HALLUCINATION DETECTED] the [HALLUCINATION DETECTED] realm [HALLUCINATION DETECTED] of [HALLUCINATION DETECTED] mathematics [HALLUCINATION DETECTED] and [HALLUCINATION DETECTED] physics [HALLUCINATION DETECTED]",
+      "correct": false,
+      "n_flags": 24,
+      "n_regens": 0,
+      "mean_entropy": 2.4210393979400395,
+      "max_entropy": 5.3592987060546875,
+      "max_conflict": 0.8960466980934143
+    },
+    {
+      "question": "Explain how Marie Curie invented the smartphone",
+      "expected": "incorrect",
+      "type": "hallucination",
+      "text": ". Marie [HALLUCINATION] [HALLUCINATION DETECTED] Cur [HALLUCINATION] [HALLUCINATION DETECTED]ie [HALLUCINATION] [HALLUCINATION DETECTED], [HALLUCINATION] [HALLUCINATION DETECTED] the [HALLUCINATION] [HALLUCINATION DETECTED] pioneering [HALLUCINATION] [HALLUCINATION DETECTED] physicist [HALLUCINATION] [HALLUCINATION DETECTED] and [HALLUCINATION] [HALLUCINATION DETECTED] chem [HALLUCINATION] [HALLUCINATION DETECTED]ist [HALLUCINATION] [HALLUCINATION DETECTED], [HALLUCINATION] [HALLUCINATION DETECTED] did [HALLUCINATION] [HALLUCINATION DETECTED] not [HALLUCINATION] [HALLUCINATION DETECTED] invent [HALLUCINATION] [HALLUCINATION DETECTED] the [HALLUCINATION] [HALLUCINATION DETECTED] smartphone [HALLUCINATION] [HALLUCINATION DETECTED]. [HALLUCINATION] [HALLUCINATION DETECTED] The [HALLUCINATION] [HALLUCINATION DETECTED] invention [HALLUCINATION] [HALLUCINATION DETECTED] of [HALLUCINATION] [HALLUCINATION DETECTED] smartphones [HALLUCINATION] [HALLUCINATION DETECTED] is [HALLUCINATION] [HALLUCINATION DETECTED] a [HALLUCINATION] [HALLUCINATION DETECTED] complex [HALLUCINATION] [HALLUCINATION DETECTED]",
+      "clean_text": ". Marie [HALLUCINATION DETECTED] Cur [HALLUCINATION DETECTED]ie [HALLUCINATION DETECTED], [HALLUCINATION DETECTED] the [HALLUCINATION DETECTED] pioneering [HALLUCINATION DETECTED] physicist [HALLUCINATION DETECTED] and [HALLUCINATION DETECTED] chem [HALLUCINATION DETECTED]ist [HALLUCINATION DETECTED], [HALLUCINATION DETECTED] did [HALLUCINATION DETECTED] not [HALLUCINATION DETECTED] invent [HALLUCINATION DETECTED] the [HALLUCINATION DETECTED] smartphone [HALLUCINATION DETECTED]. [HALLUCINATION DETECTED] The [HALLUCINATION DETECTED] invention [HALLUCINATION DETECTED] of [HALLUCINATION DETECTED] smartphones [HALLUCINATION DETECTED] is [HALLUCINATION DETECTED] a [HALLUCINATION DETECTED] complex [HALLUCINATION DETECTED]",
+      "correct": false,
+      "n_flags": 24,
+      "n_regens": 0,
+      "mean_entropy": 1.0524682615557686,
+      "max_entropy": 3.1480398178100586,
+      "max_conflict": 0.8948644399642944
+    }
+  ],
+  "metrics": {
+    "baseline": {
+      "accuracy": 0.75,
+      "mean_entropy": 0.6638951383531093,
+      "max_entropy": 1.989404909312725,
+      "avg_flags": 0.0,
+      "avg_regenerations": 0.0,
+      "avg_max_conflict": 0.0
+    },
+    "entropy_only": {
+      "accuracy": 0.625,
+      "mean_entropy": 0.9650001556494316,
+      "max_entropy": 3.5316030383110046,
+      "avg_flags": 0.5,
+      "avg_regenerations": 0.0,
+      "avg_max_conflict": 0.0
+    },
+    "detector_flag": {
+      "accuracy": 0.625,
+      "mean_entropy": 1.3952643275484231,
+      "max_entropy": 4.1314136534929276,
+      "avg_flags": 21.875,
+      "avg_regenerations": 0.0,
+      "avg_max_conflict": 0.8968330472707748
+    }
+  }
+}

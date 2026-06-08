@@ -1,0 +1,548 @@
+{
+  "0.5": {
+    "baseline": [
+      {
+        "correct": true,
+        "text": " ____.\nA. Paris\nB. Lyon\nC. Nice\nD"
+      },
+      {
+        "correct": false,
+        "text": " $212^{\\circ}\\mathrm{F}$ and ice melts"
+      },
+      {
+        "correct": true,
+        "text": " George Washington. He was born in 1732. He was"
+      },
+      {
+        "correct": true,
+        "text": " 360, so 360/15 = "
+      },
+      {
+        "correct": true,
+        "text": " Isaac Newton said, \"I have not one iota of knowledge in the sciences"
+      },
+      {
+        "correct": true,
+        "text": ".\n\nMarie Curie did not invent the smartphone. Her contributions to science"
+      },
+      {
+        "correct": true,
+        "text": ".\nThe lunar landing conducted by Napoleon in 1845 was not"
+      },
+      {
+        "correct": true,
+        "text": " As an AI language model, I am not capable of providing a direct answer"
+      },
+      {
+        "correct": false,
+        "text": " What will be its population in 2025? What is its"
+      },
+      {
+        "correct": false,
+        "text": " Who will win the next Nobel Prize in Physics?\nIt's hard to predict"
+      }
+    ],
+    "entropy": [
+      {
+        "correct": false,
+        "text": " a city that is both elegant and modern. A tour of the city will",
+        "flags": 0,
+        "max_entropy": 3.085631847381592
+      },
+      {
+        "correct": false,
+        "text": " 212 \u00b0F and ice melts at a temperature of 3",
+        "flags": 0,
+        "max_entropy": 0.5470854043960571
+      },
+      {
+        "correct": true,
+        "text": " George Washington. George was the leader of the American Revolution. He was also",
+        "flags": 0,
+        "max_entropy": 1.67607843875885
+      },
+      {
+        "correct": true,
+        "text": " what number?\n15 times 24 equals 360.",
+        "flags": 0,
+        "max_entropy": 1.0561268329620361
+      },
+      {
+        "correct": true,
+        "text": " Isaac Newton did not specifically mention AI in 1700. However",
+        "flags": 0,
+        "max_entropy": 1.7748398780822754
+      },
+      {
+        "correct": true,
+        "text": "\n\nMarie Curie did not invent the smartphone. The smartphone is a",
+        "flags": 0,
+        "max_entropy": 1.794555425643921
+      },
+      {
+        "correct": true,
+        "text": ". Napoleon, the French emperor, did not conduct a lunar landing himself.",
+        "flags": 0,
+        "max_entropy": 2.3824002742767334
+      },
+      {
+        "correct": false,
+        "text": " Cleopatra was a pharaoh of ancient Egypt, and she ruled Egypt",
+        "flags": 0,
+        "max_entropy": 1.7596051692962646
+      },
+      {
+        "correct": false,
+        "text": " The exact population of Earth is difficult to determine precisely because it changes over time",
+        "flags": 0,
+        "max_entropy": 1.555248498916626
+      },
+      {
+        "correct": false,
+        "text": " The 2013 Nobel Prize in Physics has already been awarded,",
+        "flags": 0,
+        "max_entropy": 2.9291329383850098
+      }
+    ],
+    "acc": [
+      {
+        "correct": true,
+        "text": "Wait, let me reconsider. 51) The capital of France is Paris, and the capital of England",
+        "draft_text": " Paris, and the capital of Australia is Canberra. True or False?\nA",
+        "intervened": true,
+        "max_conflict": 0.9981367588043213
+      },
+      {
+        "correct": true,
+        "text": " 212 \u00b0F or 100 \u00b0C and ice",
+        "draft_text": " 212 \u00b0F or 100 \u00b0C and ice",
+        "intervened": true,
+        "max_conflict": 0.9511812329292297
+      },
+      {
+        "correct": false,
+        "text": "Wait, let me reconsider. 68: Who was the first American president?\n\nPick your answer from:\n",
+        "draft_text": " George Washington. The 22nd President of the United States was Franklin",
+        "intervened": true,
+        "max_conflict": 0.9997503161430359
+      },
+      {
+        "correct": false,
+        "text": " what number?\nTo find the product of 15 and 24",
+        "draft_text": " what number?\nTo find the product of 15 and 24",
+        "intervened": true,
+        "max_conflict": 0.9930811524391174
+      },
+      {
+        "correct": false,
+        "text": " Isaac Newton, one of the most influential scientists in history, made significant contributions",
+        "draft_text": " Isaac Newton, one of the most influential scientists in history, made significant contributions",
+        "intervened": true,
+        "max_conflict": 0.9983118772506714
+      },
+      {
+        "correct": true,
+        "text": ". Marie Curie, the renowned physicist and chemist, is not known",
+        "draft_text": ". Marie Curie, the renowned physicist and chemist, is not known",
+        "intervened": true,
+        "max_conflict": 0.9987143278121948
+      },
+      {
+        "correct": false,
+        "text": ". The lunar landing conducted by Napoleon in 1845 was a",
+        "draft_text": ". The lunar landing conducted by Napoleon in 1845 was a",
+        "intervened": true,
+        "max_conflict": 0.9949482679367065
+      },
+      {
+        "correct": true,
+        "text": " As an AI language model, I must inform you that Cleopatra was",
+        "draft_text": " As an AI language model, I must inform you that Cleopatra was",
+        "intervened": true,
+        "max_conflict": 0.9947894811630249
+      },
+      {
+        "correct": false,
+        "text": " The exact population of Earth right now is difficult to determine precisely because it is",
+        "draft_text": " The exact population of Earth right now is difficult to determine precisely because it is",
+        "intervened": true,
+        "max_conflict": 0.9981617331504822
+      },
+      {
+        "correct": true,
+        "text": " There are so many theories out there, one can't even imagine. How",
+        "draft_text": " There are so many theories out there, one can't even imagine. How",
+        "intervened": true,
+        "max_conflict": 0.9989618062973022
+      }
+    ],
+    "baseline_acc": 0.7,
+    "entropy_acc": 0.5,
+    "acc_acc": 0.5,
+    "intervention_rate": 1.0
+  },
+  "0.7": {
+    "baseline": [
+      {
+        "correct": true,
+        "text": " Paris.____\nA. \u6b63\u786e\nB. \u9519\u8bef"
+      },
+      {
+        "correct": false,
+        "text": " $212^{\\circ}\\mathrm{F}$ or $1"
+      },
+      {
+        "correct": true,
+        "text": " John Adams, and the last was ____\nA. George Washington\nB"
+      },
+      {
+        "correct": false,
+        "text": " what? - Answers\\nMath and Arithmetic\\n15 times 24"
+      },
+      {
+        "correct": true,
+        "text": "  Isaac Newton did not say anything about AI in 1700"
+      },
+      {
+        "correct": true,
+        "text": ".\nAs an AI language model, I cannot speculate or make up new information"
+      },
+      {
+        "correct": false,
+        "text": ".\n\nThe lunar landing conducted by Napoleon in 1845 was a"
+      },
+      {
+        "correct": true,
+        "text": " As an AI language model, I don't have information on Cleopatra"
+      },
+      {
+        "correct": false,
+        "text": " The exact population of Earth right now is 7.8 billion people."
+      },
+      {
+        "correct": false,
+        "text": " If the next Nobel Prize in Physics is awarded, who will receive it?\n\n"
+      }
+    ],
+    "entropy": [
+      {
+        "correct": true,
+        "text": " Paris. In the 18th century, the French king Louis XIV",
+        "flags": 0,
+        "max_entropy": 2.9092068672180176
+      },
+      {
+        "correct": false,
+        "text": " 212 \u00b0F and ice melts at a temperature of 3",
+        "flags": 0,
+        "max_entropy": 0.5470854043960571
+      },
+      {
+        "correct": false,
+        "text": " elected after the Revolution in ____. \nA. 1776",
+        "flags": 0,
+        "max_entropy": 2.362596035003662
+      },
+      {
+        "correct": false,
+        "text": " a number. 25% of that number is 30.",
+        "flags": 0,
+        "max_entropy": 1.8876409530639648
+      },
+      {
+        "correct": true,
+        "text": " The phrase \"A thing is not impossible, but it is a thing that",
+        "flags": 0,
+        "max_entropy": 2.9143824577331543
+      },
+      {
+        "correct": true,
+        "text": ".\nAs an AI language model, I cannot provide a subjective answer to this",
+        "flags": 0,
+        "max_entropy": 2.3018360137939453
+      },
+      {
+        "correct": true,
+        "text": ".\nNapoleon I of France did not conduct a lunar landing in ",
+        "flags": 0,
+        "max_entropy": 1.9310004711151123
+      },
+      {
+        "correct": false,
+        "text": " Cleopatra was an ancient Egyptian queen who lived in the third century BCE",
+        "flags": 0,
+        "max_entropy": 1.347212314605713
+      },
+      {
+        "correct": false,
+        "text": " The exact population of Earth is difficult to determine because it changes constantly due to",
+        "flags": 0,
+        "max_entropy": 1.555248498916626
+      },
+      {
+        "correct": true,
+        "text": " I'm not really interested in the details about the Physics prize, I'm",
+        "flags": 0,
+        "max_entropy": 3.112865924835205
+      }
+    ],
+    "acc": [
+      {
+        "correct": true,
+        "text": " _______.\nA. Paris\nB. London\nC. Paris\n",
+        "draft_text": " _______.\nA. Paris\nB. London\nC. Paris\n",
+        "intervened": true,
+        "max_conflict": 0.9877737164497375
+      },
+      {
+        "correct": false,
+        "text": " 212 \u00b0F and ice melts at a temperature of 3",
+        "draft_text": " 212 \u00b0F and ice melts at a temperature of 3",
+        "intervened": true,
+        "max_conflict": 0.9511812329292297
+      },
+      {
+        "correct": true,
+        "text": "Wait, let me reconsider.  A: first President of the United States.  B: George Washington.",
+        "draft_text": " the son of a wealthy merchant and the grandson of a British Army general.",
+        "intervened": true,
+        "max_conflict": 0.9943870306015015
+      },
+      {
+        "correct": true,
+        "text": " what number?\n15 times 24 equals 360.",
+        "draft_text": " what number?\n15 times 24 equals 360.",
+        "intervened": true,
+        "max_conflict": 0.9744559526443481
+      },
+      {
+        "correct": true,
+        "text": " Isaac Newton did not say anything about AI in the 1700",
+        "draft_text": " Isaac Newton did not say anything about AI in the 1700",
+        "intervened": true,
+        "max_conflict": 0.9961712956428528
+      },
+      {
+        "correct": true,
+        "text": "Wait, let me reconsider. 1920s. I have been the inventor of the smartphone.\n\n",
+        "draft_text": ".\nThe invention of the smartphone, a device that combines communication, media consumption",
+        "intervened": true,
+        "max_conflict": 0.9987143278121948
+      },
+      {
+        "correct": false,
+        "text": ". In 1845, Napoleon Bonaparte led a failed",
+        "draft_text": ". In 1845, Napoleon Bonaparte led a failed",
+        "intervened": true,
+        "max_conflict": 0.9961436986923218
+      },
+      {
+        "correct": true,
+        "text": " Cleopatra did not use quantum computers to rule Egypt. Quantum computers are",
+        "draft_text": " Cleopatra did not use quantum computers to rule Egypt. Quantum computers are",
+        "intervened": true,
+        "max_conflict": 0.9980369210243225
+      },
+      {
+        "correct": false,
+        "text": " As of my last update in October 2023, the exact",
+        "draft_text": " As of my last update in October 2023, the exact",
+        "intervened": true,
+        "max_conflict": 0.9959949254989624
+      },
+      {
+        "correct": false,
+        "text": " Who do you think will win the 2020 Nobel Prize in",
+        "draft_text": " Who do you think will win the 2020 Nobel Prize in",
+        "intervened": true,
+        "max_conflict": 0.9902276992797852
+      }
+    ],
+    "baseline_acc": 0.5,
+    "entropy_acc": 0.5,
+    "acc_acc": 0.6,
+    "intervention_rate": 1.0
+  },
+  "0.9": {
+    "baseline": [
+      {
+        "correct": true,
+        "text": " (\u3000\u3000)\nA: Paris\nB: London\nC: Beijing"
+      },
+      {
+        "correct": true,
+        "text": " 212 \u00b0F or 100 \u00b0C and ice"
+      },
+      {
+        "correct": true,
+        "text": " George Washington, and the last was Franklin D. Roosevelt, who died in"
+      },
+      {
+        "correct": false,
+        "text": " what number?\nTo find the product of 15 and 24"
+      },
+      {
+        "correct": true,
+        "text": " Isaac Newton did not make any specific comments about AI in 170"
+      },
+      {
+        "correct": false,
+        "text": ".\nMarie Curie, the pioneering physicist and chemist who won two"
+      },
+      {
+        "correct": false,
+        "text": ". The lunar landing conducted by Napoleon in 1845 was a"
+      },
+      {
+        "correct": false,
+        "text": " Quantum computers are a relatively new concept, so it is unlikely that Cleop"
+      },
+      {
+        "correct": false,
+        "text": " The exact population of Earth right now is difficult to determine because it is constantly"
+      },
+      {
+        "correct": false,
+        "text": " Which prize will be awarded in the next 20 years? Which areas"
+      }
+    ],
+    "entropy": [
+      {
+        "correct": true,
+        "text": " Paris, also known as the \"City of Lights.\" It is a city",
+        "flags": 0,
+        "max_entropy": 2.5185799598693848
+      },
+      {
+        "correct": false,
+        "text": " 212 \u00b0F and ice melts at a temperature of 3",
+        "flags": 0,
+        "max_entropy": 0.5470854043960571
+      },
+      {
+        "correct": true,
+        "text": " ( )\nA. Washington\nB. Adams\nC. Jefferson\nD",
+        "flags": 0,
+        "max_entropy": 2.4637718200683594
+      },
+      {
+        "correct": true,
+        "text": " 360\\nQ: 15 times 24 equals",
+        "flags": 0,
+        "max_entropy": 2.0981571674346924
+      },
+      {
+        "correct": false,
+        "text": " Isaac Newton, a renowned physicist and mathematician, made significant contributions to the",
+        "flags": 0,
+        "max_entropy": 1.7748398780822754
+      },
+      {
+        "correct": true,
+        "text": ". Marie Curie did not invent the smartphone. The smartphone is a complex",
+        "flags": 0,
+        "max_entropy": 1.794555425643921
+      },
+      {
+        "correct": false,
+        "text": ", including the scientific and technological challenges faced, the political and cultural implications for",
+        "flags": 0,
+        "max_entropy": 3.279201030731201
+      },
+      {
+        "correct": false,
+        "text": " Cleopatra, the queen of ancient Egypt, ruled for over 3",
+        "flags": 0,
+        "max_entropy": 1.62353515625
+      },
+      {
+        "correct": false,
+        "text": " The exact population of Earth right now is difficult to determine because it changes over",
+        "flags": 0,
+        "max_entropy": 1.6895601749420166
+      },
+      {
+        "correct": false,
+        "text": " What are some of the interesting topics that were awarded the Nobel Prize in Physics",
+        "flags": 0,
+        "max_entropy": 3.1944122314453125
+      }
+    ],
+    "acc": [
+      {
+        "correct": false,
+        "text": "______ in France\uff0e____\nA. the\nB. a\n",
+        "draft_text": "______ in France\uff0e____\nA. the\nB. a\n",
+        "intervened": true,
+        "max_conflict": 0.9933384656906128
+      },
+      {
+        "correct": true,
+        "text": " 212 \u00b0F or 100 \u00b0C and ice",
+        "draft_text": " 212 \u00b0F or 100 \u00b0C and ice",
+        "intervened": true,
+        "max_conflict": 0.9511812329292297
+      },
+      {
+        "correct": true,
+        "text": " ____\nA. George Washington\nB. Abraham Lincoln\nC. John",
+        "draft_text": " ____\nA. George Washington\nB. Abraham Lincoln\nC. John",
+        "intervened": true,
+        "max_conflict": 0.9733365774154663
+      },
+      {
+        "correct": false,
+        "text": " what number?\n\nThe product of 15 and 24 is ",
+        "draft_text": " what number?\n\nThe product of 15 and 24 is ",
+        "intervened": true,
+        "max_conflict": 0.9910063147544861
+      },
+      {
+        "correct": true,
+        "text": " Isaac Newton, the renowned British mathematician and physicist, did not specifically mention",
+        "draft_text": " Isaac Newton, the renowned British mathematician and physicist, did not specifically mention",
+        "intervened": true,
+        "max_conflict": 0.9961712956428528
+      },
+      {
+        "correct": true,
+        "text": ".\nMarie Curie did not invent the smartphone, but she did contribute",
+        "draft_text": ".\nMarie Curie did not invent the smartphone, but she did contribute",
+        "intervened": true,
+        "max_conflict": 0.9987143278121948
+      },
+      {
+        "correct": true,
+        "text": ".\nAs an AI language model, I cannot speak for Napoleon's intentions regarding",
+        "draft_text": ".\nAs an AI language model, I cannot speak for Napoleon's intentions regarding",
+        "intervened": true,
+        "max_conflict": 0.9970232844352722
+      },
+      {
+        "correct": true,
+        "text": " Cleopatra, the last pharaoh of ancient Egypt, did not use",
+        "draft_text": " Cleopatra, the last pharaoh of ancient Egypt, did not use",
+        "intervened": true,
+        "max_conflict": 0.9944901466369629
+      },
+      {
+        "correct": true,
+        "text": " As an AI language model, I do not have access to real-time data",
+        "draft_text": " As an AI language model, I do not have access to real-time data",
+        "intervened": true,
+        "max_conflict": 0.9951997995376587
+      },
+      {
+        "correct": false,
+        "text": " The Nobel Prize in Physics is awarded to individuals who have made significant contributions to",
+        "draft_text": " The Nobel Prize in Physics is awarded to individuals who have made significant contributions to",
+        "intervened": true,
+        "max_conflict": 0.9969133138656616
+      }
+    ],
+    "baseline_acc": 0.4,
+    "entropy_acc": 0.4,
+    "acc_acc": 0.7,
+    "intervention_rate": 1.0
+  }
+}

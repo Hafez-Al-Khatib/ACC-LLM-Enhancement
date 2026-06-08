@@ -79,9 +79,20 @@ VERTICAL_DATASETS = {
 
 def _format_pubmedqa(row):
     # PubMedQA: context + question → yes/no/maybe
+    # The 'context' field is a dict with keys: contexts, labels, meshes, etc.
+    ctx = row.get('context', row.get('pubmed', ''))
+    if isinstance(ctx, dict):
+        # Extract the actual context paragraphs and join them
+        contexts = ctx.get('contexts', [])
+        if contexts:
+            ctx_text = '\n'.join(str(c) for c in contexts)
+        else:
+            ctx_text = str(ctx)
+    else:
+        ctx_text = str(ctx)
     return {
         "instruction": "Answer the following medical question based on the provided context.",
-        "input": f"Context: {row.get('context', row.get('pubmed', ''))}\nQuestion: {row.get('question', '')}",
+        "input": f"Context: {ctx_text}\nQuestion: {row.get('question', '')}",
         "output": row.get("final_decision", row.get("answer", "")),
     }
 

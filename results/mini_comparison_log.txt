@@ -1,0 +1,14 @@
+MINI DETECTOR COMPARISON (5 samples, CPU)
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/338 [00:00<?, ?it/s]Loading weights:   0%|          | 1/338 [00:00<02:33,  2.19it/s]Loading weights:  58%|#####7    | 195/338 [00:00<00:00, 462.85it/s]Loading weights:  91%|#########1| 309/338 [00:00<00:00, 386.57it/s]Loading weights: 100%|##########| 338/338 [00:01<00:00, 322.71it/s]
+
+=== Old (abs 0.9) ===
+  Base=20% ACC=40% Int=100% Conflict=0.996
+
+=== Old (rel 2.0) ===
+  Base=20% ACC=20% Int=20% Conflict=0.996
+
+=== New (abs 0.5) ===
+  Base=20% ACC=60% Int=100% Conflict=0.906
+
+=== New (abs 0.7) ===

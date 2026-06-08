@@ -1,0 +1,47 @@
+{
+  "hidden_dim": 2,
+  "num_labels": 4,
+  "labels": [
+    "supported",
+    "hallucinated",
+    "uncertain",
+    "contradictory"
+  ],
+  "label_map": {
+    "supported": 0,
+    "hallucinated": 1,
+    "uncertain": 2,
+    "contradictory": 3
+  },
+  "metrics": {
+    "epoch": 1,
+    "val_loss": 1.8588395813009242,
+    "macro_f1": 0.12318840579710146,
+    "per_class": {
+      "supported": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 21
+      },
+      "hallucinated": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 94
+      },
+      "uncertain": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 130
+      },
+      "contradictory": {
+        "precision": 0.3269230769230769,
+        "recall": 1.0,
+        "f1": 0.4927536231884058,
+        "support": 119
+      }
+    }
+  }
+}

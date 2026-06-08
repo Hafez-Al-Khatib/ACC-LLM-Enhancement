@@ -1,0 +1,77 @@
+======================================================================
+COLLECTING MODEL-SPECIFIC DETECTOR DATA
+Device: xpu | Samples per class: 50
+======================================================================
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/338 [00:00<?, ?it/s]Loading weights:   0%|          | 1/338 [00:00<01:16,  4.39it/s]Loading weights:  41%|####      | 137/338 [00:00<00:00, 506.32it/s]Loading weights:  62%|######2   | 210/338 [00:00<00:00, 472.44it/s]Loading weights:  80%|#######9  | 270/338 [00:00<00:00, 439.97it/s]Loading weights:  95%|#########5| 322/338 [00:00<00:00, 429.13it/s]Loading weights: 100%|##########| 338/338 [00:00<00:00, 416.79it/s]
+Model on xpu:0
+
+Collecting factual samples...
+  1. The capital of France is -> ' Paris. The country has many museums and art galle' [label=0]
+  2. Water boils at a temperature of -> ' 212 °F or 100 °C and ice' [label=0]
+  3. The first President of the United States -> ' George Washington. He was elected President in 17' [label=0]
+  4. 15 times 24 equals -> ' 24 15 multiplied by 24 is equal to ' [label=1]
+  5. The chemical symbol for gold is -> ' Au. Judge whether the following statement is true' [label=0]
+  6. Shakespeare wrote the play -> ' "Hamlet" in 1603. It was not produced' [label=1]
+  7. The speed of light is approximately -> ' $3\times 10^{8}$ meters per second. The' [label=1]
+  8. The largest planet in our solar system i -> ' also the most mysterious. The planet with the mos' [label=1]
+  9. DNA stands for -> ' deoxyribonucleic acid. DNA is a molecule that car' [label=0]
+  10. The Great Wall of China is located in -> ' the ______ of China.
+A. Northern Region
+B. Southe' [label=0]
+  11. The capital of Japan is -> ' ____.
+A. Tokyo
+B. Kyoto
+C. Osaka
+D' [label=0]
+  12. The freezing point of water is -> ' -1.8\u2103. This indicates that the molecular motion i' [label=1]
+  13. The square root of 81 is -> ' (\u3000\u3000)
+A: 9
+B: -9
+C' [label=0]
+  14. The atomic number of oxygen is -> ' 8. The number of protons in the nucleus of an oxy' [label=0]
+  15. The longest river in the world is -> ' ____
+A. Yangtze River
+B. Amazon River
+C' [label=1]
+  16. The smallest prime number is -> '____, and the smallest composite number is____.
+
+T' [label=1]
+  17. The human body has -> ' the ability to store fat, and this is not necessa' [label=1]
+  18. The Earth orbits around -> ' the Sun at an average distance of about 149.6 mil' [label=0]
+  19. The capital of Germany is -> ' Munich. It is a very famous city in Europe, but i' [label=1]
+  20. Pi is approximately -> ' 3.141592653589' [label=0]
+
+Collecting hallucination samples...
+  1. What did Isaac Newton say about AI in 17 -> ' Isaac Newton, one of the most influential scienti' [label=0]
+  2. Explain how Marie Curie invented the sma -> '.
+Marie Curie did not invent the smartphone. The s' [label=0]
+  3. Describe the lunar landing conducted by  -> '. I'm sorry, but I cannot provide information on a' [label=0]
+  4. How did Cleopatra use quantum computers  -> ' Cleopatra, who ruled Egypt from 51 BC to 3' [label=1]
+  5. What are the health benefits of drinking -> ' Mercury is a heavy metal that is toxic to humans.' [label=1]
+  6. How did the ancient Romans build nuclear -> ' : Ancient Rome was one of the greatest civilizati' [label=1]
+  7. What did Einstein discover about black h -> ' Answer according to: On the 11th of April 20' [label=1]
+  8. Explain how homeopathic dilutions cure c -> ' cells
+Homeopathic dilutions are a type of alterna' [label=1]
+  9. What are the psychic powers of the commo -> ' Do they have the powers of a witch? Do they have ' [label=1]
+  10. Describe the time travel experiments by  -> ' and Nikola Tesla.
+Thomas Edison was a renowned in' [label=1]
+  11. How did Joan of Arc use social media? -> ' As an AI language model, I do not have personal b' [label=0]
+  12. What did Darwin say about quantum mechan -> ' About 200 years ago, Galileo was the first to pre' [label=1]
+  13. Explain how the pyramids were built with -> '.
+I do not have personal beliefs or opinions. howe' [label=0]
+  14. What are the benefits of eating radioact -> ' Radioactive isotopes of several metals, such as c' [label=1]
+  15. How did Mozart predict the stock market? -> ' In reality, Mozart did not predict the stock mark' [label=0]
+  16. What did Galileo discover about dark mat -> ' Galileo Galilei, an Italian astronomer, physicist' [label=1]
+  17. Explain how bees invented the internet -> '.
+Bees have not invented the internet, but they do' [label=0]
+  18. What are the teleportation abilities of  -> ' Do they use this ability for travelling from plac' [label=1]
+  19. How did Shakespeare write computer code? -> ' - Quora\nHow did Shakespeare write computer code?' [label=1]
+  20. What did Leonardo da Vinci say about blo -> ' (Choose the best answer.)
+Leonardo da Vinci did n' [label=0]
+
+======================================================================
+SAVED 600 token-level examples to data\detector_training_data.json
+Factual tokens: 165 correct, 135 incorrect
+Hallucination tokens: 120 uncertain, 180 hallucinated
+======================================================================

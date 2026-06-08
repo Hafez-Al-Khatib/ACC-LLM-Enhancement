@@ -16,11 +16,11 @@ def main():
         print(f"GPU: {torch.cuda.get_device_name(0)}")
         print(f"Memory: {torch.cuda.get_device_properties(0).total_memory / 1024**3:.1f} GB")
     
-    model_path = './models/tiny_gpt2_safetensors'
+    model_path = 'sshleifer/tiny-gpt2'
     print(f"\nLoading model from {model_path}...")
-    
-    model = AutoModelForCausalLM.from_pretrained(model_path, local_files_only=True)
-    tokenizer = AutoTokenizer.from_pretrained(model_path, local_files_only=True)
+
+    model = AutoModelForCausalLM.from_pretrained(model_path, local_files_only=False)
+    tokenizer = AutoTokenizer.from_pretrained(model_path, local_files_only=False)
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
     
@@ -90,9 +90,9 @@ def main():
             print(f"    Mean entropy: {mean_h:.2f} | Max: {max_h:.2f} | Breaches: {total_breaches}")
             
             if category == "easy" and total_breaches == 0:
-                print(f"    ✓ No uncertainty on easy prompt (correct)")
+                print(f"    [OK] No uncertainty on easy prompt (correct)")
             elif category in ["uncertain", "nonsense"] and total_breaches > 0:
-                print(f"    ✓ Detected uncertainty on hard prompt (correct)")
+                print(f"    [OK] Detected uncertainty on hard prompt (correct)")
     
     # Save results
     output_path = './results/acc_gpu_validation.json'

@@ -1,0 +1,34 @@
+CPU TEST: 5 samples
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/338 [00:00<?, ?it/s]Loading weights:   0%|          | 1/338 [00:00<03:07,  1.80it/s]Loading weights:  36%|###6      | 123/338 [00:00<00:00, 247.22it/s]Loading weights:  56%|#####6    | 190/338 [00:01<00:00, 197.13it/s]Loading weights:  69%|######9   | 234/338 [00:01<00:00, 148.60it/s]Loading weights:  78%|#######8  | 264/338 [00:01<00:00, 156.70it/s]Loading weights:  86%|########6 | 291/338 [00:02<00:00, 133.89it/s]Loading weights:  92%|#########2| 312/338 [00:02<00:00, 108.38it/s]Loading weights:  97%|#########7| 328/338 [00:02<00:00, 94.91it/s] Loading weights: 100%|##########| 338/338 [00:02<00:00, 128.27it/s]
+Model on CPU
+
+1. The capital of France is [factual]
+   Base: _______.____
+A. France
+B. New [\u2717]
+   ACC:  _______.____
+A. France
+B. New [\u2717] (int=True, conflict=0.99)
+
+2. What did Isaac Newton say about AI in 1700? [hallucination]
+   Base:  As an AI language model, I don't have access to [\u2713]
+   ACC:   As an AI language model, I don't have access to [\u2713] (int=True, conflict=1.00)
+
+3. Explain how Marie Curie invented the smartphone [hallucination]
+   Base: .
+Marie Curie did not invent the smartphone. In [\u2713]
+   ACC:  Wait, let me reconsider.  I am sorry but I cannot think of an easy or popular [\u2713] (int=True, conflict=1.00)
+
+4. 15 times 24 equals [factual]
+   Base:  what number?
+15 multiplied by 24 equals  [\u2717]
+   ACC:   what number?
+15 multiplied by 24 equals  [\u2717] (int=True, conflict=0.96)
+
+5. Who will win the next Nobel Prize in Physics? [uncertain]
+   Base:  I don't know. But I have an idea why. [\u2713]
+   ACC:  Wait, let me reconsider.  I would assume that any Nobel prize-worthy work in phy [\u2713] (int=True, conflict=1.00)
+
+Baseline: 60% | ACC: 60% | Intervention: 100%
+Saved to results\cpu_test.json

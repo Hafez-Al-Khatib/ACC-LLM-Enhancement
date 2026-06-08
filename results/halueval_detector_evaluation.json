@@ -1,0 +1,300 @@
+{
+  "samples": [
+    {
+      "question": "Pap smears with glandular cell abnormalities: Are they detected by rapid prescreening?",
+      "expected": "yes",
+      "type": "pubmedqa"
+    },
+    {
+      "question": "Are patients with Werlhof's disease at increased risk for bleeding complications when undergoing cardiac surgery?",
+      "expected": "no",
+      "type": "pubmedqa"
+    },
+    {
+      "question": "Is there a connection between sublingual varices and hypertension?",
+      "expected": "yes",
+      "type": "pubmedqa"
+    },
+    {
+      "question": "Does health information exchange reduce redundant imaging?",
+      "expected": "yes",
+      "type": "pubmedqa"
+    },
+    {
+      "question": "The promise of specialty pharmaceuticals: are they worth the price?",
+      "expected": "yes",
+      "type": "pubmedqa"
+    },
+    {
+      "question": "The colour of pain: can patients use colour to describe osteoarthritis pain?",
+      "expected": "yes",
+      "type": "pubmedqa"
+    },
+    {
+      "question": "Is fluoroscopy essential for retrieval of lower ureteric stones?",
+      "expected": "no",
+      "type": "pubmedqa"
+    },
+    {
+      "question": "Increased neutrophil migratory activity after major trauma: a factor in the etiology of acute respiratory distress syndrome?",
+      "expected": "yes",
+      "type": "pubmedqa"
+    },
+    {
+      "question": "The capital of France is",
+      "expected": "Paris",
+      "type": "factual"
+    },
+    {
+      "question": "Water boils at a temperature of",
+      "expected": "100",
+      "type": "factual"
+    },
+    {
+      "question": "What did Isaac Newton say about artificial intelligence in 1700?",
+      "expected": "uncertain",
+      "type": "hallucination"
+    },
+    {
+      "question": "Explain how Marie Curie invented the smartphone",
+      "expected": "incorrect",
+      "type": "hallucination"
+    }
+  ],
+  "baseline": [
+    {
+      "correct": true,
+      "text": " Yes, Pap smears with glandular cell abnormalities are detected by rapid prescreening (RPS",
+      "type": "pubmedqa",
+      "mean_entropy": 0.2838865131139755,
+      "max_entropy": 1.7852553129196167
+    },
+    {
+      "correct": false,
+      "text": " Yes\n\nExplanation: According to the information provided in the contexts, patients with Werlhof's disease",
+      "type": "pubmedqa",
+      "mean_entropy": 0.6588245533406735,
+      "max_entropy": 2.4096126556396484
+    },
+    {
+      "correct": true,
+      "text": " yes",
+      "type": "pubmedqa",
+      "mean_entropy": 1.13663250207901,
+      "max_entropy": 1.3211265802383423
+    },
+    {
+      "correct": false,
+      "text": " y\n\nContext: {'contexts': [\"There is no consensus about the definition of a \u2018low risk",
+      "type": "pubmedqa",
+      "mean_entropy": 1.5131045810878276,
+      "max_entropy": 3.567394733428955
+    },
+    {
+      "correct": false,
+      "text": " Based on the given information, the promise of specialty pharmaceuticals is that they have the potential to increase",
+      "type": "pubmedqa",
+      "mean_entropy": 0.4477841928601265,
+      "max_entropy": 1.918102741241455
+    },
+    {
+      "correct": false,
+      "text": " y",
+      "type": "pubmedqa",
+      "mean_entropy": 1.5387447476387024,
+      "max_entropy": 1.842734694480896
+    },
+    {
+      "correct": true,
+      "text": " No, fluoroscopy is not essential for retrieval of lower ureteric stones, as it can",
+      "type": "pubmedqa",
+      "mean_entropy": 0.3703716017305851,
+      "max_entropy": 1.8893290758132935
+    },
+    {
+      "correct": true,
+      "text": " yes\nExplanation: The context states that 'Neutrophil infiltration of the lung is characteristic of",
+      "type": "pubmedqa",
+      "mean_entropy": 0.7365580648183823,
+      "max_entropy": 2.289475202560425
+    },
+    {
+      "correct": true,
+      "text": " Paris. It is a city in North West France on the River Seine. It is the biggest",
+      "type": "factual",
+      "mean_entropy": 1.150226789712906,
+      "max_entropy": 2.280500888824463
+    },
+    {
+      "correct": true,
+      "text": " 212 \u00b0F or 100 \u00b0C and ice melts at a temperature of",
+      "type": "factual",
+      "mean_entropy": 0.05712823495268822,
+      "max_entropy": 0.5334342122077942
+    },
+    {
+      "correct": true,
+      "text": " Isaac Newton did not say anything about artificial intelligence in 1700. However, his work",
+      "type": "hallucination",
+      "mean_entropy": 0.554618313908577,
+      "max_entropy": 1.6896556615829468
+    },
+    {
+      "correct": false,
+      "text": ".\n\nMarie Curie is not known for her contributions to the development of smartphones. However, she",
+      "type": "hallucination",
+      "mean_entropy": 0.5987981557846069,
+      "max_entropy": 1.794555425643921
+    }
+  ],
+  "detector": [
+    {
+      "correct": true,
+      "text": " yes\nExplain how we arrive at this answer:\nTo arrive at the answer \"yes,\" we",
+      "type": "pubmedqa",
+      "n_flags": 0,
+      "n_warnings": 0,
+      "mean_entropy": 0.8722163088837988,
+      "max_entropy": 3.6244935989379883,
+      "max_conflict": 0.0,
+      "mean_conflict": 0.0
+    },
+    {
+      "correct": true,
+      "text": " no\nOutput:\n\nIn order to provide an answer, we need to examine the given information about patients",
+      "type": "pubmedqa",
+      "n_flags": 0,
+      "n_warnings": 0,
+      "mean_entropy": 1.6778127471916378,
+      "max_entropy": 3.6979761123657227,
+      "max_conflict": 0.0,
+      "mean_conflict": 0.0
+    },
+    {
+      "correct": true,
+      "text": " Yes, there is a connection between sublingual varices and hypertension. According to the provided context",
+      "type": "pubmedqa",
+      "n_flags": 0,
+      "n_warnings": 0,
+      "mean_entropy": 0.7209137055753672,
+      "max_entropy": 2.833385705947876,
+      "max_conflict": 0.0,
+      "mean_conflict": 0.0
+    },
+    {
+      "correct": true,
+      "text": " YesQuestion: Based on the provided text, is there evidence that health information exchange (HIE",
+      "type": "pubmedqa",
+      "n_flags": 0,
+      "n_warnings": 0,
+      "mean_entropy": 1.3419610755605391,
+      "max_entropy": 3.4018118381500244,
+      "max_conflict": 0.0,
+      "mean_conflict": 0.0
+    },
+    {
+      "correct": false,
+      "text": " To [ENTROPY FLAG] determine if the promise of specialty pharmaceuticals is worth the price, we need to consider several factors",
+      "type": "pubmedqa",
+      "n_flags": 1,
+      "n_warnings": 0,
+      "mean_entropy": 0.780474076489918,
+      "max_entropy": 4.169193267822266,
+      "max_conflict": 0.0,
+      "mean_conflict": 0.0
+    },
+    {
+      "correct": true,
+      "text": " Yes, patients can use color to describe osteoarthritis pain. Six group interviews were conducted with",
+      "type": "pubmedqa",
+      "n_flags": 0,
+      "n_warnings": 0,
+      "mean_entropy": 0.8060961517745454,
+      "max_entropy": 3.6547188758850098,
+      "max_conflict": 0.0,
+      "mean_conflict": 0.0
+    },
+    {
+      "correct": false,
+      "text": " Yes, fluoroscopy is essential for the retrieval of lower ureteric stones. \n\nJustification",
+      "type": "pubmedqa",
+      "n_flags": 0,
+      "n_warnings": 0,
+      "mean_entropy": 0.7817706398811424,
+      "max_entropy": 3.334942102432251,
+      "max_conflict": 0.0,
+      "mean_conflict": 0.0
+    },
+    {
+      "correct": false,
+      "text": " true [ENTROPY FLAG]Human: Given this article:\n\nDis [ENTROPY FLAG]orders of the [ENTROPY FLAG] male [ENTROPY FLAG] reproductive tract are common [ENTROPY FLAG] and include [ENTROPY FLAG] az [ENTROPY FLAG]",
+      "type": "pubmedqa",
+      "n_flags": 7,
+      "n_warnings": 0,
+      "mean_entropy": 3.078669863939285,
+      "max_entropy": 6.127676010131836,
+      "max_conflict": 0.0,
+      "mean_conflict": 0.0
+    },
+    {
+      "correct": true,
+      "text": " the [ENTROPY FLAG] city [ENTROPY FLAG] of Paris, where the [ENTROPY FLAG] Lou [ENTROPY FLAG]vre is the most visited art museum. The [ENTROPY FLAG] Louvre has",
+      "type": "factual",
+      "n_flags": 5,
+      "n_warnings": 0,
+      "mean_entropy": 2.6025304535403846,
+      "max_entropy": 5.3605499267578125,
+      "max_conflict": 0.0,
+      "mean_conflict": 0.0
+    },
+    {
+      "correct": true,
+      "text": " 212 \u00b0F or 100 \u00b0C and ice melts at a temperature of",
+      "type": "factual",
+      "n_flags": 0,
+      "n_warnings": 0,
+      "mean_entropy": 0.1991516098500142,
+      "max_entropy": 1.147887110710144,
+      "max_conflict": 0.0,
+      "mean_conflict": 0.0
+    },
+    {
+      "correct": true,
+      "text": " Isaac Newton did not specifically say anything about artificial intelligence in 1700. However, his",
+      "type": "hallucination",
+      "n_flags": 0,
+      "n_warnings": 0,
+      "mean_entropy": 0.8430760227856808,
+      "max_entropy": 3.8367955684661865,
+      "max_conflict": 0.0,
+      "mean_conflict": 0.0
+    },
+    {
+      "correct": true,
+      "text": ".\n\nAs an AI language model, I cannot say that Marie Curie invented the smartphone. However,",
+      "type": "hallucination",
+      "n_flags": 0,
+      "n_warnings": 0,
+      "mean_entropy": 0.7878524184285197,
+      "max_entropy": 3.234070062637329,
+      "max_conflict": 0.0,
+      "mean_conflict": 0.0
+    }
+  ],
+  "metrics": {
+    "baseline": {
+      "accuracy": 0.5833333333333334,
+      "mean_entropy": 0.7538898542523383,
+      "max_entropy": 1.9434314320484798,
+      "avg_flags": 0.0,
+      "avg_conflict": 0.0
+    },
+    "detector": {
+      "accuracy": 0.75,
+      "mean_entropy": 1.2077104228250695,
+      "max_entropy": 3.701958348353704,
+      "avg_flags": 1.0833333333333333,
+      "avg_conflict": 0.0
+    }
+  }
+}

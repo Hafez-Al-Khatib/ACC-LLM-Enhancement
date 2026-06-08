@@ -164,12 +164,18 @@ def build_trainer(config: dict):
     text_col = config["dataset"]["text_column"]
 
     def tokenize_fn(examples):
-        return tokenizer(
+        result = tokenizer(
             examples[text_col],
             truncation=True,
             max_length=max_length,
             padding="max_length",
         )
+        # Mask padding tokens in labels so they don't contribute to loss
+        result["labels"] = [
+            [-100 if token_id == tokenizer.pad_token_id else token_id for token_id in seq]
+            for seq in result["input_ids"]
+        ]
+        return result
 
     train_ds = train_ds.map(tokenize_fn, batched=True, remove_columns=train_ds.column_names)
     if eval_ds:
@@ -203,18 +209,12 @@ def build_trainer(config: dict):
         dataloader_num_workers=0,
     )
 
-    # mlm=False tells the collator to create labels = input_ids shifted by 1 for causal LM.
-    data_collator = DataCollatorForLanguageModeling(
-        tokenizer=tokenizer,
-        mlm=False,
-    )
-
+    # No custom collator needed — labels are pre-computed and padding is masked via -100
     trainer = Trainer(
         model=model,
         train_dataset=train_ds,
         eval_dataset=eval_ds,
         args=training_args,
-        data_collator=data_collator,
     )
     return trainer
 

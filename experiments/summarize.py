@@ -35,7 +35,7 @@ def print_summary(df: pd.DataFrame):
 
     print("\nPer-run results:")
     for _, row in df.iterrows():
-        status = "✓" if row["success"] else "✗"
+        status = "[PASS]" if row["success"] else "[FAIL]"
         print(f"  {status} {row.get('config', 'unknown')} | {row.get('elapsed_seconds', 0):.0f}s")
 
     print("=" * 60)

@@ -31,7 +31,7 @@ import torch.nn.functional as F
 logger = logging.getLogger(__name__)
 
 ThresholdMode = Literal["absolute", "moving_average", "percentile"]
-Action = Literal["flag", "regenerate", "warning"]
+Action = Literal["flag", "regenerate", "warning", "suppress"]
 
 _EPS = 1e-12
 
@@ -149,7 +149,7 @@ class EntropyMonitor:
     ):
         if mode not in ("absolute", "moving_average", "percentile"):
             raise ValueError(f"unknown mode: {mode}")
-        if action not in ("flag", "regenerate", "warning"):
+        if action not in ("flag", "regenerate", "warning", "suppress"):
             raise ValueError(f"unknown action: {action}")
         if base <= 1.0:
             raise ValueError("base must be > 1")

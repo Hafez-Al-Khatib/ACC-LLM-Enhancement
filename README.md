@@ -5,9 +5,10 @@ Supports systematic multi-vertical ablation studies across Medical, Legal, Finan
 
 ## Hardware Targets
 
-| Platform | VRAM | Strategy |
-|----------|------|----------|
+| Platform | VRAM / Memory | Strategy |
+|----------|--------------|----------|
 | RTX 3080 10GB (Desktop) | 10GB | QLoRA 4-bit + LoRA rank 16-32 |
+| Intel Arc 140T (Zenbook Duo) | 16GB unified | FP16 or QLoRA 4-bit |
 | Jetson Orin Nano | 8GB unified | QLoRA 4-bit + LoRA rank 4-8 |
 
 ## Model
@@ -48,27 +49,196 @@ acc-llm-enhancement/
 └── requirements.txt
 ```
 
+## Current Status (Overnight Update)
+
+**Last updated:** 2026-05-29 ~05:40 UTC
+
+### What's Ready
+- **Code fixed:** ~10 critical bugs patched (paths, WandB, entropy, padding, etc.)
+- **Pipeline validated:** Full train → validate flow tested on `sshleifer/tiny-gpt2`
+- **Datasets ready:** PubMedQA (medical), SciQ (STEM), General Instruction
+- **Documentation:** Detailed experimental protocol, enhanced related work, BibTeX references
+- **Utility scripts:** Environment checker, auto-launcher, results aggregator
+
+### What's Blocked
+- **Mistral 7B download:** Requires HuggingFace authentication (`huggingface-cli login`)
+
+### Next Steps (See `results/WAKE_UP_GUIDE.md`)
+1. Authenticate HF Hub and download model
+2. Install the correct PyTorch backend for your hardware (see Environment Setup below)
+3. Launch QLoRA training per `experiments/EXPERIMENTAL_PROTOCOL.md`
+
+---
+
+## Environment Setup
+
+The codebase supports **three hardware backends**. Pick the one matching your machine and install into a virtual environment.
+
+### Intel Arc / XPU (e.g. ASUS Zenbook Duo, Core Ultra with Arc 140T)
+
+```bash
+python -m venv .venv
+.venv\Scripts\activate        # Windows
+# source .venv/bin/activate   # Linux/Mac
+
+pip install -r requirements-xpu.txt
+```
+
+This installs PyTorch 2.8.0 with **native Intel XPU support** (no IPEX needed). The wheel is ~1.2 GB, so the first install may take 20–40 minutes on a slow connection.
+
+Verify the GPU is visible:
+
+```python
+import torch
+print(torch.xpu.is_available())        # True
+print(torch.xpu.get_device_name(0))    # Intel(R) Arc(TM) ...
+```
+
+### NVIDIA CUDA (e.g. RTX 3080, RTX 4090, A100)
+
+```bash
+python -m venv .venv
+.venv\Scripts\activate
+
+pip install -r requirements-cuda.txt
+```
+
+Verify:
+
+```python
+import torch
+print(torch.cuda.is_available())       # True
+print(torch.cuda.get_device_name(0))   # NVIDIA GeForce RTX ...
+```
+
+### CPU-Only (not recommended for 7B training)
+
+```bash
+python -m venv .venv
+.venv\Scripts\activate
+
+pip install -r requirements-cpu.txt
+```
+
+---
+
+## Loading Models on Your Platform
+
+`src.model_utils.load_model` auto-detects the best device, or you can specify it explicitly:
+
+```python
+from src.model_utils import load_model, load_tokenizer, make_bnb_config
+
+# Intel Arc — loads to CPU first, then moves to XPU automatically
+model = load_model("models/mistral_7b", device="xpu")
+
+# NVIDIA — standard device_map
+model = load_model("models/mistral_7b", device="cuda:0")
+
+# With 4-bit QLoRA on any platform
+bnb = make_bnb_config({"load_in_4bit": True, "bnb_4bit_compute_dtype": "float16"})
+model = load_model("models/mistral_7b", bnb_config=bnb, device="xpu")
+```
+
+---
+
+## Generation-Time Conflict Detection
+
+The framework now supports **real-time conflict detection** during generation via a
+`PredictiveCodingDetector` integrated into the HuggingFace `.generate()` pipeline.
+This enables per-token intervention (flag, regenerate, suppress, warning) based on
+a fusion of entropy monitoring and hierarchical prediction-error signals.
+
+### Quick Example
+
+```python
+from src.acc_integration import ACCEnhancedGenerator, MarkerConfig, UnifiedDecisionEngine
+from src.acc_conflict_detector import PredictiveCodingDetector
+
+# Load a pre-trained conflict detector
+detector = PredictiveCodingDetector(hidden_dim=4096)
+detector.load_state_dict(torch.load("detector.pt"))
+
+gen = ACCEnhancedGenerator(
+    model=model,
+    tokenizer=tokenizer,
+    action="flag",
+    use_conflict_detector=True,
+    use_realtime_conflict_detector=True,
+    conflict_detector=detector,
+    decision_engine=UnifiedDecisionEngine(
+        entropy_threshold=1.5,
+        conflict_score_threshold=0.7,
+        dual_signal_regenerate=True,
+        marker_config=MarkerConfig(
+            hallucination=" [HALLUCINATION]",
+            contradiction=" [CONTRADICTION]",
+        ),
+    ),
+)
+
+output = gen.generate_from_prompt(
+    "What is the capital of France?",
+    max_new_tokens=50,
+    return_dict_in_generate=True,
+)
+
+print(output.text[0])          # generated text with inline markers
+print(gen.explain_decisions(output))  # human-readable decision trace
+```
+
+### Output Format
+
+`ACCGenerationOutput` includes:
+
+| Field | Description |
+|-------|-------------|
+| `text` | Generated text with intervention markers |
+| `per_token_entropy` | Shannon entropy at each step |
+| `per_token_decisions` | List of `{action, reason, entropy, conflict_score, primary, secondary}` |
+| `regenerations` | Count of regeneration interventions per sequence |
+| `primary_labels` | 3-way label per token (`supported`/`unsupported`/`uncertain`) |
+| `secondary_labels` | 2-way label per token (`hallucinated`/`contradictory`) |
+| `conflict_scores` | Continuous conflict score [0, 1] per token |
+
+### Intervention Actions
+
+| Action | Trigger | Effect |
+|--------|---------|--------|
+| `pass` | No signal | None |
+| `flag` | Entropy breach or moderate conflict | Insert marker after token |
+| `warning` | Same as flag (configurable) | Insert prefix before token |
+| `regenerate` | Dual signal (entropy + conflict) | Resample with lower temperature |
+| `suppress` | High conflict on unsupported token | Block top-1 token, force alternative |
+
+---
+
 ## Quick Start — Ablation Study
 
-### 1. Download Model
+### 1. Verify Environment
 
 ```bash
-python scripts/setup_model.py
+python scripts/check_environment.py
 ```
 
-### 2. Run a Single Vertical
+### 2. Download Model (Authenticated)
 
 ```bash
-# Auto-download PubMedQA, format, and train
-python experiments/datasets/auto_load.py \
-    --dataset pubmedqa \
-    --output-dir experiments/datasets/pubmedqa
+huggingface-cli login
+python scripts/download_model_robust.py
+```
 
+### 3. Run a Single Vertical
+
+```bash
+# Auto-download and format datasets
+python experiments/datasets/auto_load.py
+
+# Train
 python scripts/train.py --config configs/desktop_qlora.yaml
-# (update config dataset paths to point to experiments/datasets/pubmedqa)
 ```
 
-### 3. Run Systematic Ablations
+### 4. Run Systematic Ablations
 
 ```bash
 python experiments/run_ablation.py \
@@ -81,12 +251,11 @@ python experiments/run_ablation.py \
     --epochs 3
 ```
 
-This generates one config per rank, trains sequentially, and logs all results to `experiments/results/`.
-
-### 4. Summarize Results
+### 5. Summarize Results
 
 ```bash
-python experiments/summarize.py --results experiments/results/medical_pubmedqa_rank_2026*.jsonl
+python experiments/summarize.py --results experiments/results/*.jsonl
+python scripts/aggregate_results.py --input results/ --output results/summary/
 ```
 
 ## Quick Start — Jetson Orin Nano

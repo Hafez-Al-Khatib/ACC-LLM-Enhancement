@@ -1,0 +1,20 @@
+======================================================================
+MINIMAL EVALUATION FRAMEWORK
+======================================================================
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/338 [00:00<?, ?it/s]Loading weights:   0%|          | 1/338 [00:00<02:00,  2.79it/s]Loading weights:  51%|#####     | 172/338 [00:00<00:00, 488.12it/s]Loading weights:  80%|########  | 272/338 [00:00<00:00, 514.57it/s]Loading weights: 100%|##########| 338/338 [00:00<00:00, 476.77it/s]
+Model on xpu:0
+HTTP Request: HEAD https://huggingface.co/datasets/qiaojin/PubMedQA/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+HTTP Request: HEAD https://huggingface.co/api/resolve-cache/datasets/qiaojin/PubMedQA/9001f2853fb87cab8d220904e0de81ac6973b318/README.md "HTTP/1.1 200 OK"
+HTTP Request: HEAD https://huggingface.co/datasets/qiaojin/PubMedQA/resolve/9001f2853fb87cab8d220904e0de81ac6973b318/PubMedQA.py "HTTP/1.1 404 Not Found"
+HTTP Request: HEAD https://s3.amazonaws.com/datasets.huggingface.co/datasets/datasets/qiaojin/PubMedQA/qiaojin/PubMedQA.py "HTTP/1.1 404 Not Found"
+HTTP Request: GET https://huggingface.co/api/datasets/qiaojin/PubMedQA/revision/9001f2853fb87cab8d220904e0de81ac6973b318 "HTTP/1.1 200 OK"
+HTTP Request: HEAD https://huggingface.co/datasets/qiaojin/PubMedQA/resolve/9001f2853fb87cab8d220904e0de81ac6973b318/.huggingface.yaml "HTTP/1.1 404 Not Found"
+HTTP Request: GET https://datasets-server.huggingface.co/info?dataset=qiaojin/PubMedQA "HTTP/1.1 200 OK"
+HTTP Request: GET https://huggingface.co/api/datasets/qiaojin/PubMedQA/tree/9001f2853fb87cab8d220904e0de81ac6973b318/pqa_artificial?recursive=true&expand=false "HTTP/1.1 200 OK"
+HTTP Request: GET https://huggingface.co/api/datasets/qiaojin/PubMedQA/tree/9001f2853fb87cab8d220904e0de81ac6973b318?recursive=false&expand=false "HTTP/1.1 200 OK"
+HTTP Request: HEAD https://huggingface.co/datasets/qiaojin/PubMedQA/resolve/9001f2853fb87cab8d220904e0de81ac6973b318/dataset_infos.json "HTTP/1.1 404 Not Found"
+HTTP Request: GET https://huggingface.co/api/datasets/qiaojin/PubMedQA/tree/9001f2853fb87cab8d220904e0de81ac6973b318/pqa_labeled?recursive=true&expand=false "HTTP/1.1 200 OK"
+Evaluating 26 samples
+
+Evaluating:   0%|          | 0/26 [00:00<?, ?it/s]Evaluating:   4%|3         | 1/26 [00:31<13:01, 31.24s/it]Evaluating:   8%|7         | 2/26 [00:58<11:33, 28.89s/it]Evaluating:  12%|#1        | 3/26 [01:24<10:39, 27.79s/it]Evaluating:  15%|#5        | 4/26 [01:45<09:06, 24.83s/it]Evaluating:  19%|#9        | 5/26 [02:12<08:56, 25.53s/it]Evaluating:  23%|##3       | 6/26 [02:40<08:52, 26.64s/it]Evaluating:  27%|##6       | 7/26 [03:09<08:38, 27.27s/it]Evaluating:  31%|###       | 8/26 [03:36<08:11, 27.33s/it]Evaluating:  35%|###4      | 9/26 [03:48<06:20, 22.38s/it]Evaluating:  38%|###8      | 10/26 [04:14<06:15, 23.49s/it]Evaluating:  42%|####2     | 11/26 [04:32<05:29, 22.00s/it]

@@ -1,0 +1,21 @@
+======================================================================
+UNIFIED EVALUATION: All Methods
+Samples: 10 | Device: cpu | Max tokens: 12
+======================================================================
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/338 [00:00<?, ?it/s]Loading weights:   0%|          | 1/338 [00:00<05:15,  1.07it/s]Loading weights:  40%|###9      | 135/338 [00:01<00:01, 167.28it/s]Loading weights:  56%|#####5    | 188/338 [00:01<00:00, 179.57it/s]Loading weights:  67%|######6   | 226/338 [00:01<00:00, 181.94it/s]Loading weights:  76%|#######6  | 257/338 [00:01<00:00, 167.39it/s]Loading weights:  84%|########4 | 285/338 [00:01<00:00, 179.26it/s]Loading weights:  92%|#########2| 311/338 [00:01<00:00, 193.33it/s]Loading weights:  99%|#########9| 336/338 [00:02<00:00, 194.40it/s]Loading weights: 100%|##########| 338/338 [00:02<00:00, 159.17it/s]
+Model loaded on cpu
+
+Initializing detectors...
+Training SAPLMA...
+Sample 1/10: The capital of France is
+Traceback (most recent call last):
+  File "C:\Users\Hafez\Desktop\AUB Research\ACC LLM Enhancement\ACC-LLM-Enhancement\scripts\evaluate_all_methods.py", line 289, in <module>
+    main()
+  File "C:\Users\Hafez\Desktop\AUB Research\ACC LLM Enhancement\ACC-LLM-Enhancement\scripts\evaluate_all_methods.py", line 204, in main
+    ent_text, ent_dets = generate_with_detector(model, tokenizer, prompt, entropy_det, DEVICE, seed)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Hafez\Desktop\AUB Research\ACC LLM Enhancement\ACC-LLM-Enhancement\scripts\evaluate_all_methods.py", line 98, in generate_with_detector
+    results = detector.detect_sequence(input_ids, max_new_tokens=MAX_NEW_TOKENS)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: EntropyDetector.detect_sequence() missing 1 required positional argument: 'input_ids'

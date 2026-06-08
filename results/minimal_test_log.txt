@@ -1,0 +1,13 @@
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading model...
+Loading weights:   0%|          | 0/338 [00:00<?, ?it/s]Loading weights:   0%|          | 1/338 [00:00<01:46,  3.15it/s]Loading weights:  51%|#####     | 171/338 [00:00<00:00, 528.59it/s]Loading weights:  80%|########  | 271/338 [00:00<00:00, 445.54it/s]Loading weights: 100%|##########| 338/338 [00:01<00:00, 316.43it/s]
+Model loaded
+Testing baseline...
+Baseline:  in which continent?
+To determine the capital of F
+Testing intervention...
+ACC:  in which continent?
+To determine the capital of F
+Intervened: True
+Max conflict: 0.9999995231628418
+Done!

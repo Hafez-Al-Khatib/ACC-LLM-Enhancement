@@ -1,0 +1,247 @@
+{
+  "Baseline": {
+    "accuracy": 0.5,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "flag_rate": 0.0,
+    "results": [
+      {
+        "correct": false,
+        "text": "_______.____\nBritain\nFrance\nChina\nLondon"
+      },
+      {
+        "correct": true,
+        "text": " 212 \u00b0F or 100 \u00b0"
+      },
+      {
+        "correct": true,
+        "text": " George Washington. He also served as the first ____ of the"
+      },
+      {
+        "correct": false,
+        "text": " what number?\n15 multiplied by 24 equals "
+      },
+      {
+        "correct": true,
+        "text": " Isaac Newton did not say anything about AI in 17"
+      },
+      {
+        "correct": false,
+        "text": ". Marie Curie, who was a physicist and chemist"
+      },
+      {
+        "correct": false,
+        "text": " and the impact it had on European colonization.\nLunar exploration"
+      },
+      {
+        "correct": true,
+        "text": " As an AI language model, I cannot provide an answer to"
+      },
+      {
+        "correct": true,
+        "text": " As an AI language model, I cannot provide real-time information"
+      },
+      {
+        "correct": false,
+        "text": " It's already almost a year since the Nobel Prize in Physics"
+      }
+    ]
+  },
+  "Entropy": {
+    "accuracy": 0.5,
+    "precision": 0.2,
+    "recall": 0.03333333333333333,
+    "f1": 0.055384615384615386,
+    "flag_rate": 0.041666666666666664,
+    "results": [
+      {
+        "correct": false,
+        "text": "_______.____\nBritain\nFrance\nChina\nLondon"
+      },
+      {
+        "correct": true,
+        "text": " 212 \u00b0F or 100 \u00b0"
+      },
+      {
+        "correct": true,
+        "text": " George Washington. He also served as the first ____ of the"
+      },
+      {
+        "correct": false,
+        "text": " what number?\n15 multiplied by 24 equals "
+      },
+      {
+        "correct": true,
+        "text": " Isaac Newton did not say anything about AI in 17"
+      },
+      {
+        "correct": false,
+        "text": ". Marie Curie, who was a physicist and chemist"
+      },
+      {
+        "correct": false,
+        "text": " and the impact it had on European colonization.\nLunar exploration"
+      },
+      {
+        "correct": true,
+        "text": " As an AI language model, I cannot provide an answer to"
+      },
+      {
+        "correct": true,
+        "text": " As an AI language model, I cannot provide real-time information"
+      },
+      {
+        "correct": false,
+        "text": " It's already almost a year since the Nobel Prize in Physics"
+      }
+    ]
+  },
+  "DoLa": {
+    "accuracy": 0.5,
+    "precision": 0.6,
+    "recall": 0.6,
+    "f1": 0.6,
+    "flag_rate": 1.0,
+    "results": [
+      {
+        "correct": false,
+        "text": "_______.____\nBritain\nFrance\nChina\nLondon"
+      },
+      {
+        "correct": true,
+        "text": " 212 \u00b0F or 100 \u00b0"
+      },
+      {
+        "correct": true,
+        "text": " George Washington. He also served as the first ____ of the"
+      },
+      {
+        "correct": false,
+        "text": " what number?\n15 multiplied by 24 equals "
+      },
+      {
+        "correct": true,
+        "text": " Isaac Newton did not say anything about AI in 17"
+      },
+      {
+        "correct": false,
+        "text": ". Marie Curie, who was a physicist and chemist"
+      },
+      {
+        "correct": false,
+        "text": " and the impact it had on European colonization.\nLunar exploration"
+      },
+      {
+        "correct": true,
+        "text": " As an AI language model, I cannot provide an answer to"
+      },
+      {
+        "correct": true,
+        "text": " As an AI language model, I cannot provide real-time information"
+      },
+      {
+        "correct": false,
+        "text": " It's already almost a year since the Nobel Prize in Physics"
+      }
+    ]
+  },
+  "SAPLMA": {
+    "accuracy": 0.5,
+    "precision": 0.6,
+    "recall": 0.175,
+    "f1": 0.24967032967032968,
+    "flag_rate": 0.1833333333333333,
+    "results": [
+      {
+        "correct": false,
+        "text": "_______.____\nBritain\nFrance\nChina\nLondon"
+      },
+      {
+        "correct": true,
+        "text": " 212 \u00b0F or 100 \u00b0"
+      },
+      {
+        "correct": true,
+        "text": " George Washington. He also served as the first ____ of the"
+      },
+      {
+        "correct": false,
+        "text": " what number?\n15 multiplied by 24 equals "
+      },
+      {
+        "correct": true,
+        "text": " Isaac Newton did not say anything about AI in 17"
+      },
+      {
+        "correct": false,
+        "text": ". Marie Curie, who was a physicist and chemist"
+      },
+      {
+        "correct": false,
+        "text": " and the impact it had on European colonization.\nLunar exploration"
+      },
+      {
+        "correct": true,
+        "text": " As an AI language model, I cannot provide an answer to"
+      },
+      {
+        "correct": true,
+        "text": " As an AI language model, I cannot provide real-time information"
+      },
+      {
+        "correct": false,
+        "text": " It's already almost a year since the Nobel Prize in Physics"
+      }
+    ]
+  },
+  "ACC": {
+    "accuracy": 0.6,
+    "precision": 0.5,
+    "recall": 0.5,
+    "f1": 0.5,
+    "flag_rate": 0.8,
+    "results": [
+      {
+        "correct": true,
+        "text": "Wait, let me reconsider. 1. __\nA. Paris\nB. Washington\n"
+      },
+      {
+        "correct": true,
+        "text": " 212 \u00b0F or 100 \u00b0"
+      },
+      {
+        "correct": true,
+        "text": " George Washington. He also served as the first ____ of the"
+      },
+      {
+        "correct": false,
+        "text": " what number?\n15 multiplied by 24 equals "
+      },
+      {
+        "correct": true,
+        "text": "Wait, let me reconsider.  I would assume that he didn't discuss it. Who did"
+      },
+      {
+        "correct": false,
+        "text": ". Marie Curie, who was a physicist and chemist"
+      },
+      {
+        "correct": false,
+        "text": " and the impact it had on European colonization.\nLunar exploration"
+      },
+      {
+        "correct": true,
+        "text": " As an AI language model, I cannot provide an answer to"
+      },
+      {
+        "correct": true,
+        "text": " As an AI language model, I cannot provide real-time information"
+      },
+      {
+        "correct": false,
+        "text": " It's already almost a year since the Nobel Prize in Physics"
+      }
+    ]
+  }
+}

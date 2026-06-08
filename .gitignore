@@ -29,6 +29,8 @@ dist/
 build/
 .eggs/
 *.egg
+.venv/
+venv/
 
 # Jupyter
 .ipynb_checkpoints/

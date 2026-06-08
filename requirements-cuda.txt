@@ -1,0 +1,15 @@
+# ACC LLM — NVIDIA CUDA Requirements
+# For RTX 3080, RTX 4090, A100, H100, etc.
+#
+# Install order:
+#   1. Ensure CUDA 12.x toolkit and cuDNN are installed
+#   2. python -m venv .venv
+#   3. .venv\Scripts\activate  (or source .venv/bin/activate on Linux)
+#   4. pip install -r requirements-cuda.txt
+
+-r requirements.txt
+
+# NVIDIA CUDA 12.4+ wheel index
+torch>=2.5.0
+
+--index-url https://download.pytorch.org/whl/cu124
