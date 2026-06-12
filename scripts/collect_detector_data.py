@@ -27,7 +27,12 @@ logging.basicConfig(level=logging.INFO, format="%(message)s")
 logger = logging.getLogger(__name__)
 
 MODEL_NAME = "models/qwen2.5-1.5b"
-DEVICE = "xpu" if torch.xpu.is_available() else "cpu"
+if torch.cuda.is_available():
+    DEVICE = "cuda"
+elif torch.xpu.is_available():
+    DEVICE = "xpu"
+else:
+    DEVICE = "cpu"
 MAX_NEW_TOKENS = 15
 NUM_SAMPLES_PER_CLASS = 50  # 50 factual, 50 hallucinated
 

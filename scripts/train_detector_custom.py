@@ -31,7 +31,7 @@ HIDDEN_DIM = 1536  # Qwen2.5-1.5B
 BATCH_SIZE = 32
 EPOCHS = 30
 LR = 1e-3
-DEVICE = "cpu"
+DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 
 def load_data(path: str):
