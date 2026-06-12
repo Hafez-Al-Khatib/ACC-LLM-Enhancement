@@ -25,8 +25,14 @@ def main():
     repo_root = Path(__file__).resolve().parent.parent
 
     if not args.skip_deps:
-        print("\n=== Installing dependencies ===")
-        run([sys.executable, "-m", "pip", "install", "-r", str(repo_root / "requirements-cuda.txt")])
+        print("\n=== Installing PyTorch with CUDA ===")
+        run([
+            sys.executable, "-m", "pip", "install", "--upgrade",
+            "torch>=2.5.0", "--index-url", "https://download.pytorch.org/whl/cu124",
+        ])
+
+        print("\n=== Installing remaining dependencies ===")
+        run([sys.executable, "-m", "pip", "install", "-r", str(repo_root / "requirements.txt")])
 
     print("\n=== Verifying CUDA ===")
     run([sys.executable, "-c", "import torch; print(f'CUDA available: {torch.cuda.is_available()}'); print(f'GPU: {torch.cuda.get_device_name(0) if torch.cuda.is_available() else None}')"])
