@@ -38,17 +38,20 @@ def main():
     run([sys.executable, "-c", "import torch; print(f'CUDA available: {torch.cuda.is_available()}'); print(f'GPU: {torch.cuda.get_device_name(0) if torch.cuda.is_available() else None}')"])
 
     print(f"\n=== Downloading model: {args.model} ===")
-    from huggingface_hub import snapshot_download
+    print("Using robust downloader with retries and resume support...")
 
     model_name_safe = args.model.replace("/", "_")
     model_dir = repo_root / "models" / model_name_safe
-    model_dir.mkdir(parents=True, exist_ok=True)
 
-    snapshot_download(
-        repo_id=args.model,
-        local_dir=str(model_dir),
-        local_dir_use_symlinks=False,
-    )
+    # Use robust downloader with retries
+    run([
+        sys.executable,
+        str(repo_root / "scripts" / "download_model_robust_hf.py"),
+        args.model,
+        "--local-dir", str(model_dir),
+        "--max-retries", "20",
+        "--delay", "10",
+    ])
     print(f"Model saved to: {model_dir}")
 
     print("\n=== Setup complete ===")
