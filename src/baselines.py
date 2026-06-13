@@ -155,7 +155,7 @@ class SAPLMADetector(nn.Module):
             inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
             with torch.no_grad():
                 outputs = model(**inputs, output_hidden_states=True)
-            last_hidden = outputs.hidden_states[-1][0, -1, :].cpu()  # (hidden_dim,)
+            last_hidden = outputs.hidden_states[-1][0, -1, :].cpu().float()  # (hidden_dim,)
             features.append(last_hidden)
             labels.append(0.0)
 
@@ -164,7 +164,7 @@ class SAPLMADetector(nn.Module):
             inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
             with torch.no_grad():
                 outputs = model(**inputs, output_hidden_states=True)
-            last_hidden = outputs.hidden_states[-1][0, -1, :].cpu()  # (hidden_dim,)
+            last_hidden = outputs.hidden_states[-1][0, -1, :].cpu().float()  # (hidden_dim,)
             features.append(last_hidden)
             labels.append(1.0)
 
@@ -194,7 +194,7 @@ class SAPLMADetector(nn.Module):
         with torch.no_grad():
             for _ in range(max_new_tokens):
                 outputs = model(input_ids, output_hidden_states=True)
-                last_hidden = outputs.hidden_states[-1][0, -1, :].cpu()  # (hidden_dim,)
+                last_hidden = outputs.hidden_states[-1][0, -1, :].cpu().float()  # (hidden_dim,)
 
                 logit = self.forward(last_hidden.to(self.device))
                 prob = torch.sigmoid(logit)
