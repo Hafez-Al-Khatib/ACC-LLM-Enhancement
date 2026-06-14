@@ -171,7 +171,12 @@ def main():
     parser.add_argument("--output", default="results/4090_unified_evaluation.json")
     args = parser.parse_args()
 
-    device = "cuda" if torch.cuda.is_available() else "cpu"
+    if torch.cuda.is_available():
+        device = "cuda"
+    elif getattr(torch, "xpu", None) and torch.xpu.is_available():
+        device = "xpu"
+    else:
+        device = "cpu"
     logger.info("=" * 70)
     logger.info("RTX 4090 UNIFIED EVALUATION")
     logger.info("Model: %s | Device: %s | Samples: %d", args.model, device, len(SAMPLES))
@@ -224,7 +229,7 @@ def main():
     acc_engine = ACCInterventionEngine(
         detector=acc_detector,
         conflict_threshold=0.5,
-        relative_threshold=1.5,
+        relative_threshold=None,
         calibration_tokens=3,
         max_regenerations=1,
         temperature_bump=0.3,
@@ -268,7 +273,7 @@ def main():
         methods["SAPLMA"]["detections"].append(sap_dets)
 
         # ACC
-        acc_result = acc_engine.generate_with_intervention(
+        acc_result = acc_engine.generate_with_logit_shift(
             model, tokenizer, prompt, args.max_new_tokens, 0.8, 0.95, device, seed
         )
         methods["ACC"]["results"].append({"correct": judge(acc_result["text"], expected, q_type), "text": acc_result["text"]})
