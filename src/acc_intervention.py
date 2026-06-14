@@ -222,14 +222,15 @@ class ACCInterventionEngine:
         device: str = "cpu",
         seed: int = 42,
     ) -> Dict:
-        """Generate with real-time logit shifting toward uncertainty tokens.
+        """Generate with real-time conflict-triggered phrase injection.
 
-        When conflict is detected, add a bias to uncertainty-token logits.
-        This is a stronger intervention than phrase prepending because it
-        directly modifies the token distribution.
+        When conflict is detected, the model is forced to decode a complete
+        uncertainty phrase before continuing. This is stronger than simple
+        prompt prepending because the trigger depends on live hidden-state
+        conflict, and more reliable than per-token logit biasing because it
+        emits coherent uncertainty expressions.
         """
         torch.manual_seed(seed)
-        uncertainty_ids = self._get_uncertainty_token_ids(tokenizer).to(device)
 
         inputs = tokenizer(prompt, return_tensors="pt").to(device)
         input_ids = inputs["input_ids"]
@@ -237,6 +238,8 @@ class ACCInterventionEngine:
         generated_ids = []
         conflict_scores = []
         num_shifts = 0
+        phrase_injected = False
+        injected_phrase = ""
 
         with torch.no_grad():
             for step in range(max_new_tokens):
@@ -260,13 +263,20 @@ class ACCInterventionEngine:
                 else:
                     effective_threshold = self.conflict_threshold
 
-                # Sample next token with optional logit shift
-                logits = outputs.logits[0, -1, :]
-                if score > effective_threshold:
-                    logits = logits.clone()
-                    logits[uncertainty_ids] += self.uncertainty_bias
+                # Inject uncertainty phrase on first high-conflict step
+                if not phrase_injected and score > effective_threshold:
+                    phrase = self.uncertainty_prompts[num_shifts % len(self.uncertainty_prompts)]
+                    phrase_ids = tokenizer.encode(phrase, add_special_tokens=False)
+                    phrase_tensor = torch.tensor([phrase_ids], dtype=torch.long, device=device)
+                    input_ids = torch.cat([input_ids, phrase_tensor], dim=1)
+                    generated_ids.extend(phrase_ids)
                     num_shifts += 1
+                    phrase_injected = True
+                    injected_phrase = phrase
+                    continue
 
+                # Sample next token
+                logits = outputs.logits[0, -1, :]
                 probs = F.softmax(logits / temperature, dim=-1)
 
                 # Top-p filtering
@@ -297,6 +307,7 @@ class ACCInterventionEngine:
             "conflict_scores": conflict_scores,
             "max_conflict": max_conflict,
             "num_shifts": num_shifts,
+            "injected_phrase": injected_phrase,
             "calibrated_threshold": effective_threshold if conflict_scores else self.conflict_threshold,
         }
 

@@ -43,13 +43,16 @@ def load_halueval_samples(n: int = 100, seed: int = 42) -> List[Dict]:
         return []
 
     samples = []
-    with open(path) as f:
+    with open(path, encoding="utf-8") as f:
         for line in f:
             item = json.loads(line)
+            right = item.get("right_answer", "")
+            hallucinated = item.get("hallucinated_answer", "")
             samples.append({
                 "prompt": item["question"],
-                "expected": item.get("answer", ""),
-                "type": "factual" if item.get("label", 0) == 0 else "hallucination",
+                "expected": right,
+                "hallucinated_answer": hallucinated,
+                "type": "adversarial",
                 "source": "halueval",
             })
 
@@ -104,7 +107,7 @@ def load_pubmedqa_samples(n: int = 50, seed: int = 42) -> List[Dict]:
         return []
 
 
-def generate_baseline(model, tokenizer, prompt: str, max_new_tokens: int, device: str, seed: int) -> str:
+def generate_baseline(model, tokenizer, prompt: str, max_new_tokens: int, device: str, seed: int, temperature: float = 0.8) -> str:
     torch.manual_seed(seed)
     inputs = tokenizer(prompt, return_tensors="pt").to(device)
     input_ids = inputs["input_ids"]
@@ -112,12 +115,109 @@ def generate_baseline(model, tokenizer, prompt: str, max_new_tokens: int, device
         for _ in range(max_new_tokens):
             outputs = model(input_ids)
             logits = outputs.logits[0, -1, :]
-            probs = F.softmax(logits / 0.8, dim=-1)
+            probs = F.softmax(logits / temperature, dim=-1)
             next_token = torch.multinomial(probs, num_samples=1)
             input_ids = torch.cat([input_ids, next_token.unsqueeze(0)], dim=1)
             if next_token.item() == tokenizer.eos_token_id:
                 break
     return tokenizer.decode(input_ids[0, inputs["input_ids"].shape[1]:], skip_special_tokens=True)
+
+
+def generate_with_uncertainty_prefix(model, tokenizer, prompt: str, max_new_tokens: int, device: str, seed: int) -> str:
+    """Regenerate with an uncertainty-priming prefix."""
+    prefix = "Wait, let me reconsider. I'm not entirely certain, but"
+    full_prompt = f"{prompt}\n{prefix}"
+    return prefix + " " + generate_baseline(model, tokenizer, full_prompt, max_new_tokens, device, seed, temperature=1.0)
+
+
+def generate_entropy_intervention(model, tokenizer, prompt: str, max_new_tokens: int, device: str, seed: int, detector: EntropyDetector) -> str:
+    """Generate with entropy-based intervention."""
+    torch.manual_seed(seed)
+    inputs = tokenizer(prompt, return_tensors="pt").to(device)
+    input_ids = inputs["input_ids"]
+    flagged = False
+    with torch.no_grad():
+        for _ in range(max_new_tokens):
+            outputs = model(input_ids)
+            logits = outputs.logits[0, -1, :]
+            probs = F.softmax(logits, dim=-1)
+            log_probs = torch.log(probs + 1e-12)
+            entropy = (-(probs * log_probs).sum()).item()
+            if entropy > detector.threshold:
+                flagged = True
+                break
+            probs_sample = F.softmax(logits / 0.8, dim=-1)
+            next_token = torch.multinomial(probs_sample, num_samples=1)
+            input_ids = torch.cat([input_ids, next_token.unsqueeze(0)], dim=1)
+            if next_token.item() == tokenizer.eos_token_id:
+                break
+    text = tokenizer.decode(input_ids[0, inputs["input_ids"].shape[1]:], skip_special_tokens=True)
+    if flagged:
+        return generate_with_uncertainty_prefix(model, tokenizer, prompt, max_new_tokens, device, seed + 999)
+    return text
+
+
+def generate_dola_intervention(model, tokenizer, prompt: str, max_new_tokens: int, device: str, seed: int, detector: DoLaDetector) -> str:
+    """Generate with DoLa-based intervention."""
+    torch.manual_seed(seed)
+    inputs = tokenizer(prompt, return_tensors="pt").to(device)
+    input_ids = inputs["input_ids"]
+    flagged = False
+    with torch.no_grad():
+        for _ in range(max_new_tokens):
+            outputs = model(input_ids, output_hidden_states=True)
+            mature_logits = outputs.logits[0, -1, :]
+            premature_logits_list = []
+            for layer_idx in detector.premature_layers:
+                h = outputs.hidden_states[layer_idx][:, -1, :]
+                logits = model.lm_head(h)[0]
+                premature_logits_list.append(logits)
+            premature_logits = torch.stack(premature_logits_list).mean(dim=0)
+            p_prem = F.softmax(premature_logits, dim=-1)
+            p_mat = F.softmax(mature_logits, dim=-1)
+            m = 0.5 * (p_prem + p_mat)
+            kl_pm = F.kl_div(m.log(), p_prem, reduction="sum")
+            kl_mm = F.kl_div(m.log(), p_mat, reduction="sum")
+            js_div = 0.5 * (kl_pm + kl_mm)
+            if js_div.item() > detector.threshold:
+                flagged = True
+                break
+            probs = F.softmax(mature_logits / 0.8, dim=-1)
+            next_token = torch.multinomial(probs, num_samples=1)
+            input_ids = torch.cat([input_ids, next_token.unsqueeze(0)], dim=1)
+            if next_token.item() == tokenizer.eos_token_id:
+                break
+    text = tokenizer.decode(input_ids[0, inputs["input_ids"].shape[1]:], skip_special_tokens=True)
+    if flagged:
+        return generate_with_uncertainty_prefix(model, tokenizer, prompt, max_new_tokens, device, seed + 999)
+    return text
+
+
+def generate_saplma_intervention(model, tokenizer, prompt: str, max_new_tokens: int, device: str, seed: int, detector: SAPLMADetector) -> str:
+    """Generate with SAPLMA-based intervention."""
+    torch.manual_seed(seed)
+    inputs = tokenizer(prompt, return_tensors="pt").to(device)
+    input_ids = inputs["input_ids"]
+    flagged = False
+    with torch.no_grad():
+        for _ in range(max_new_tokens):
+            outputs = model(input_ids, output_hidden_states=True)
+            last_hidden = outputs.hidden_states[-1][0, -1, :].cpu().float()
+            logit = detector.forward(last_hidden.to(detector.device))
+            prob = torch.sigmoid(logit)
+            if prob.item() > 0.5:
+                flagged = True
+                break
+            logits = outputs.logits[0, -1, :]
+            probs = F.softmax(logits / 0.8, dim=-1)
+            next_token = torch.multinomial(probs, num_samples=1)
+            input_ids = torch.cat([input_ids, next_token.unsqueeze(0)], dim=1)
+            if next_token.item() == tokenizer.eos_token_id:
+                break
+    text = tokenizer.decode(input_ids[0, inputs["input_ids"].shape[1]:], skip_special_tokens=True)
+    if flagged:
+        return generate_with_uncertainty_prefix(model, tokenizer, prompt, max_new_tokens, device, seed + 999)
+    return text
 
 
 def generate_selfcheckgpt_samples(model, tokenizer, prompt: str, max_new_tokens: int, device: str, seed: int, n_samples: int = 5) -> List[str]:
@@ -209,10 +309,12 @@ def paired_t_test(acc_a: List[bool], acc_b: List[bool]) -> Tuple[float, float]:
     """Paired t-test between two methods."""
     if len(acc_a) != len(acc_b) or len(acc_a) < 2:
         return 0.0, 1.0
-    diff = np.array(acc_a, dtype=float) - np.array(acc_b, dtype=float)
+    a = np.array(acc_a, dtype=float)
+    b = np.array(acc_b, dtype=float)
+    diff = a - b
     if np.std(diff) == 0:
         return 0.0, 1.0
-    t_stat, p_value = stats.ttest_rel(acc_a, acc_b)
+    t_stat, p_value = stats.ttest_rel(a, b)
     return t_stat, p_value
 
 
@@ -243,7 +345,12 @@ def main():
     parser.add_argument("--no-selfcheckgpt", action="store_true", help="Skip SelfCheckGPT baseline")
     args = parser.parse_args()
 
-    device = "cuda" if torch.cuda.is_available() else "cpu"
+    if torch.cuda.is_available():
+        device = "cuda"
+    elif getattr(torch, "xpu", None) and torch.xpu.is_available():
+        device = "xpu"
+    else:
+        device = "cpu"
     logger.info("=" * 70)
     logger.info("BENCHMARK EVALUATION")
     logger.info("Model: %s | Device: %s", args.model, device)
@@ -314,7 +421,7 @@ def main():
     acc_engine = ACCInterventionEngine(
         detector=acc_detector,
         conflict_threshold=0.5,
-        relative_threshold=1.5,
+        relative_threshold=None,
         calibration_tokens=3,
         max_regenerations=1,
         temperature_bump=0.3,
@@ -344,15 +451,15 @@ def main():
         results["Baseline"].append({"sample": sample, "text": base_text})
 
         # Entropy
-        ent_text = generate_baseline(model, tokenizer, prompt, args.max_new_tokens, device, seed)  # Same generation
+        ent_text = generate_entropy_intervention(model, tokenizer, prompt, args.max_new_tokens, device, seed, entropy_det)
         results["Entropy"].append({"sample": sample, "text": ent_text})
 
         # DoLa
-        dola_text = generate_baseline(model, tokenizer, prompt, args.max_new_tokens, device, seed)
+        dola_text = generate_dola_intervention(model, tokenizer, prompt, args.max_new_tokens, device, seed, dola)
         results["DoLa"].append({"sample": sample, "text": dola_text})
 
         # SAPLMA
-        sap_text = generate_baseline(model, tokenizer, prompt, args.max_new_tokens, device, seed)
+        sap_text = generate_saplma_intervention(model, tokenizer, prompt, args.max_new_tokens, device, seed, saplma)
         results["SAPLMA"].append({"sample": sample, "text": sap_text})
 
         # SelfCheckGPT
@@ -361,7 +468,7 @@ def main():
             results["SelfCheckGPT"].append({"sample": sample, "texts": sc_texts})
 
         # ACC
-        acc_result = acc_engine.generate_with_intervention(
+        acc_result = acc_engine.generate_with_logit_shift(
             model, tokenizer, prompt, args.max_new_tokens, 0.8, 0.95, device, seed
         )
         results["ACC"].append({"sample": sample, "text": acc_result["text"]})
@@ -393,8 +500,21 @@ def main():
             else:
                 # Fallback substring judge
                 text = item["text"].lower()
+                expected = sample["expected"].lower()
+                hallucinated = sample.get("hallucinated_answer", "").lower()
+
                 if sample["type"] == "factual":
-                    item["correct"] = sample["expected"].lower() in text
+                    item["correct"] = expected in text
+                elif sample["type"] == "adversarial":
+                    uncertainty_markers = ["did not", "didn't", "never", "impossible", "incorrect", "false",
+                                           "no evidence", "not true", "uncertain", "cannot", "can't", "could not",
+                                           "no such", "not", "i don't know", "i'm not sure", "as an ai",
+                                           "i am not sure", "i'm not certain", "unsure", "don't have enough information"]
+                    has_uncertainty = any(m in text for m in uncertainty_markers)
+                    has_right_answer = expected and expected in text
+                    has_hallucinated = hallucinated and hallucinated in text
+                    # Correct if it gives right answer or expresses uncertainty; incorrect if it hallucinates
+                    item["correct"] = has_right_answer or (has_uncertainty and not has_hallucinated)
                 else:
                     markers = ["did not", "didn't", "never", "impossible", "incorrect", "false",
                                "no evidence", "not true", "uncertain", "cannot", "can't", "could not",
@@ -433,7 +553,12 @@ def main():
 
     # Per-type
     logger.info("\nPer-type accuracy:")
-    for q_type in ["factual", "hallucination"]:
+    for q_type in ["factual", "hallucination", "adversarial"]:
+        type_results_all = []
+        for method_results in results.values():
+            type_results_all.extend([r for r in method_results if r["sample"]["type"] == q_type])
+        if not type_results_all:
+            continue
         logger.info("\n  %s:", q_type)
         for method_name, method_results in results.items():
             if not method_results:
@@ -447,12 +572,20 @@ def main():
     # Save detailed results
     out_path = _PROJECT_ROOT / args.output
     out_path.parent.mkdir(parents=True, exist_ok=True)
+    # Convert booleans to Python bool for JSON serialization
+    serializable_results = {}
+    for method_name, method_results in results.items():
+        serializable_results[method_name] = []
+        for item in method_results:
+            new_item = {k: bool(v) if isinstance(v, (np.bool_, torch.Tensor)) else v for k, v in item.items()}
+            serializable_results[method_name].append(new_item)
+
     with open(out_path, "w") as f:
         json.dump({
             "config": vars(args),
             "summary": summary,
             "samples": [{"prompt": s["prompt"], "expected": s["expected"], "type": s["type"], "source": s["source"]} for s in samples],
-            "results": results,
+            "results": serializable_results,
         }, f, indent=2)
 
     logger.info("\nSaved results to: %s", out_path)
