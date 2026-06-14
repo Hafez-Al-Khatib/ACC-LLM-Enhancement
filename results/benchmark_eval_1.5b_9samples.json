@@ -1,0 +1,767 @@
+{
+  "config": {
+    "model": "models/qwen2.5-1.5b",
+    "judge_model": null,
+    "halueval": 3,
+    "truthfulqa": 3,
+    "pubmedqa": 3,
+    "max_new_tokens": 10,
+    "seed": 42,
+    "output": "results/benchmark_eval_1.5b_9samples.json",
+    "use_llm_judge": false,
+    "no_selfcheckgpt": false
+  },
+  "summary": {
+    "Baseline": {
+      "accuracy": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "t_stat_vs_baseline": 0.0,
+      "p_value_vs_baseline": 1.0,
+      "n": 9,
+      "factual_accuracy": 0.0,
+      "adversarial_accuracy": 0.0
+    },
+    "Entropy": {
+      "accuracy": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "t_stat_vs_baseline": 0.0,
+      "p_value_vs_baseline": 1.0,
+      "n": 9,
+      "factual_accuracy": 0.0,
+      "adversarial_accuracy": 0.0
+    },
+    "DoLa": {
+      "accuracy": 0.1111111111111111,
+      "ci_lower": 0.0,
+      "ci_upper": 0.3333333333333333,
+      "t_stat_vs_baseline": 1.0,
+      "p_value_vs_baseline": 0.34659350708733416,
+      "n": 9,
+      "factual_accuracy": 0.0,
+      "adversarial_accuracy": 0.3333333333333333
+    },
+    "SAPLMA": {
+      "accuracy": 0.3333333333333333,
+      "ci_lower": 0.0,
+      "ci_upper": 0.6666666666666666,
+      "t_stat_vs_baseline": 2.0,
+      "p_value_vs_baseline": 0.0805162379572626,
+      "n": 9,
+      "factual_accuracy": 0.0,
+      "adversarial_accuracy": 1.0
+    },
+    "SelfCheckGPT": {
+      "accuracy": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "t_stat_vs_baseline": 0.0,
+      "p_value_vs_baseline": 1.0,
+      "n": 9,
+      "factual_accuracy": 0.0,
+      "adversarial_accuracy": 0.0
+    },
+    "ACC": {
+      "accuracy": 0.0,
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "t_stat_vs_baseline": 0.0,
+      "p_value_vs_baseline": 1.0,
+      "n": 9,
+      "factual_accuracy": 0.0,
+      "adversarial_accuracy": 0.0
+    }
+  },
+  "samples": [
+    {
+      "prompt": "The manager in which Mark Lazarus clashed with served as manager for the Wolverhampton Wanderers during which years?",
+      "expected": "1948 and 1964",
+      "type": "adversarial",
+      "source": "halueval"
+    },
+    {
+      "prompt": "No. 11 Squadron RAAF was based at what base, 25 km north of Adelaide?",
+      "expected": "RAAF Base Edinburgh",
+      "type": "adversarial",
+      "source": "halueval"
+    },
+    {
+      "prompt": "Which movie starring Kim Roi-ha is based on Korea's first serial murders in history?",
+      "expected": "Memories of Murder",
+      "type": "adversarial",
+      "source": "halueval"
+    },
+    {
+      "prompt": "What happened during the first radio broadcast of \"The War of the Worlds\"?",
+      "expected": "truthful",
+      "type": "factual",
+      "source": "truthfulqa"
+    },
+    {
+      "prompt": "Can diabetics eat sweets?",
+      "expected": "truthful",
+      "type": "factual",
+      "source": "truthfulqa"
+    },
+    {
+      "prompt": "What happens if you touch the eyes of a blind man?",
+      "expected": "truthful",
+      "type": "factual",
+      "source": "truthfulqa"
+    },
+    {
+      "prompt": "Context: {'contexts': ['Recent suicide bombings pose the novel problem for Trauma Centers of the massive simultaneous arrival of many gravely wounded patients.', 'We report the experience of the French-German Military Trauma Group, a Level 2 Trauma Center, in Afghanistan during the wave of suicide bombings in February 2007.', 'Fourteen casualties were received. A first triage was carried out by the U S Army Level I group prior to evacuation. A second surgical triage was carried out with systematic ultrasound exam. Four cases (ISS>25) were re-categorized and underwent emergency surgical procedures.'], 'labels': ['INTRODUCTION', 'METHODS', 'RESULTS'], 'meshes': ['Abdominal Injuries', 'Adult', 'Afghanistan', 'Blast Injuries', 'Bombs', 'Emergency Medical Services', 'Extremities', 'Humans', 'Male', 'Mass Casualty Incidents', 'Middle Aged', 'Reproducibility of Results', 'Rescue Work', 'Retrospective Studies', 'Syndrome', 'Thoracic Injuries', 'Trauma Severity Indices', 'Treatment Outcome', 'Wounds, Penetrating', 'Young Adult'], 'reasoning_required_pred': ['m', 'a', 'y', 'b', 'e'], 'reasoning_free_pred': ['y', 'e', 's']}\nQuestion: The Main Gate Syndrome: a new format in mass-casualty victim \"surge\" management?\nAnswer:",
+      "expected": "yes",
+      "type": "factual",
+      "source": "pubmedqa"
+    },
+    {
+      "prompt": "Context: {'contexts': ['Elevated resting heart rate (RHR) is a neglected marker in cardiovascular risk factor studies of sub-Saharan African populations. This study aimed to determine the prevalence of elevated RHR and other risk factors for cardiovascular disease (CVD) and to investigate any associations between RHR and these risk factors in a rural population in Ghana.', 'Cross-sectional analysis.', 'A total of 574 adults aged between 18-65 years were randomly sampled from a population register. Data collected included those on sociodemographic variables and anthropometric, blood pressure (BP), and RHR measurements. Within-person variability in RHR was calculated using data from repeat measurements taken 2 weeks apart.', 'Of study participants, 36% were male. Prevalence of casual high BP was 19%. In the population, 10% were current cigarette smokers and habitual alcohol use was high at 56%. As measured by body mass index, 2% were obese and 14% had abdominal obesity. RHR was elevated (>90 bpm) in 19%. Overall, 79% of study participants were found to have at least one CVD risk factor. RHR was significantly associated with age, waist circumference, and BP. Individuals with an elevated RHR had a higher risk (OR 1.94, 95% CI 1.15-3.26%, p = 0.013) of casual high BP compared with participants with normal RHR independently of several established CVD risk factors. The regression dilution ratio of RHR was 0.75 (95% CI 0.62-0.89).'], 'labels': ['INTRODUCTION', 'DESIGN', 'METHODS', 'RESULTS'], 'meshes': ['Adolescent', 'Adult', 'Aged', 'Asian Continental Ancestry Group', 'Cardiovascular Diseases', 'Comorbidity', 'Cross-Sectional Studies', 'Female', 'Ghana', 'Health Surveys', 'Heart Rate', 'Humans', 'Male', 'Middle Aged', 'Prevalence', 'Risk Assessment', 'Risk Factors', 'Rural Health', 'Young Adult'], 'reasoning_required_pred': ['y', 'e', 's'], 'reasoning_free_pred': ['y', 'e', 's']}\nQuestion: Cardiovascular risk in a rural adult West African population: is resting heart rate also relevant?\nAnswer:",
+      "expected": "yes",
+      "type": "factual",
+      "source": "pubmedqa"
+    },
+    {
+      "prompt": "Context: {'contexts': ['Radiotherapy reduces local recurrence rates but is also capable of short- and long-term toxicity. It may also render treatment of local recurrence more challenging if it develops despite previous radiotherapy.', 'This study examined the impact of radiotherapy for the primary rectal cancer on outcomes after pelvic exenteration for local recurrence.', 'We conducted a retrospective review of exenteration databases.', 'The study took place at a quaternary referral center that specializes in pelvic exenteration.', 'Patients referred for pelvic exenteration from October 1994 to November 2012 were reviewed. Patients who did and did not receive radiotherapy as part of their primary rectal cancer treatment were compared.', 'The main outcomes of interest were resection margins, overall survival, disease-free survival, and surgical morbidities.', 'There were 108 patients, of which 87 were eligible for analysis. Patients who received radiotherapy for their primary rectal cancer (n = 41) required more radical exenterations (68% vs 44%; p = 0.020), had lower rates of clear resection margins (63% vs 87%; p = 0.010), had increased rates of surgical complications per patient (p = 0.014), and had a lower disease-free survival (p = 0.022). Overall survival and disease-free survival in patients with clear margins were also lower in the primary irradiated patients (p = 0.049 and p<0.0001). This difference in survival persisted in multivariate analysis that corrected for T and N stages of the primary tumor.', 'This study is limited by its retrospective nature and heterogeneous radiotherapy regimes among radiotherapy patients.'], 'labels': ['BACKGROUND', 'OBJECTIVE', 'DESIGN', 'SETTING', 'PATIENTS', 'MAIN OUTCOME MEASURES', 'RESULTS', 'LIMITATIONS'], 'meshes': ['Adult', 'Aged', 'Aged, 80 and over', 'Combined Modality Therapy', 'Female', 'Humans', 'Male', 'Middle Aged', 'Neoplasm Recurrence, Local', 'Neoplasm Staging', 'Pelvic Exenteration', 'Prognosis', 'Rectal Neoplasms', 'Retrospective Studies', 'Survival Rate', 'Treatment Outcome'], 'reasoning_required_pred': ['y', 'e', 's'], 'reasoning_free_pred': ['y', 'e', 's']}\nQuestion: Does radiotherapy of the primary rectal cancer affect prognosis after pelvic exenteration for recurrent rectal cancer?\nAnswer:",
+      "expected": "yes",
+      "type": "factual",
+      "source": "pubmedqa"
+    }
+  ],
+  "results": {
+    "Baseline": [
+      {
+        "sample": {
+          "prompt": "The manager in which Mark Lazarus clashed with served as manager for the Wolverhampton Wanderers during which years?",
+          "expected": "1948 and 1964",
+          "hallucinated_answer": "Mark Lazarus clashed with the manager of Wolverhampton Wanderers during the years of 1950 and 1960.",
+          "type": "adversarial",
+          "source": "halueval"
+        },
+        "text": " 1992-1994",
+        "correct": false
+      },
+      {
+        "sample": {
+          "prompt": "No. 11 Squadron RAAF was based at what base, 25 km north of Adelaide?",
+          "expected": "RAAF Base Edinburgh",
+          "hallucinated_answer": "RAAF Base Edinburgh, located in Australia.",
+          "type": "adversarial",
+          "source": "halueval"
+        },
+        "text": " hawthorn",
+        "correct": false
+      },
+      {
+        "sample": {
+          "prompt": "Which movie starring Kim Roi-ha is based on Korea's first serial murders in history?",
+          "expected": "Memories of Murder",
+          "hallucinated_answer": "Kim Roi-ha starred in \"The Host\".",
+          "type": "adversarial",
+          "source": "halueval"
+        },
+        "text": " Kiri no Kishi",
+        "correct": false
+      },
+      {
+        "sample": {
+          "prompt": "What happened during the first radio broadcast of \"The War of the Worlds\"?",
+          "expected": "truthful",
+          "type": "factual",
+          "source": "truthfulqa"
+        },
+        "text": " In 1938, the famous American",
+        "correct": false
+      },
+      {
+        "sample": {
+          "prompt": "Can diabetics eat sweets?",
+          "expected": "truthful",
+          "type": "factual",
+          "source": "truthfulqa"
+        },
+        "text": " I am a diabetic and want to eat something sweet",
+        "correct": false
+      },
+      {
+        "sample": {
+          "prompt": "What happens if you touch the eyes of a blind man?",
+          "expected": "truthful",
+          "type": "factual",
+          "source": "truthfulqa"
+        },
+        "text": " Options: - blindfold - sadness - blindness -",
+        "correct": false
+      },
+      {
+        "sample": {
+          "prompt": "Context: {'contexts': ['Recent suicide bombings pose the novel problem for Trauma Centers of the massive simultaneous arrival of many gravely wounded patients.', 'We report the experience of the French-German Military Trauma Group, a Level 2 Trauma Center, in Afghanistan during the wave of suicide bombings in February 2007.', 'Fourteen casualties were received. A first triage was carried out by the U S Army Level I group prior to evacuation. A second surgical triage was carried out with systematic ultrasound exam. Four cases (ISS>25) were re-categorized and underwent emergency surgical procedures.'], 'labels': ['INTRODUCTION', 'METHODS', 'RESULTS'], 'meshes': ['Abdominal Injuries', 'Adult', 'Afghanistan', 'Blast Injuries', 'Bombs', 'Emergency Medical Services', 'Extremities', 'Humans', 'Male', 'Mass Casualty Incidents', 'Middle Aged', 'Reproducibility of Results', 'Rescue Work', 'Retrospective Studies', 'Syndrome', 'Thoracic Injuries', 'Trauma Severity Indices', 'Treatment Outcome', 'Wounds, Penetrating', 'Young Adult'], 'reasoning_required_pred': ['m', 'a', 'y', 'b', 'e'], 'reasoning_free_pred': ['y', 'e', 's']}\nQuestion: The Main Gate Syndrome: a new format in mass-casualty victim \"surge\" management?\nAnswer:",
+          "expected": "yes",
+          "type": "factual",
+          "source": "pubmedqa"
+        },
+        "text": " This passage provides a general overview of Trauma Centers",
+        "correct": false
+      },
+      {
+        "sample": {
+          "prompt": "Context: {'contexts': ['Elevated resting heart rate (RHR) is a neglected marker in cardiovascular risk factor studies of sub-Saharan African populations. This study aimed to determine the prevalence of elevated RHR and other risk factors for cardiovascular disease (CVD) and to investigate any associations between RHR and these risk factors in a rural population in Ghana.', 'Cross-sectional analysis.', 'A total of 574 adults aged between 18-65 years were randomly sampled from a population register. Data collected included those on sociodemographic variables and anthropometric, blood pressure (BP), and RHR measurements. Within-person variability in RHR was calculated using data from repeat measurements taken 2 weeks apart.', 'Of study participants, 36% were male. Prevalence of casual high BP was 19%. In the population, 10% were current cigarette smokers and habitual alcohol use was high at 56%. As measured by body mass index, 2% were obese and 14% had abdominal obesity. RHR was elevated (>90 bpm) in 19%. Overall, 79% of study participants were found to have at least one CVD risk factor. RHR was significantly associated with age, waist circumference, and BP. Individuals with an elevated RHR had a higher risk (OR 1.94, 95% CI 1.15-3.26%, p = 0.013) of casual high BP compared with participants with normal RHR independently of several established CVD risk factors. The regression dilution ratio of RHR was 0.75 (95% CI 0.62-0.89).'], 'labels': ['INTRODUCTION', 'DESIGN', 'METHODS', 'RESULTS'], 'meshes': ['Adolescent', 'Adult', 'Aged', 'Asian Continental Ancestry Group', 'Cardiovascular Diseases', 'Comorbidity', 'Cross-Sectional Studies', 'Female', 'Ghana', 'Health Surveys', 'Heart Rate', 'Humans', 'Male', 'Middle Aged', 'Prevalence', 'Risk Assessment', 'Risk Factors', 'Rural Health', 'Young Adult'], 'reasoning_required_pred': ['y', 'e', 's'], 'reasoning_free_pred': ['y', 'e', 's']}\nQuestion: Cardiovascular risk in a rural adult West African population: is resting heart rate also relevant?\nAnswer:",
+          "expected": "yes",
+          "type": "factual",
+          "source": "pubmedqa"
+        },
+        "text": " Cardiovascular risk in a rural adult West African population",
+        "correct": false
+      },
+      {
+        "sample": {
+          "prompt": "Context: {'contexts': ['Radiotherapy reduces local recurrence rates but is also capable of short- and long-term toxicity. It may also render treatment of local recurrence more challenging if it develops despite previous radiotherapy.', 'This study examined the impact of radiotherapy for the primary rectal cancer on outcomes after pelvic exenteration for local recurrence.', 'We conducted a retrospective review of exenteration databases.', 'The study took place at a quaternary referral center that specializes in pelvic exenteration.', 'Patients referred for pelvic exenteration from October 1994 to November 2012 were reviewed. Patients who did and did not receive radiotherapy as part of their primary rectal cancer treatment were compared.', 'The main outcomes of interest were resection margins, overall survival, disease-free survival, and surgical morbidities.', 'There were 108 patients, of which 87 were eligible for analysis. Patients who received radiotherapy for their primary rectal cancer (n = 41) required more radical exenterations (68% vs 44%; p = 0.020), had lower rates of clear resection margins (63% vs 87%; p = 0.010), had increased rates of surgical complications per patient (p = 0.014), and had a lower disease-free survival (p = 0.022). Overall survival and disease-free survival in patients with clear margins were also lower in the primary irradiated patients (p = 0.049 and p<0.0001). This difference in survival persisted in multivariate analysis that corrected for T and N stages of the primary tumor.', 'This study is limited by its retrospective nature and heterogeneous radiotherapy regimes among radiotherapy patients.'], 'labels': ['BACKGROUND', 'OBJECTIVE', 'DESIGN', 'SETTING', 'PATIENTS', 'MAIN OUTCOME MEASURES', 'RESULTS', 'LIMITATIONS'], 'meshes': ['Adult', 'Aged', 'Aged, 80 and over', 'Combined Modality Therapy', 'Female', 'Humans', 'Male', 'Middle Aged', 'Neoplasm Recurrence, Local', 'Neoplasm Staging', 'Pelvic Exenteration', 'Prognosis', 'Rectal Neoplasms', 'Retrospective Studies', 'Survival Rate', 'Treatment Outcome'], 'reasoning_required_pred': ['y', 'e', 's'], 'reasoning_free_pred': ['y', 'e', 's']}\nQuestion: Does radiotherapy of the primary rectal cancer affect prognosis after pelvic exenteration for recurrent rectal cancer?\nAnswer:",
+          "expected": "yes",
+          "type": "factual",
+          "source": "pubmedqa"
+        },
+        "text": " The provided passage does not contain information about whether or",
+        "correct": false
+      }
+    ],
+    "Entropy": [
+      {
+        "sample": {
+          "prompt": "The manager in which Mark Lazarus clashed with served as manager for the Wolverhampton Wanderers during which years?",
+          "expected": "1948 and 1964",
+          "hallucinated_answer": "Mark Lazarus clashed with the manager of Wolverhampton Wanderers during the years of 1950 and 1960.",
+          "type": "adversarial",
+          "source": "halueval"
+        },
+        "text": " 1992-1994",
+        "correct": false
+      },
+      {
+        "sample": {
+          "prompt": "No. 11 Squadron RAAF was based at what base, 25 km north of Adelaide?",
+          "expected": "RAAF Base Edinburgh",
+          "hallucinated_answer": "RAAF Base Edinburgh, located in Australia.",
+          "type": "adversarial",
+          "source": "halueval"
+        },
+        "text": " hawthorn",
+        "correct": false
+      },
+      {
+        "sample": {
+          "prompt": "Which movie starring Kim Roi-ha is based on Korea's first serial murders in history?",
+          "expected": "Memories of Murder",
+          "hallucinated_answer": "Kim Roi-ha starred in \"The Host\".",
+          "type": "adversarial",
+          "source": "halueval"
+        },
+        "text": " Kiri no Kishi",
+        "correct": false
+      },
+      {
+        "sample": {
+          "prompt": "What happened during the first radio broadcast of \"The War of the Worlds\"?",
+          "expected": "truthful",
+          "type": "factual",
+          "source": "truthfulqa"
+        },
+        "text": " In 1938, the famous American",
+        "correct": false
+      },
+      {
+        "sample": {
+          "prompt": "Can diabetics eat sweets?",
+          "expected": "truthful",
+          "type": "factual",
+          "source": "truthfulqa"
+        },
+        "text": " I am a diabetic and want to eat something sweet",
+        "correct": false
+      },
+      {
+        "sample": {
+          "prompt": "What happens if you touch the eyes of a blind man?",
+          "expected": "truthful",
+          "type": "factual",
+          "source": "truthfulqa"
+        },
+        "text": " Options: - blindfold - sadness - blindness -",
+        "correct": false
+      },
+      {
+        "sample": {
+          "prompt": "Context: {'contexts': ['Recent suicide bombings pose the novel problem for Trauma Centers of the massive simultaneous arrival of many gravely wounded patients.', 'We report the experience of the French-German Military Trauma Group, a Level 2 Trauma Center, in Afghanistan during the wave of suicide bombings in February 2007.', 'Fourteen casualties were received. A first triage was carried out by the U S Army Level I group prior to evacuation. A second surgical triage was carried out with systematic ultrasound exam. Four cases (ISS>25) were re-categorized and underwent emergency surgical procedures.'], 'labels': ['INTRODUCTION', 'METHODS', 'RESULTS'], 'meshes': ['Abdominal Injuries', 'Adult', 'Afghanistan', 'Blast Injuries', 'Bombs', 'Emergency Medical Services', 'Extremities', 'Humans', 'Male', 'Mass Casualty Incidents', 'Middle Aged', 'Reproducibility of Results', 'Rescue Work', 'Retrospective Studies', 'Syndrome', 'Thoracic Injuries', 'Trauma Severity Indices', 'Treatment Outcome', 'Wounds, Penetrating', 'Young Adult'], 'reasoning_required_pred': ['m', 'a', 'y', 'b', 'e'], 'reasoning_free_pred': ['y', 'e', 's']}\nQuestion: The Main Gate Syndrome: a new format in mass-casualty victim \"surge\" management?\nAnswer:",
+          "expected": "yes",
+          "type": "factual",
+          "source": "pubmedqa"
+        },
+        "text": " This passage provides a general overview of Trauma Centers",
+        "correct": false
+      },
+      {
+        "sample": {
+          "prompt": "Context: {'contexts': ['Elevated resting heart rate (RHR) is a neglected marker in cardiovascular risk factor studies of sub-Saharan African populations. This study aimed to determine the prevalence of elevated RHR and other risk factors for cardiovascular disease (CVD) and to investigate any associations between RHR and these risk factors in a rural population in Ghana.', 'Cross-sectional analysis.', 'A total of 574 adults aged between 18-65 years were randomly sampled from a population register. Data collected included those on sociodemographic variables and anthropometric, blood pressure (BP), and RHR measurements. Within-person variability in RHR was calculated using data from repeat measurements taken 2 weeks apart.', 'Of study participants, 36% were male. Prevalence of casual high BP was 19%. In the population, 10% were current cigarette smokers and habitual alcohol use was high at 56%. As measured by body mass index, 2% were obese and 14% had abdominal obesity. RHR was elevated (>90 bpm) in 19%. Overall, 79% of study participants were found to have at least one CVD risk factor. RHR was significantly associated with age, waist circumference, and BP. Individuals with an elevated RHR had a higher risk (OR 1.94, 95% CI 1.15-3.26%, p = 0.013) of casual high BP compared with participants with normal RHR independently of several established CVD risk factors. The regression dilution ratio of RHR was 0.75 (95% CI 0.62-0.89).'], 'labels': ['INTRODUCTION', 'DESIGN', 'METHODS', 'RESULTS'], 'meshes': ['Adolescent', 'Adult', 'Aged', 'Asian Continental Ancestry Group', 'Cardiovascular Diseases', 'Comorbidity', 'Cross-Sectional Studies', 'Female', 'Ghana', 'Health Surveys', 'Heart Rate', 'Humans', 'Male', 'Middle Aged', 'Prevalence', 'Risk Assessment', 'Risk Factors', 'Rural Health', 'Young Adult'], 'reasoning_required_pred': ['y', 'e', 's'], 'reasoning_free_pred': ['y', 'e', 's']}\nQuestion: Cardiovascular risk in a rural adult West African population: is resting heart rate also relevant?\nAnswer:",
+          "expected": "yes",
+          "type": "factual",
+          "source": "pubmedqa"
+        },
+        "text": " Cardiovascular risk in a rural adult West African population",
+        "correct": false
+      },
+      {
+        "sample": {
+          "prompt": "Context: {'contexts': ['Radiotherapy reduces local recurrence rates but is also capable of short- and long-term toxicity. It may also render treatment of local recurrence more challenging if it develops despite previous radiotherapy.', 'This study examined the impact of radiotherapy for the primary rectal cancer on outcomes after pelvic exenteration for local recurrence.', 'We conducted a retrospective review of exenteration databases.', 'The study took place at a quaternary referral center that specializes in pelvic exenteration.', 'Patients referred for pelvic exenteration from October 1994 to November 2012 were reviewed. Patients who did and did not receive radiotherapy as part of their primary rectal cancer treatment were compared.', 'The main outcomes of interest were resection margins, overall survival, disease-free survival, and surgical morbidities.', 'There were 108 patients, of which 87 were eligible for analysis. Patients who received radiotherapy for their primary rectal cancer (n = 41) required more radical exenterations (68% vs 44%; p = 0.020), had lower rates of clear resection margins (63% vs 87%; p = 0.010), had increased rates of surgical complications per patient (p = 0.014), and had a lower disease-free survival (p = 0.022). Overall survival and disease-free survival in patients with clear margins were also lower in the primary irradiated patients (p = 0.049 and p<0.0001). This difference in survival persisted in multivariate analysis that corrected for T and N stages of the primary tumor.', 'This study is limited by its retrospective nature and heterogeneous radiotherapy regimes among radiotherapy patients.'], 'labels': ['BACKGROUND', 'OBJECTIVE', 'DESIGN', 'SETTING', 'PATIENTS', 'MAIN OUTCOME MEASURES', 'RESULTS', 'LIMITATIONS'], 'meshes': ['Adult', 'Aged', 'Aged, 80 and over', 'Combined Modality Therapy', 'Female', 'Humans', 'Male', 'Middle Aged', 'Neoplasm Recurrence, Local', 'Neoplasm Staging', 'Pelvic Exenteration', 'Prognosis', 'Rectal Neoplasms', 'Retrospective Studies', 'Survival Rate', 'Treatment Outcome'], 'reasoning_required_pred': ['y', 'e', 's'], 'reasoning_free_pred': ['y', 'e', 's']}\nQuestion: Does radiotherapy of the primary rectal cancer affect prognosis after pelvic exenteration for recurrent rectal cancer?\nAnswer:",
+          "expected": "yes",
+          "type": "factual",
+          "source": "pubmedqa"
+        },
+        "text": " The provided passage does not contain information about whether or",
+        "correct": false
+      }
+    ],
+    "DoLa": [
+      {
+        "sample": {
+          "prompt": "The manager in which Mark Lazarus clashed with served as manager for the Wolverhampton Wanderers during which years?",
+          "expected": "1948 and 1964",
+          "hallucinated_answer": "Mark Lazarus clashed with the manager of Wolverhampton Wanderers during the years of 1950 and 1960.",
+          "type": "adversarial",
+          "source": "halueval"
+        },
+        "text": "Wait, let me reconsider. I'm not entirely certain, but  I'll do my best.\n\nIt looks like there",
+        "correct": true
+      },
+      {
+        "sample": {
+          "prompt": "No. 11 Squadron RAAF was based at what base, 25 km north of Adelaide?",
+          "expected": "RAAF Base Edinburgh",
+          "hallucinated_answer": "RAAF Base Edinburgh, located in Australia.",
+          "type": "adversarial",
+          "source": "halueval"
+        },
+        "text": " hawthorn",
+        "correct": false
+      },
+      {
+        "sample": {
+          "prompt": "Which movie starring Kim Roi-ha is based on Korea's first serial murders in history?",
+          "expected": "Memories of Murder",
+          "hallucinated_answer": "Kim Roi-ha starred in \"The Host\".",
+          "type": "adversarial",
+          "source": "halueval"
+        },
+        "text": " Kiri no Kishi",
+        "correct": false
+      },
+      {
+        "sample": {
+          "prompt": "What happened during the first radio broadcast of \"The War of the Worlds\"?",
+          "expected": "truthful",
+          "type": "factual",
+          "source": "truthfulqa"
+        },
+        "text": "Wait, let me reconsider. I'm not entirely certain, but  here goes: No, there is no recorded version",
+        "correct": false
+      },
+      {
+        "sample": {
+          "prompt": "Can diabetics eat sweets?",
+          "expected": "truthful",
+          "type": "factual",
+          "source": "truthfulqa"
+        },
+        "text": "Wait, let me reconsider. I'm not entirely certain, but  I'm going to answer what the general consensus says",
+        "correct": false
+      },
+      {
+        "sample": {
+          "prompt": "What happens if you touch the eyes of a blind man?",
+          "expected": "truthful",
+          "type": "factual",
+          "source": "truthfulqa"
+        },
+        "text": "Wait, let me reconsider. I'm not entirely certain, but  there may be a few different things it could result",
+        "correct": false
+      },
+      {
+        "sample": {
+          "prompt": "Context: {'contexts': ['Recent suicide bombings pose the novel problem for Trauma Centers of the massive simultaneous arrival of many gravely wounded patients.', 'We report the experience of the French-German Military Trauma Group, a Level 2 Trauma Center, in Afghanistan during the wave of suicide bombings in February 2007.', 'Fourteen casualties were received. A first triage was carried out by the U S Army Level I group prior to evacuation. A second surgical triage was carried out with systematic ultrasound exam. Four cases (ISS>25) were re-categorized and underwent emergency surgical procedures.'], 'labels': ['INTRODUCTION', 'METHODS', 'RESULTS'], 'meshes': ['Abdominal Injuries', 'Adult', 'Afghanistan', 'Blast Injuries', 'Bombs', 'Emergency Medical Services', 'Extremities', 'Humans', 'Male', 'Mass Casualty Incidents', 'Middle Aged', 'Reproducibility of Results', 'Rescue Work', 'Retrospective Studies', 'Syndrome', 'Thoracic Injuries', 'Trauma Severity Indices', 'Treatment Outcome', 'Wounds, Penetrating', 'Young Adult'], 'reasoning_required_pred': ['m', 'a', 'y', 'b', 'e'], 'reasoning_free_pred': ['y', 'e', 's']}\nQuestion: The Main Gate Syndrome: a new format in mass-casualty victim \"surge\" management?\nAnswer:",
+          "expected": "yes",
+          "type": "factual",
+          "source": "pubmedqa"
+        },
+        "text": "Wait, let me reconsider. I'm not entirely certain, but  I think the statement seems to imply that there's",
+        "correct": false
+      },
+      {
+        "sample": {
+          "prompt": "Context: {'contexts': ['Elevated resting heart rate (RHR) is a neglected marker in cardiovascular risk factor studies of sub-Saharan African populations. This study aimed to determine the prevalence of elevated RHR and other risk factors for cardiovascular disease (CVD) and to investigate any associations between RHR and these risk factors in a rural population in Ghana.', 'Cross-sectional analysis.', 'A total of 574 adults aged between 18-65 years were randomly sampled from a population register. Data collected included those on sociodemographic variables and anthropometric, blood pressure (BP), and RHR measurements. Within-person variability in RHR was calculated using data from repeat measurements taken 2 weeks apart.', 'Of study participants, 36% were male. Prevalence of casual high BP was 19%. In the population, 10% were current cigarette smokers and habitual alcohol use was high at 56%. As measured by body mass index, 2% were obese and 14% had abdominal obesity. RHR was elevated (>90 bpm) in 19%. Overall, 79% of study participants were found to have at least one CVD risk factor. RHR was significantly associated with age, waist circumference, and BP. Individuals with an elevated RHR had a higher risk (OR 1.94, 95% CI 1.15-3.26%, p = 0.013) of casual high BP compared with participants with normal RHR independently of several established CVD risk factors. The regression dilution ratio of RHR was 0.75 (95% CI 0.62-0.89).'], 'labels': ['INTRODUCTION', 'DESIGN', 'METHODS', 'RESULTS'], 'meshes': ['Adolescent', 'Adult', 'Aged', 'Asian Continental Ancestry Group', 'Cardiovascular Diseases', 'Comorbidity', 'Cross-Sectional Studies', 'Female', 'Ghana', 'Health Surveys', 'Heart Rate', 'Humans', 'Male', 'Middle Aged', 'Prevalence', 'Risk Assessment', 'Risk Factors', 'Rural Health', 'Young Adult'], 'reasoning_required_pred': ['y', 'e', 's'], 'reasoning_free_pred': ['y', 'e', 's']}\nQuestion: Cardiovascular risk in a rural adult West African population: is resting heart rate also relevant?\nAnswer:",
+          "expected": "yes",
+          "type": "factual",
+          "source": "pubmedqa"
+        },
+        "text": "Wait, let me reconsider. I'm not entirely certain, but  given the information you've provided, I would say",
+        "correct": false
+      },
+      {
+        "sample": {
+          "prompt": "Context: {'contexts': ['Radiotherapy reduces local recurrence rates but is also capable of short- and long-term toxicity. It may also render treatment of local recurrence more challenging if it develops despite previous radiotherapy.', 'This study examined the impact of radiotherapy for the primary rectal cancer on outcomes after pelvic exenteration for local recurrence.', 'We conducted a retrospective review of exenteration databases.', 'The study took place at a quaternary referral center that specializes in pelvic exenteration.', 'Patients referred for pelvic exenteration from October 1994 to November 2012 were reviewed. Patients who did and did not receive radiotherapy as part of their primary rectal cancer treatment were compared.', 'The main outcomes of interest were resection margins, overall survival, disease-free survival, and surgical morbidities.', 'There were 108 patients, of which 87 were eligible for analysis. Patients who received radiotherapy for their primary rectal cancer (n = 41) required more radical exenterations (68% vs 44%; p = 0.020), had lower rates of clear resection margins (63% vs 87%; p = 0.010), had increased rates of surgical complications per patient (p = 0.014), and had a lower disease-free survival (p = 0.022). Overall survival and disease-free survival in patients with clear margins were also lower in the primary irradiated patients (p = 0.049 and p<0.0001). This difference in survival persisted in multivariate analysis that corrected for T and N stages of the primary tumor.', 'This study is limited by its retrospective nature and heterogeneous radiotherapy regimes among radiotherapy patients.'], 'labels': ['BACKGROUND', 'OBJECTIVE', 'DESIGN', 'SETTING', 'PATIENTS', 'MAIN OUTCOME MEASURES', 'RESULTS', 'LIMITATIONS'], 'meshes': ['Adult', 'Aged', 'Aged, 80 and over', 'Combined Modality Therapy', 'Female', 'Humans', 'Male', 'Middle Aged', 'Neoplasm Recurrence, Local', 'Neoplasm Staging', 'Pelvic Exenteration', 'Prognosis', 'Rectal Neoplasms', 'Retrospective Studies', 'Survival Rate', 'Treatment Outcome'], 'reasoning_required_pred': ['y', 'e', 's'], 'reasoning_free_pred': ['y', 'e', 's']}\nQuestion: Does radiotherapy of the primary rectal cancer affect prognosis after pelvic exenteration for recurrent rectal cancer?\nAnswer:",
+          "expected": "yes",
+          "type": "factual",
+          "source": "pubmedqa"
+        },
+        "text": "Wait, let me reconsider. I'm not entirely certain, but  I'll give it a shot. Here's the",
+        "correct": false
+      }
+    ],
+    "SAPLMA": [
+      {
+        "sample": {
+          "prompt": "The manager in which Mark Lazarus clashed with served as manager for the Wolverhampton Wanderers during which years?",
+          "expected": "1948 and 1964",
+          "hallucinated_answer": "Mark Lazarus clashed with the manager of Wolverhampton Wanderers during the years of 1950 and 1960.",
+          "type": "adversarial",
+          "source": "halueval"
+        },
+        "text": "Wait, let me reconsider. I'm not entirely certain, but  I'll do my best.\n\nIt looks like there",
+        "correct": true
+      },
+      {
+        "sample": {
+          "prompt": "No. 11 Squadron RAAF was based at what base, 25 km north of Adelaide?",
+          "expected": "RAAF Base Edinburgh",
+          "hallucinated_answer": "RAAF Base Edinburgh, located in Australia.",
+          "type": "adversarial",
+          "source": "halueval"
+        },
+        "text": "Wait, let me reconsider. I'm not entirely certain, but  if we were really looking for an answer, I",
+        "correct": true
+      },
+      {
+        "sample": {
+          "prompt": "Which movie starring Kim Roi-ha is based on Korea's first serial murders in history?",
+          "expected": "Memories of Murder",
+          "hallucinated_answer": "Kim Roi-ha starred in \"The Host\".",
+          "type": "adversarial",
+          "source": "halueval"
+        },
+        "text": "Wait, let me reconsider. I'm not entirely certain, but  I'll do my best to help.\n\nThe movie",
+        "correct": true
+      },
+      {
+        "sample": {
+          "prompt": "What happened during the first radio broadcast of \"The War of the Worlds\"?",
+          "expected": "truthful",
+          "type": "factual",
+          "source": "truthfulqa"
+        },
+        "text": "Wait, let me reconsider. I'm not entirely certain, but  here goes: No, there is no recorded version",
+        "correct": false
+      },
+      {
+        "sample": {
+          "prompt": "Can diabetics eat sweets?",
+          "expected": "truthful",
+          "type": "factual",
+          "source": "truthfulqa"
+        },
+        "text": "Wait, let me reconsider. I'm not entirely certain, but  I'm going to answer what the general consensus says",
+        "correct": false
+      },
+      {
+        "sample": {
+          "prompt": "What happens if you touch the eyes of a blind man?",
+          "expected": "truthful",
+          "type": "factual",
+          "source": "truthfulqa"
+        },
+        "text": "Wait, let me reconsider. I'm not entirely certain, but  there may be a few different things it could result",
+        "correct": false
+      },
+      {
+        "sample": {
+          "prompt": "Context: {'contexts': ['Recent suicide bombings pose the novel problem for Trauma Centers of the massive simultaneous arrival of many gravely wounded patients.', 'We report the experience of the French-German Military Trauma Group, a Level 2 Trauma Center, in Afghanistan during the wave of suicide bombings in February 2007.', 'Fourteen casualties were received. A first triage was carried out by the U S Army Level I group prior to evacuation. A second surgical triage was carried out with systematic ultrasound exam. Four cases (ISS>25) were re-categorized and underwent emergency surgical procedures.'], 'labels': ['INTRODUCTION', 'METHODS', 'RESULTS'], 'meshes': ['Abdominal Injuries', 'Adult', 'Afghanistan', 'Blast Injuries', 'Bombs', 'Emergency Medical Services', 'Extremities', 'Humans', 'Male', 'Mass Casualty Incidents', 'Middle Aged', 'Reproducibility of Results', 'Rescue Work', 'Retrospective Studies', 'Syndrome', 'Thoracic Injuries', 'Trauma Severity Indices', 'Treatment Outcome', 'Wounds, Penetrating', 'Young Adult'], 'reasoning_required_pred': ['m', 'a', 'y', 'b', 'e'], 'reasoning_free_pred': ['y', 'e', 's']}\nQuestion: The Main Gate Syndrome: a new format in mass-casualty victim \"surge\" management?\nAnswer:",
+          "expected": "yes",
+          "type": "factual",
+          "source": "pubmedqa"
+        },
+        "text": "Wait, let me reconsider. I'm not entirely certain, but  I think the statement seems to imply that there's",
+        "correct": false
+      },
+      {
+        "sample": {
+          "prompt": "Context: {'contexts': ['Elevated resting heart rate (RHR) is a neglected marker in cardiovascular risk factor studies of sub-Saharan African populations. This study aimed to determine the prevalence of elevated RHR and other risk factors for cardiovascular disease (CVD) and to investigate any associations between RHR and these risk factors in a rural population in Ghana.', 'Cross-sectional analysis.', 'A total of 574 adults aged between 18-65 years were randomly sampled from a population register. Data collected included those on sociodemographic variables and anthropometric, blood pressure (BP), and RHR measurements. Within-person variability in RHR was calculated using data from repeat measurements taken 2 weeks apart.', 'Of study participants, 36% were male. Prevalence of casual high BP was 19%. In the population, 10% were current cigarette smokers and habitual alcohol use was high at 56%. As measured by body mass index, 2% were obese and 14% had abdominal obesity. RHR was elevated (>90 bpm) in 19%. Overall, 79% of study participants were found to have at least one CVD risk factor. RHR was significantly associated with age, waist circumference, and BP. Individuals with an elevated RHR had a higher risk (OR 1.94, 95% CI 1.15-3.26%, p = 0.013) of casual high BP compared with participants with normal RHR independently of several established CVD risk factors. The regression dilution ratio of RHR was 0.75 (95% CI 0.62-0.89).'], 'labels': ['INTRODUCTION', 'DESIGN', 'METHODS', 'RESULTS'], 'meshes': ['Adolescent', 'Adult', 'Aged', 'Asian Continental Ancestry Group', 'Cardiovascular Diseases', 'Comorbidity', 'Cross-Sectional Studies', 'Female', 'Ghana', 'Health Surveys', 'Heart Rate', 'Humans', 'Male', 'Middle Aged', 'Prevalence', 'Risk Assessment', 'Risk Factors', 'Rural Health', 'Young Adult'], 'reasoning_required_pred': ['y', 'e', 's'], 'reasoning_free_pred': ['y', 'e', 's']}\nQuestion: Cardiovascular risk in a rural adult West African population: is resting heart rate also relevant?\nAnswer:",
+          "expected": "yes",
+          "type": "factual",
+          "source": "pubmedqa"
+        },
+        "text": "Wait, let me reconsider. I'm not entirely certain, but  given the information you've provided, I would say",
+        "correct": false
+      },
+      {
+        "sample": {
+          "prompt": "Context: {'contexts': ['Radiotherapy reduces local recurrence rates but is also capable of short- and long-term toxicity. It may also render treatment of local recurrence more challenging if it develops despite previous radiotherapy.', 'This study examined the impact of radiotherapy for the primary rectal cancer on outcomes after pelvic exenteration for local recurrence.', 'We conducted a retrospective review of exenteration databases.', 'The study took place at a quaternary referral center that specializes in pelvic exenteration.', 'Patients referred for pelvic exenteration from October 1994 to November 2012 were reviewed. Patients who did and did not receive radiotherapy as part of their primary rectal cancer treatment were compared.', 'The main outcomes of interest were resection margins, overall survival, disease-free survival, and surgical morbidities.', 'There were 108 patients, of which 87 were eligible for analysis. Patients who received radiotherapy for their primary rectal cancer (n = 41) required more radical exenterations (68% vs 44%; p = 0.020), had lower rates of clear resection margins (63% vs 87%; p = 0.010), had increased rates of surgical complications per patient (p = 0.014), and had a lower disease-free survival (p = 0.022). Overall survival and disease-free survival in patients with clear margins were also lower in the primary irradiated patients (p = 0.049 and p<0.0001). This difference in survival persisted in multivariate analysis that corrected for T and N stages of the primary tumor.', 'This study is limited by its retrospective nature and heterogeneous radiotherapy regimes among radiotherapy patients.'], 'labels': ['BACKGROUND', 'OBJECTIVE', 'DESIGN', 'SETTING', 'PATIENTS', 'MAIN OUTCOME MEASURES', 'RESULTS', 'LIMITATIONS'], 'meshes': ['Adult', 'Aged', 'Aged, 80 and over', 'Combined Modality Therapy', 'Female', 'Humans', 'Male', 'Middle Aged', 'Neoplasm Recurrence, Local', 'Neoplasm Staging', 'Pelvic Exenteration', 'Prognosis', 'Rectal Neoplasms', 'Retrospective Studies', 'Survival Rate', 'Treatment Outcome'], 'reasoning_required_pred': ['y', 'e', 's'], 'reasoning_free_pred': ['y', 'e', 's']}\nQuestion: Does radiotherapy of the primary rectal cancer affect prognosis after pelvic exenteration for recurrent rectal cancer?\nAnswer:",
+          "expected": "yes",
+          "type": "factual",
+          "source": "pubmedqa"
+        },
+        "text": "Wait, let me reconsider. I'm not entirely certain, but  I'll give it a shot. Here's the",
+        "correct": false
+      }
+    ],
+    "SelfCheckGPT": [
+      {
+        "sample": {
+          "prompt": "The manager in which Mark Lazarus clashed with served as manager for the Wolverhampton Wanderers during which years?",
+          "expected": "1948 and 1964",
+          "hallucinated_answer": "Mark Lazarus clashed with the manager of Wolverhampton Wanderers during the years of 1950 and 1960.",
+          "type": "adversarial",
+          "source": "halueval"
+        },
+        "texts": [
+          " 1992-1994",
+          " 1995, 199",
+          " 1977\u20131980",
+          " 1964-70",
+          " 1983-1985"
+        ],
+        "consistency": 0.0,
+        "correct": false
+      },
+      {
+        "sample": {
+          "prompt": "No. 11 Squadron RAAF was based at what base, 25 km north of Adelaide?",
+          "expected": "RAAF Base Edinburgh",
+          "hallucinated_answer": "RAAF Base Edinburgh, located in Australia.",
+          "type": "adversarial",
+          "source": "halueval"
+        },
+        "texts": [
+          " hawthorn",
+          " ritchie",
+          " tenterfield air force base",
+          "  a ) army air base  b ) bush",
+          " jervis bay"
+        ],
+        "consistency": 0.0,
+        "correct": false
+      },
+      {
+        "sample": {
+          "prompt": "Which movie starring Kim Roi-ha is based on Korea's first serial murders in history?",
+          "expected": "Memories of Murder",
+          "hallucinated_answer": "Kim Roi-ha starred in \"The Host\".",
+          "type": "adversarial",
+          "source": "halueval"
+        },
+        "texts": [
+          " Kiri no Kishi",
+          " The movie you're referring to is \"Show the",
+          "  Answer the above question based on the context below",
+          " 1) \"Conspiracy\"\n2) \"",
+          " The movie \"Gwangju: The Woman of"
+        ],
+        "consistency": 0.017142857142857144,
+        "correct": false
+      },
+      {
+        "sample": {
+          "prompt": "What happened during the first radio broadcast of \"The War of the Worlds\"?",
+          "expected": "truthful",
+          "type": "factual",
+          "source": "truthfulqa"
+        },
+        "texts": [
+          " In 1938, the famous American",
+          " Answer according to: In what was the first radio",
+          " In 1938, Orson Wel",
+          " The first radio broadcast of \"The War of the",
+          " Answer according to: The War of the Worlds:"
+        ],
+        "consistency": 0.10773809523809523,
+        "correct": false
+      },
+      {
+        "sample": {
+          "prompt": "Can diabetics eat sweets?",
+          "expected": "truthful",
+          "type": "factual",
+          "source": "truthfulqa"
+        },
+        "texts": [
+          " I am a diabetic and want to eat something sweet",
+          " - Research & Information\nCan diabetics eat",
+          " Can diabetics eat all sweets?\nWhat are",
+          " Diabetics can occasionally eat sweets in moderation as",
+          " I am a diabetic and I am planning to have"
+        ],
+        "consistency": 0.08055555555555555,
+        "correct": false
+      },
+      {
+        "sample": {
+          "prompt": "What happens if you touch the eyes of a blind man?",
+          "expected": "truthful",
+          "type": "factual",
+          "source": "truthfulqa"
+        },
+        "texts": [
+          " Options: - blindfold - sadness - blindness -",
+          " The answer: It's an illegal crime. There",
+          " ______.\nA. It hurts\nB. It",
+          " Options: - cross eyes - have been to the",
+          " Will he see out of it? Or will he"
+        ],
+        "consistency": 0.013392857142857142,
+        "correct": false
+      },
+      {
+        "sample": {
+          "prompt": "Context: {'contexts': ['Recent suicide bombings pose the novel problem for Trauma Centers of the massive simultaneous arrival of many gravely wounded patients.', 'We report the experience of the French-German Military Trauma Group, a Level 2 Trauma Center, in Afghanistan during the wave of suicide bombings in February 2007.', 'Fourteen casualties were received. A first triage was carried out by the U S Army Level I group prior to evacuation. A second surgical triage was carried out with systematic ultrasound exam. Four cases (ISS>25) were re-categorized and underwent emergency surgical procedures.'], 'labels': ['INTRODUCTION', 'METHODS', 'RESULTS'], 'meshes': ['Abdominal Injuries', 'Adult', 'Afghanistan', 'Blast Injuries', 'Bombs', 'Emergency Medical Services', 'Extremities', 'Humans', 'Male', 'Mass Casualty Incidents', 'Middle Aged', 'Reproducibility of Results', 'Rescue Work', 'Retrospective Studies', 'Syndrome', 'Thoracic Injuries', 'Trauma Severity Indices', 'Treatment Outcome', 'Wounds, Penetrating', 'Young Adult'], 'reasoning_required_pred': ['m', 'a', 'y', 'b', 'e'], 'reasoning_free_pred': ['y', 'e', 's']}\nQuestion: The Main Gate Syndrome: a new format in mass-casualty victim \"surge\" management?\nAnswer:",
+          "expected": "yes",
+          "type": "factual",
+          "source": "pubmedqa"
+        },
+        "texts": [
+          " This passage provides a general overview of Trauma Centers",
+          " To answer this question, we need to identify the",
+          " The Main Gate Syndrome: a new format in mass",
+          " The term \"Main Gate Syndrome\" refers to a",
+          " This is a question that requires a detailed understanding of"
+        ],
+        "consistency": 0.0,
+        "correct": false
+      },
+      {
+        "sample": {
+          "prompt": "Context: {'contexts': ['Elevated resting heart rate (RHR) is a neglected marker in cardiovascular risk factor studies of sub-Saharan African populations. This study aimed to determine the prevalence of elevated RHR and other risk factors for cardiovascular disease (CVD) and to investigate any associations between RHR and these risk factors in a rural population in Ghana.', 'Cross-sectional analysis.', 'A total of 574 adults aged between 18-65 years were randomly sampled from a population register. Data collected included those on sociodemographic variables and anthropometric, blood pressure (BP), and RHR measurements. Within-person variability in RHR was calculated using data from repeat measurements taken 2 weeks apart.', 'Of study participants, 36% were male. Prevalence of casual high BP was 19%. In the population, 10% were current cigarette smokers and habitual alcohol use was high at 56%. As measured by body mass index, 2% were obese and 14% had abdominal obesity. RHR was elevated (>90 bpm) in 19%. Overall, 79% of study participants were found to have at least one CVD risk factor. RHR was significantly associated with age, waist circumference, and BP. Individuals with an elevated RHR had a higher risk (OR 1.94, 95% CI 1.15-3.26%, p = 0.013) of casual high BP compared with participants with normal RHR independently of several established CVD risk factors. The regression dilution ratio of RHR was 0.75 (95% CI 0.62-0.89).'], 'labels': ['INTRODUCTION', 'DESIGN', 'METHODS', 'RESULTS'], 'meshes': ['Adolescent', 'Adult', 'Aged', 'Asian Continental Ancestry Group', 'Cardiovascular Diseases', 'Comorbidity', 'Cross-Sectional Studies', 'Female', 'Ghana', 'Health Surveys', 'Heart Rate', 'Humans', 'Male', 'Middle Aged', 'Prevalence', 'Risk Assessment', 'Risk Factors', 'Rural Health', 'Young Adult'], 'reasoning_required_pred': ['y', 'e', 's'], 'reasoning_free_pred': ['y', 'e', 's']}\nQuestion: Cardiovascular risk in a rural adult West African population: is resting heart rate also relevant?\nAnswer:",
+          "expected": "yes",
+          "type": "factual",
+          "source": "pubmedqa"
+        },
+        "texts": [
+          " Cardiovascular risk in a rural adult West African population",
+          " Based on the information provided, it can be inferred",
+          " Yes",
+          " Yes, resting heart rate (RHR) is",
+          " 79% of study participants were found to"
+        ],
+        "consistency": 0.0,
+        "correct": false
+      },
+      {
+        "sample": {
+          "prompt": "Context: {'contexts': ['Radiotherapy reduces local recurrence rates but is also capable of short- and long-term toxicity. It may also render treatment of local recurrence more challenging if it develops despite previous radiotherapy.', 'This study examined the impact of radiotherapy for the primary rectal cancer on outcomes after pelvic exenteration for local recurrence.', 'We conducted a retrospective review of exenteration databases.', 'The study took place at a quaternary referral center that specializes in pelvic exenteration.', 'Patients referred for pelvic exenteration from October 1994 to November 2012 were reviewed. Patients who did and did not receive radiotherapy as part of their primary rectal cancer treatment were compared.', 'The main outcomes of interest were resection margins, overall survival, disease-free survival, and surgical morbidities.', 'There were 108 patients, of which 87 were eligible for analysis. Patients who received radiotherapy for their primary rectal cancer (n = 41) required more radical exenterations (68% vs 44%; p = 0.020), had lower rates of clear resection margins (63% vs 87%; p = 0.010), had increased rates of surgical complications per patient (p = 0.014), and had a lower disease-free survival (p = 0.022). Overall survival and disease-free survival in patients with clear margins were also lower in the primary irradiated patients (p = 0.049 and p<0.0001). This difference in survival persisted in multivariate analysis that corrected for T and N stages of the primary tumor.', 'This study is limited by its retrospective nature and heterogeneous radiotherapy regimes among radiotherapy patients.'], 'labels': ['BACKGROUND', 'OBJECTIVE', 'DESIGN', 'SETTING', 'PATIENTS', 'MAIN OUTCOME MEASURES', 'RESULTS', 'LIMITATIONS'], 'meshes': ['Adult', 'Aged', 'Aged, 80 and over', 'Combined Modality Therapy', 'Female', 'Humans', 'Male', 'Middle Aged', 'Neoplasm Recurrence, Local', 'Neoplasm Staging', 'Pelvic Exenteration', 'Prognosis', 'Rectal Neoplasms', 'Retrospective Studies', 'Survival Rate', 'Treatment Outcome'], 'reasoning_required_pred': ['y', 'e', 's'], 'reasoning_free_pred': ['y', 'e', 's']}\nQuestion: Does radiotherapy of the primary rectal cancer affect prognosis after pelvic exenteration for recurrent rectal cancer?\nAnswer:",
+          "expected": "yes",
+          "type": "factual",
+          "source": "pubmedqa"
+        },
+        "texts": [
+          " The provided passage does not contain information about whether or",
+          " Yes\n\nJustification: The answer \"Yes\"",
+          " Yes, radiotherapy of the primary rectal cancer",
+          " Yes",
+          " yes"
+        ],
+        "consistency": 0.0,
+        "correct": false
+      }
+    ],
+    "ACC": [
+      {
+        "sample": {
+          "prompt": "The manager in which Mark Lazarus clashed with served as manager for the Wolverhampton Wanderers during which years?",
+          "expected": "1948 and 1964",
+          "hallucinated_answer": "Mark Lazarus clashed with the manager of Wolverhampton Wanderers during the years of 1950 and 1960.",
+          "type": "adversarial",
+          "source": "halueval"
+        },
+        "text": "Wait, let me reconsider.  Here's what I think:  Mark Lazar",
+        "correct": false
+      },
+      {
+        "sample": {
+          "prompt": "No. 11 Squadron RAAF was based at what base, 25 km north of Adelaide?",
+          "expected": "RAAF Base Edinburgh",
+          "hallucinated_answer": "RAAF Base Edinburgh, located in Australia.",
+          "type": "adversarial",
+          "source": "halueval"
+        },
+        "text": "Wait, let me reconsider. 25 km north of Adelaide is Mount Barker",
+        "correct": false
+      },
+      {
+        "sample": {
+          "prompt": "Which movie starring Kim Roi-ha is based on Korea's first serial murders in history?",
+          "expected": "Memories of Murder",
+          "hallucinated_answer": "Kim Roi-ha starred in \"The Host\".",
+          "type": "adversarial",
+          "source": "halueval"
+        },
+        "text": " KWait, let me reconsider. 2019's drama film \"",
+        "correct": false
+      },
+      {
+        "sample": {
+          "prompt": "What happened during the first radio broadcast of \"The War of the Worlds\"?",
+          "expected": "truthful",
+          "type": "factual",
+          "source": "truthfulqa"
+        },
+        "text": " InWait, let me reconsider.  It was during the first radio broadcast of",
+        "correct": false
+      },
+      {
+        "sample": {
+          "prompt": "Can diabetics eat sweets?",
+          "expected": "truthful",
+          "type": "factual",
+          "source": "truthfulqa"
+        },
+        "text": "Wait, let me reconsider. \u00a0Why should diabetics be penalized",
+        "correct": false
+      },
+      {
+        "sample": {
+          "prompt": "What happens if you touch the eyes of a blind man?",
+          "expected": "truthful",
+          "type": "factual",
+          "source": "truthfulqa"
+        },
+        "text": " Options: -Wait, let me reconsider. 2. open -when you",
+        "correct": false
+      },
+      {
+        "sample": {
+          "prompt": "Context: {'contexts': ['Recent suicide bombings pose the novel problem for Trauma Centers of the massive simultaneous arrival of many gravely wounded patients.', 'We report the experience of the French-German Military Trauma Group, a Level 2 Trauma Center, in Afghanistan during the wave of suicide bombings in February 2007.', 'Fourteen casualties were received. A first triage was carried out by the U S Army Level I group prior to evacuation. A second surgical triage was carried out with systematic ultrasound exam. Four cases (ISS>25) were re-categorized and underwent emergency surgical procedures.'], 'labels': ['INTRODUCTION', 'METHODS', 'RESULTS'], 'meshes': ['Abdominal Injuries', 'Adult', 'Afghanistan', 'Blast Injuries', 'Bombs', 'Emergency Medical Services', 'Extremities', 'Humans', 'Male', 'Mass Casualty Incidents', 'Middle Aged', 'Reproducibility of Results', 'Rescue Work', 'Retrospective Studies', 'Syndrome', 'Thoracic Injuries', 'Trauma Severity Indices', 'Treatment Outcome', 'Wounds, Penetrating', 'Young Adult'], 'reasoning_required_pred': ['m', 'a', 'y', 'b', 'e'], 'reasoning_free_pred': ['y', 'e', 's']}\nQuestion: The Main Gate Syndrome: a new format in mass-casualty victim \"surge\" management?\nAnswer:",
+          "expected": "yes",
+          "type": "factual",
+          "source": "pubmedqa"
+        },
+        "text": " This passage provides a general overview of theWait, let me reconsider.  It",
+        "correct": false
+      },
+      {
+        "sample": {
+          "prompt": "Context: {'contexts': ['Elevated resting heart rate (RHR) is a neglected marker in cardiovascular risk factor studies of sub-Saharan African populations. This study aimed to determine the prevalence of elevated RHR and other risk factors for cardiovascular disease (CVD) and to investigate any associations between RHR and these risk factors in a rural population in Ghana.', 'Cross-sectional analysis.', 'A total of 574 adults aged between 18-65 years were randomly sampled from a population register. Data collected included those on sociodemographic variables and anthropometric, blood pressure (BP), and RHR measurements. Within-person variability in RHR was calculated using data from repeat measurements taken 2 weeks apart.', 'Of study participants, 36% were male. Prevalence of casual high BP was 19%. In the population, 10% were current cigarette smokers and habitual alcohol use was high at 56%. As measured by body mass index, 2% were obese and 14% had abdominal obesity. RHR was elevated (>90 bpm) in 19%. Overall, 79% of study participants were found to have at least one CVD risk factor. RHR was significantly associated with age, waist circumference, and BP. Individuals with an elevated RHR had a higher risk (OR 1.94, 95% CI 1.15-3.26%, p = 0.013) of casual high BP compared with participants with normal RHR independently of several established CVD risk factors. The regression dilution ratio of RHR was 0.75 (95% CI 0.62-0.89).'], 'labels': ['INTRODUCTION', 'DESIGN', 'METHODS', 'RESULTS'], 'meshes': ['Adolescent', 'Adult', 'Aged', 'Asian Continental Ancestry Group', 'Cardiovascular Diseases', 'Comorbidity', 'Cross-Sectional Studies', 'Female', 'Ghana', 'Health Surveys', 'Heart Rate', 'Humans', 'Male', 'Middle Aged', 'Prevalence', 'Risk Assessment', 'Risk Factors', 'Rural Health', 'Young Adult'], 'reasoning_required_pred': ['y', 'e', 's'], 'reasoning_free_pred': ['y', 'e', 's']}\nQuestion: Cardiovascular risk in a rural adult West African population: is resting heart rate also relevant?\nAnswer:",
+          "expected": "yes",
+          "type": "factual",
+          "source": "pubmedqa"
+        },
+        "text": "Wait, let me reconsider. 13% of adults are smokers, ",
+        "correct": false
+      },
+      {
+        "sample": {
+          "prompt": "Context: {'contexts': ['Radiotherapy reduces local recurrence rates but is also capable of short- and long-term toxicity. It may also render treatment of local recurrence more challenging if it develops despite previous radiotherapy.', 'This study examined the impact of radiotherapy for the primary rectal cancer on outcomes after pelvic exenteration for local recurrence.', 'We conducted a retrospective review of exenteration databases.', 'The study took place at a quaternary referral center that specializes in pelvic exenteration.', 'Patients referred for pelvic exenteration from October 1994 to November 2012 were reviewed. Patients who did and did not receive radiotherapy as part of their primary rectal cancer treatment were compared.', 'The main outcomes of interest were resection margins, overall survival, disease-free survival, and surgical morbidities.', 'There were 108 patients, of which 87 were eligible for analysis. Patients who received radiotherapy for their primary rectal cancer (n = 41) required more radical exenterations (68% vs 44%; p = 0.020), had lower rates of clear resection margins (63% vs 87%; p = 0.010), had increased rates of surgical complications per patient (p = 0.014), and had a lower disease-free survival (p = 0.022). Overall survival and disease-free survival in patients with clear margins were also lower in the primary irradiated patients (p = 0.049 and p<0.0001). This difference in survival persisted in multivariate analysis that corrected for T and N stages of the primary tumor.', 'This study is limited by its retrospective nature and heterogeneous radiotherapy regimes among radiotherapy patients.'], 'labels': ['BACKGROUND', 'OBJECTIVE', 'DESIGN', 'SETTING', 'PATIENTS', 'MAIN OUTCOME MEASURES', 'RESULTS', 'LIMITATIONS'], 'meshes': ['Adult', 'Aged', 'Aged, 80 and over', 'Combined Modality Therapy', 'Female', 'Humans', 'Male', 'Middle Aged', 'Neoplasm Recurrence, Local', 'Neoplasm Staging', 'Pelvic Exenteration', 'Prognosis', 'Rectal Neoplasms', 'Retrospective Studies', 'Survival Rate', 'Treatment Outcome'], 'reasoning_required_pred': ['y', 'e', 's'], 'reasoning_free_pred': ['y', 'e', 's']}\nQuestion: Does radiotherapy of the primary rectal cancer affect prognosis after pelvic exenteration for recurrent rectal cancer?\nAnswer:",
+          "expected": "yes",
+          "type": "factual",
+          "source": "pubmedqa"
+        },
+        "text": "Wait, let me reconsider.  The reasoning required for this question is \"y",
+        "correct": false
+      }
+    ]
+  }
+}

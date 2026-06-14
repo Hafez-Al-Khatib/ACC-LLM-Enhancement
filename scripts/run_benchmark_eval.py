@@ -64,7 +64,7 @@ def load_halueval_samples(n: int = 100, seed: int = 42) -> List[Dict]:
 def load_truthfulqa_samples(n: int = 100, seed: int = 42) -> List[Dict]:
     """Load TruthfulQA multiple-choice samples."""
     try:
-        ds = load_dataset("truthful_qa", "generation", split="validation")
+        ds = load_dataset("truthfulqa/truthful_qa", "generation", split="validation")
         rng = np.random.RandomState(seed)
         indices = rng.choice(len(ds), min(n, len(ds)), replace=False)
         samples = []
