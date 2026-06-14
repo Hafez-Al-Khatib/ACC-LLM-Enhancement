@@ -283,18 +283,17 @@ Respond with only one word: correct, incorrect, or uncertain. Then briefly expla
         )
     text = judge_tokenizer.decode(outputs[0, inputs["input_ids"].shape[1]:], skip_special_tokens=True)
     clean = text.lower().strip()
+    words = [w.strip(".,!?;:\"'()[]") for w in clean.split()[:10] if w.strip()]
 
     label = "uncertain"
-    if clean.startswith("correct"):
-        label = "correct"
-    elif clean.startswith("incorrect"):
-        label = "incorrect"
-    elif clean.startswith("uncertain"):
+    if not words:
         label = "uncertain"
-    elif "incorrect" in clean.split()[:5]:
-        label = "incorrect"
-    elif "correct" in clean.split()[:5]:
+    elif words[0] == "correct" or "correct" in words[:5]:
         label = "correct"
+    elif words[0] == "incorrect" or "incorrect" in words[:5]:
+        label = "incorrect"
+    elif words[0] == "uncertain" or "uncertain" in words[:5]:
+        label = "uncertain"
 
     is_correct = label == "correct" or (q_type in ["hallucination", "uncertain"] and label == "uncertain")
 
