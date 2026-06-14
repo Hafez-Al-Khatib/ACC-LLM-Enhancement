@@ -33,6 +33,8 @@ class ACCInterventionEngine:
         temperature_bump: float = 0.3,
         top_p_reduce: float = 0.1,
         uncertainty_prompts: Optional[List[str]] = None,
+        uncertainty_bias: float = 2.0,
+        uncertainty_phrases: Optional[List[str]] = None,
     ):
         self.detector = detector
         self.conflict_threshold = conflict_threshold
@@ -45,6 +47,12 @@ class ACCInterventionEngine:
             "Wait, let me reconsider. ",
             "Actually, I should be careful here. ",
             "I'm not entirely certain, but ",
+        ]
+        self.uncertainty_bias = uncertainty_bias
+        self.uncertainty_phrases = uncertainty_phrases or [
+            "I don't know", "I'm not sure", "I cannot confirm",
+            "uncertain", "possibly", "maybe", "it is unclear",
+            "I don't have enough information",
         ]
 
     def _generate_with_scores(
@@ -189,6 +197,107 @@ class ACCInterventionEngine:
             "conflict_scores": conflict_scores, "max_conflict": max_conflict,
             "avg_conflict": avg_conflict, "calibrated_threshold": effective_threshold,
             "num_regenerations": num_regens, "reason": "conflict_detected",
+        }
+
+    def _get_uncertainty_token_ids(self, tokenizer) -> torch.Tensor:
+        """Build a set of token IDs associated with uncertainty expression."""
+        ids = set()
+        for phrase in self.uncertainty_phrases:
+            tokens = tokenizer.encode(phrase, add_special_tokens=False)
+            ids.update(tokens)
+        # Also include some single tokens that express uncertainty
+        for word in ["uncertain", "possibly", "maybe", "perhaps", "unknown", "unclear"]:
+            tokens = tokenizer.encode(word, add_special_tokens=False)
+            ids.update(tokens)
+        return torch.tensor(sorted(ids), dtype=torch.long)
+
+    def generate_with_logit_shift(
+        self,
+        model,
+        tokenizer,
+        prompt: str,
+        max_new_tokens: int = 30,
+        temperature: float = 0.8,
+        top_p: float = 0.95,
+        device: str = "cpu",
+        seed: int = 42,
+    ) -> Dict:
+        """Generate with real-time logit shifting toward uncertainty tokens.
+
+        When conflict is detected, add a bias to uncertainty-token logits.
+        This is a stronger intervention than phrase prepending because it
+        directly modifies the token distribution.
+        """
+        torch.manual_seed(seed)
+        uncertainty_ids = self._get_uncertainty_token_ids(tokenizer).to(device)
+
+        inputs = tokenizer(prompt, return_tensors="pt").to(device)
+        input_ids = inputs["input_ids"]
+
+        generated_ids = []
+        conflict_scores = []
+        num_shifts = 0
+
+        with torch.no_grad():
+            for step in range(max_new_tokens):
+                outputs = model(input_ids, output_hidden_states=True)
+
+                # Conflict detection
+                last_token_hs = {}
+                for layer_idx, hs in enumerate(outputs.hidden_states):
+                    h = hs[0, -1, :].detach().cpu()
+                    last_token_hs[layer_idx] = h
+                    last_token_hs[layer_idx - len(outputs.hidden_states)] = h
+
+                detector_out = self.detector.forward(last_token_hs)
+                score = float(detector_out[2][0].item())
+                conflict_scores.append(score)
+
+                # Calibrate threshold on first few tokens
+                if self.relative_threshold is not None and step >= self.calibration_tokens:
+                    baseline = sum(conflict_scores[:self.calibration_tokens]) / self.calibration_tokens
+                    effective_threshold = baseline * self.relative_threshold
+                else:
+                    effective_threshold = self.conflict_threshold
+
+                # Sample next token with optional logit shift
+                logits = outputs.logits[0, -1, :]
+                if score > effective_threshold:
+                    logits = logits.clone()
+                    logits[uncertainty_ids] += self.uncertainty_bias
+                    num_shifts += 1
+
+                probs = F.softmax(logits / temperature, dim=-1)
+
+                # Top-p filtering
+                sorted_probs, sorted_indices = torch.sort(probs, descending=True)
+                cumsum = torch.cumsum(sorted_probs, dim=0)
+                mask = cumsum <= top_p
+                mask[1:] = mask[:-1].clone()
+                mask[0] = True
+                filtered_probs = sorted_probs * mask.to(sorted_probs.dtype)
+                filtered_probs = filtered_probs / filtered_probs.sum()
+                probs = torch.zeros_like(probs)
+                probs.scatter_(0, sorted_indices, filtered_probs)
+
+                next_token = torch.multinomial(probs, num_samples=1)
+                generated_ids.append(next_token.item())
+
+                if next_token.item() == tokenizer.eos_token_id:
+                    break
+
+                input_ids = torch.cat([input_ids, next_token.unsqueeze(0)], dim=1)
+
+        text = tokenizer.decode(generated_ids, skip_special_tokens=True)
+        max_conflict = max(conflict_scores) if conflict_scores else 0.0
+
+        return {
+            "text": text,
+            "intervened": num_shifts > 0,
+            "conflict_scores": conflict_scores,
+            "max_conflict": max_conflict,
+            "num_shifts": num_shifts,
+            "calibrated_threshold": effective_threshold if conflict_scores else self.conflict_threshold,
         }
 
     def generate_simple_baseline(
