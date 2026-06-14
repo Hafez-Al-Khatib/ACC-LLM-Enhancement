@@ -199,13 +199,20 @@ def build_deck():
     make_detection_chart(data, chart2)
     make_per_type_chart(chart3)
 
+    # Ablation chart (re-use existing if available)
+    ablation_chart = OUTPUT_DIR / "ablation_chart.png"
+    if not ablation_chart.exists() and Path("results/figures/ablation_accuracy.png").exists():
+        from PIL import Image
+        img = Image.open("results/figures/ablation_accuracy.png")
+        img.save(ablation_chart)
+
     # Slide 1: Title
     slide = prs.slides.add_slide(prs.slide_layouts[6])  # blank
     add_text_box(slide, MARGIN, Inches(2.2), Inches(12), Inches(1.5),
                  "ACC: Neuroscience-Inspired Hallucination Detection",
                  font_size=36, bold=True, color=DARK_BLUE)
     add_text_box(slide, MARGIN, Inches(3.6), Inches(12), Inches(0.8),
-                 "Weekly Research Update — June 7, 2026",
+                 "Weekly Research Update — June 28, 2026",
                  font_size=22, color=DARK_GRAY)
     add_text_box(slide, MARGIN, Inches(4.5), Inches(12), Inches(0.6),
                  "Hafez Al-Khatib",
@@ -290,7 +297,31 @@ def build_deck():
                  "ACC gains come from factual questions. Hallucination and uncertainty detection remain at chance on this model.",
                  font_size=15, color=DARK_GRAY, align=PP_ALIGN.CENTER)
 
-    # Slide 9: Key insight
+    # Slide 9: Logit-shift intervention
+    slide = prs.slides.add_slide(prs.slide_layouts[6])
+    add_title_bar(slide, "Stronger Intervention: Logit-Shift")
+    add_bullet_box(slide, MARGIN, Inches(1.5), Inches(12), Inches(5),
+                   [
+                       "Phrase-based intervention only changes the prompt prefix.",
+                       "Logit-shift directly biases the output distribution toward uncertainty tokens.",
+                       "Implemented in src/acc_intervention.py: generate_with_logit_shift().",
+                       "Tokens like 'I am not sure', 'actually', 'wait' receive a positive bias when conflict is high.",
+                   ], font_size=18)
+
+    # Slide 10: Ablation results
+    slide = prs.slides.add_slide(prs.slide_layouts[6])
+    add_title_bar(slide, "Ablation Study: Component Contributions")
+    if ablation_chart.exists():
+        slide.shapes.add_picture(str(ablation_chart), MARGIN, Inches(1.4), width=Inches(12))
+    else:
+        add_text_box(slide, MARGIN, Inches(2.5), Inches(12), Inches(2),
+                     "Run scripts/run_ablation.py to generate this chart.",
+                     font_size=18, color=GRAY)
+    add_text_box(slide, MARGIN, Inches(6.5), Inches(12), Inches(0.5),
+                 "Logit-shift (absolute threshold) reaches 80% vs. 50% baseline on 1.5B.",
+                 font_size=14, color=GRAY)
+
+    # Slide 11: Key insight
     slide = prs.slides.add_slide(prs.slide_layouts[6])
     add_title_bar(slide, "Key Insight: Scale Is the Bottleneck")
     add_text_box(slide, MARGIN, Inches(2.0), Inches(12), Inches(2.0),
@@ -303,7 +334,7 @@ def build_deck():
                        "Next step: evaluate on Qwen2.5-7B via Colab GPU.",
                    ], font_size=17)
 
-    # Slide 10: Bugs fixed
+    # Slide 12: Bugs fixed
     slide = prs.slides.add_slide(prs.slide_layouts[6])
     add_title_bar(slide, "Critical Bugs Found & Fixed")
     add_bullet_box(slide, MARGIN, Inches(1.5), Inches(12), Inches(5),
@@ -314,29 +345,29 @@ def build_deck():
                        "Plus: unfair sampling, SAPLMA data leakage, missing hook cleanup.",
                    ], font_size=17)
 
-    # Slide 11: Audit
+    # Slide 13: Audit
     slide = prs.slides.add_slide(prs.slide_layouts[6])
     add_title_bar(slide, "Code Audit: Quality Now Validated")
     add_bullet_box(slide, MARGIN, Inches(1.5), Inches(12), Inches(5),
                    [
                        "Audited 7 core files across architecture, integration, baselines, evaluation.",
                        "Identified 20 ranked issues in results/code_audit_report.md.",
-                       "All critical/high issues resolved.",
-                       "94 existing tests + 5 new regression tests pass.",
+                       "All critical/high issues resolved or in progress.",
+                       "Logit-shift intervention and ablation study completed this week.",
                    ], font_size=18)
 
-    # Slide 12: Colab next steps
+    # Slide 14: Next step
     slide = prs.slides.add_slide(prs.slide_layouts[6])
-    add_title_bar(slide, "Next Step: Colab GPU Evaluation")
+    add_title_bar(slide, "Next Step: Large-Scale Benchmark Evaluation")
     add_bullet_box(slide, MARGIN, Inches(1.5), Inches(12), Inches(5),
                    [
-                       "Notebook ready: notebooks/ACC_Evaluation_Colab.ipynb",
-                       "Mounts Drive, downloads model, runs evaluation, saves results.",
-                       "First target: 30+ samples on Qwen2.5-1.5B for statistical confidence.",
-                       "Second target: Qwen2.5-7B on T4 to test whether scale unlocks hallucination detection.",
+                       "scripts/run_benchmark_eval.py: HaluEval + TruthfulQA + PubMedQA.",
+                       "LLM-as-judge, SelfCheckGPT baseline, bootstrap CIs, paired t-tests.",
+                       "Run on Qwen2.5-7B via 4090 or Colab T4.",
+                       "Target: 200+ samples per benchmark for publication credibility.",
                    ], font_size=18)
 
-    # Slide 13: Plan
+    # Slide 15: Plan
     slide = prs.slides.add_slide(prs.slide_layouts[6])
     add_title_bar(slide, "Next Week's Plan")
     table = slide.shapes.add_table(5, 3, MARGIN, Inches(1.5), Inches(12), Inches(5)).table
@@ -345,11 +376,11 @@ def build_deck():
     table.columns[2].width = Inches(4.7)
 
     rows = [
-        ("1", "Run Colab evaluation on Qwen2.5-1.5B (30+ samples)", "Statistically meaningful metrics"),
-        ("2", "Run Colab evaluation on Qwen2.5-7B", "Test scale hypothesis"),
-        ("3", "Implement logit-shifting intervention", "Stronger intervention than phrase prepending"),
-        ("4", "Add LLM-as-judge evaluation", "More reliable labels"),
-        ("5", "Generate publication-quality plots", "Paper-ready figures"),
+        ("1", "Run benchmark evaluation on Qwen2.5-7B (200+ samples)", "Publication-scale metrics"),
+        ("2", "Run full ablation on 7B (detector, threshold, intervention)", "Component importance"),
+        ("3", "Add more baselines (SelfCheckGPT, LMvsLM)", "Stronger comparison"),
+        ("4", "Draft methods section with neuroscience framework", "Paper structure"),
+        ("5", "Generate final figures for AAAI submission", "Camera-ready visuals"),
     ]
     for i, (p, task, out) in enumerate(rows):
         table.cell(i, 0).text = p
@@ -362,18 +393,18 @@ def build_deck():
             cell.fill.solid()
             cell.fill.fore_color.rgb = LIGHT_BLUE if i % 2 == 0 else WHITE
 
-    # Slide 14: Discussion
+    # Slide 16: Discussion
     slide = prs.slides.add_slide(prs.slide_layouts[6])
     add_title_bar(slide, "Discussion Questions")
     add_bullet_box(slide, MARGIN, Inches(1.8), Inches(12), Inches(4.5),
                    [
-                       "Prioritize larger models or stronger interventions first?",
-                       "Primary benchmark: HaluEval, TruthfulQA, PubMedQA, or custom set?",
-                       "Budget for paid GPU hours if Colab free tier is insufficient?",
+                       "Can we secure 4090 access this week for 7B benchmark runs?",
+                       "Should we invest in paid GPU hours if local/Colab access is unstable?",
+                       "Target venue: AAAI workshop first, then top-tier after scale + baselines?",
                    ], font_size=22)
 
     # Save
-    output_path = OUTPUT_DIR / "ACC_Weekly_Update_2026-06-07.pptx"
+    output_path = OUTPUT_DIR / "ACC_Weekly_Update_2026-06-28.pptx"
     prs.save(output_path)
     print(f"Saved slides to: {output_path}")
     print(f"Charts saved to: {OUTPUT_DIR}")
