@@ -132,7 +132,8 @@ class SAPLMADetector(nn.Module):
 
     def forward(self, hidden_state: torch.Tensor) -> torch.Tensor:
         """hidden_state: (..., hidden_dim)"""
-        return self.mlp(hidden_state).squeeze(-1)
+        # Ensure float32 input to match MLP weights (handles float16/bfloat16 models)
+        return self.mlp(hidden_state.float()).squeeze(-1)
 
     def train_on_examples(
         self,
