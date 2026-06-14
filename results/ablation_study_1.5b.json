@@ -1,0 +1,534 @@
+{
+  "config": {
+    "model": "models/qwen2.5-1.5b",
+    "max_new_tokens": 15,
+    "seed": 42,
+    "output": "results/ablation_study_1.5b.json"
+  },
+  "summary": {
+    "Baseline (no intervention)": {
+      "accuracy": 0.5
+    },
+    "HaluEval + phrase (abs 0.5)": {
+      "accuracy": 0.6
+    },
+    "HaluEval + phrase (rel 1.5)": {
+      "accuracy": 0.5
+    },
+    "HaluEval + logit-shift (abs 0.5)": {
+      "accuracy": 0.8
+    },
+    "HaluEval + logit-shift (rel 1.5)": {
+      "accuracy": 0.5
+    },
+    "Custom + phrase (abs 0.5)": {
+      "accuracy": 0.6
+    },
+    "Custom + phrase (rel 1.5)": {
+      "accuracy": 0.6
+    },
+    "Custom + logit-shift (abs 0.5)": {
+      "accuracy": 0.8
+    },
+    "Custom + logit-shift (rel 1.5)": {
+      "accuracy": 0.6
+    }
+  },
+  "detailed_results": {
+    "Baseline (no intervention)": {
+      "accuracy": 0.5,
+      "results": [
+        {
+          "correct": true,
+          "text": " Paris, and the language is French.  Given the question \"Where do",
+          "type": "factual"
+        },
+        {
+          "correct": true,
+          "text": " 212 \u00b0F or 100 \u00b0C and ice",
+          "type": "factual"
+        },
+        {
+          "correct": true,
+          "text": " George Washington. He was born on February 22, 17",
+          "type": "factual"
+        },
+        {
+          "correct": true,
+          "text": " what number?\n15 multiplied by 24 equals 360",
+          "type": "factual"
+        },
+        {
+          "correct": false,
+          "text": " Could you please provide the page number from which this quote is taken?\n\nIs",
+          "type": "hallucination"
+        },
+        {
+          "correct": true,
+          "text": ".\nMarie Curie did not invent the smartphone. The smartphone is a",
+          "type": "hallucination"
+        },
+        {
+          "correct": false,
+          "text": "\nOn November 14, 1845, Napoleon Bon",
+          "type": "hallucination"
+        },
+        {
+          "correct": false,
+          "text": " Cleopatra's rule over Egypt is largely considered a myth due to the",
+          "type": "hallucination"
+        },
+        {
+          "correct": false,
+          "text": " The exact population of Earth right now is difficult to determine because the population is",
+          "type": "uncertain"
+        },
+        {
+          "correct": false,
+          "text": " What about the next two? How about five or ten?\nIn a recent",
+          "type": "uncertain"
+        }
+      ]
+    },
+    "HaluEval + phrase (abs 0.5)": {
+      "accuracy": 0.6,
+      "results": [
+        {
+          "correct": true,
+          "text": " Paris, and the language is French.  Given the question \"Where do",
+          "type": "factual"
+        },
+        {
+          "correct": true,
+          "text": " 212 \u00b0F or 100 \u00b0C and ice",
+          "type": "factual"
+        },
+        {
+          "correct": true,
+          "text": "Wait, let me reconsider.  The first President of the United States was George Washington, right?\n\nGeorge Washington",
+          "type": "factual"
+        },
+        {
+          "correct": true,
+          "text": " what number?\n15 multiplied by 24 equals 360",
+          "type": "factual"
+        },
+        {
+          "correct": false,
+          "text": " Could you please provide the quote in the format of a single sentence?\n\nIs",
+          "type": "hallucination"
+        },
+        {
+          "correct": true,
+          "text": "Wait, let me reconsider.  The smartphone was already invented, and Marie Curie is a Nobel Prize-winning",
+          "type": "hallucination"
+        },
+        {
+          "correct": false,
+          "text": "\nNapoleon I, the emperor of France, attempted to lead a",
+          "type": "hallucination"
+        },
+        {
+          "correct": false,
+          "text": " Cleopatra's rule over Egypt is largely considered a myth due to the",
+          "type": "hallucination"
+        },
+        {
+          "correct": false,
+          "text": " The exact population of Earth right now is difficult to determine because the population is",
+          "type": "uncertain"
+        },
+        {
+          "correct": true,
+          "text": "Wait, let me reconsider.  So there's talk about trying to find extra dimensions for all particles. I",
+          "type": "uncertain"
+        }
+      ]
+    },
+    "HaluEval + phrase (rel 1.5)": {
+      "accuracy": 0.5,
+      "results": [
+        {
+          "correct": true,
+          "text": " Paris, and the language is French.  Given the question \"Where do",
+          "type": "factual"
+        },
+        {
+          "correct": true,
+          "text": " 212 \u00b0F or 100 \u00b0C and ice",
+          "type": "factual"
+        },
+        {
+          "correct": true,
+          "text": " George Washington. He was born on February 22, 17",
+          "type": "factual"
+        },
+        {
+          "correct": true,
+          "text": " what number?\n15 multiplied by 24 equals 360",
+          "type": "factual"
+        },
+        {
+          "correct": false,
+          "text": " Could you please provide the quote in the format of a single sentence?\n\nIs",
+          "type": "hallucination"
+        },
+        {
+          "correct": true,
+          "text": ".\nMarie Curie did not invent the smartphone. The smartphone is a",
+          "type": "hallucination"
+        },
+        {
+          "correct": false,
+          "text": "\nNapoleon I, the emperor of France, attempted to lead a",
+          "type": "hallucination"
+        },
+        {
+          "correct": false,
+          "text": " Cleopatra's rule over Egypt is largely considered a myth due to the",
+          "type": "hallucination"
+        },
+        {
+          "correct": false,
+          "text": " The exact population of Earth right now is difficult to determine because the population is",
+          "type": "uncertain"
+        },
+        {
+          "correct": false,
+          "text": " What about the next two? How about five or ten?\nIn a recent",
+          "type": "uncertain"
+        }
+      ]
+    },
+    "HaluEval + logit-shift (abs 0.5)": {
+      "accuracy": 0.8,
+      "results": [
+        {
+          "correct": true,
+          "text": " Paris, and the language is French.  Given the question \"Where is",
+          "type": "factual"
+        },
+        {
+          "correct": true,
+          "text": " 212 \u00b0F or 100 \u00b0C and ice",
+          "type": "factual"
+        },
+        {
+          "correct": true,
+          "text": " George Washington. He is not only the first, but the only one who",
+          "type": "factual"
+        },
+        {
+          "correct": true,
+          "text": " what number?\n15 multiplied by 24 equals 360",
+          "type": "factual"
+        },
+        {
+          "correct": false,
+          "text": " Could you please provide the quote in the format of a single sentence?\n\nIs",
+          "type": "hallucination"
+        },
+        {
+          "correct": true,
+          "text": ".\nMarie Curie did not invent the smartphone. The smartphone is a",
+          "type": "hallucination"
+        },
+        {
+          "correct": false,
+          "text": "\nNapoleon I, the emperor of France, attempted to lead a",
+          "type": "hallucination"
+        },
+        {
+          "correct": true,
+          "text": " Cleopatra is not known to have used quantum computers to rule Egypt.",
+          "type": "hallucination"
+        },
+        {
+          "correct": true,
+          "text": " The exact population of Earth is not known, as it changes over time due",
+          "type": "uncertain"
+        },
+        {
+          "correct": true,
+          "text": " What about the next two? How about five or ten?\nI have not",
+          "type": "uncertain"
+        }
+      ]
+    },
+    "HaluEval + logit-shift (rel 1.5)": {
+      "accuracy": 0.5,
+      "results": [
+        {
+          "correct": true,
+          "text": " Paris, and the language is French.  Given the question \"Where do",
+          "type": "factual"
+        },
+        {
+          "correct": true,
+          "text": " 212 \u00b0F or 100 \u00b0C and ice",
+          "type": "factual"
+        },
+        {
+          "correct": true,
+          "text": " George Washington. He was born on February 22, 17",
+          "type": "factual"
+        },
+        {
+          "correct": true,
+          "text": " what number?\n15 multiplied by 24 equals 360",
+          "type": "factual"
+        },
+        {
+          "correct": false,
+          "text": " Could you please provide the quote in the format of a single sentence?\n\nIs",
+          "type": "hallucination"
+        },
+        {
+          "correct": true,
+          "text": ".\nMarie Curie did not invent the smartphone. The smartphone is a",
+          "type": "hallucination"
+        },
+        {
+          "correct": false,
+          "text": "\nNapoleon I, the emperor of France, attempted to lead a",
+          "type": "hallucination"
+        },
+        {
+          "correct": false,
+          "text": " Cleopatra's rule over Egypt is largely considered a myth due to the",
+          "type": "hallucination"
+        },
+        {
+          "correct": false,
+          "text": " The exact population of Earth right now is difficult to determine because the population is",
+          "type": "uncertain"
+        },
+        {
+          "correct": false,
+          "text": " What about the next two? How about five or ten?\nIn a recent",
+          "type": "uncertain"
+        }
+      ]
+    },
+    "Custom + phrase (abs 0.5)": {
+      "accuracy": 0.6,
+      "results": [
+        {
+          "correct": true,
+          "text": " Paris, and the language is French.  Given the question \"Where do",
+          "type": "factual"
+        },
+        {
+          "correct": true,
+          "text": " 212 \u00b0F or 100 \u00b0C and ice",
+          "type": "factual"
+        },
+        {
+          "correct": true,
+          "text": "Wait, let me reconsider.  The first President of the United States was George Washington, right?\n\nGeorge Washington",
+          "type": "factual"
+        },
+        {
+          "correct": true,
+          "text": " what number?\n15 multiplied by 24 equals 360",
+          "type": "factual"
+        },
+        {
+          "correct": true,
+          "text": "Wait, let me reconsider.  - a mythbusting essay by morgan linnon yearbook what",
+          "type": "hallucination"
+        },
+        {
+          "correct": true,
+          "text": ".\nMarie Curie did not invent the smartphone. The smartphone is a",
+          "type": "hallucination"
+        },
+        {
+          "correct": false,
+          "text": "\nNapoleon I, the emperor of France, attempted to lead a",
+          "type": "hallucination"
+        },
+        {
+          "correct": false,
+          "text": " Cleopatra's rule over Egypt is largely considered a myth due to the",
+          "type": "hallucination"
+        },
+        {
+          "correct": false,
+          "text": " The exact population of Earth right now is difficult to determine because the population is",
+          "type": "uncertain"
+        },
+        {
+          "correct": false,
+          "text": " What about the next two? How about five or ten?\nIn a recent",
+          "type": "uncertain"
+        }
+      ]
+    },
+    "Custom + phrase (rel 1.5)": {
+      "accuracy": 0.6,
+      "results": [
+        {
+          "correct": true,
+          "text": " Paris, and the language is French.  Given the question \"Where do",
+          "type": "factual"
+        },
+        {
+          "correct": true,
+          "text": " 212 \u00b0F or 100 \u00b0C and ice",
+          "type": "factual"
+        },
+        {
+          "correct": true,
+          "text": "Wait, let me reconsider.  The first President of the United States was George Washington, right?\n\nGeorge Washington",
+          "type": "factual"
+        },
+        {
+          "correct": true,
+          "text": " what number?\n15 multiplied by 24 equals 360",
+          "type": "factual"
+        },
+        {
+          "correct": true,
+          "text": "Wait, let me reconsider.  - a mythbusting essay by morgan linnon yearbook what",
+          "type": "hallucination"
+        },
+        {
+          "correct": true,
+          "text": ".\nMarie Curie did not invent the smartphone. The smartphone is a",
+          "type": "hallucination"
+        },
+        {
+          "correct": false,
+          "text": "\nNapoleon I, the emperor of France, attempted to lead a",
+          "type": "hallucination"
+        },
+        {
+          "correct": false,
+          "text": " Cleopatra's rule over Egypt is largely considered a myth due to the",
+          "type": "hallucination"
+        },
+        {
+          "correct": false,
+          "text": " The exact population of Earth right now is difficult to determine because the population is",
+          "type": "uncertain"
+        },
+        {
+          "correct": false,
+          "text": " What about the next two? How about five or ten?\nIn a recent",
+          "type": "uncertain"
+        }
+      ]
+    },
+    "Custom + logit-shift (abs 0.5)": {
+      "accuracy": 0.8,
+      "results": [
+        {
+          "correct": true,
+          "text": " Paris, and the language is French.  Given the question \"Where is",
+          "type": "factual"
+        },
+        {
+          "correct": true,
+          "text": " 212 \u00b0F or 100 \u00b0C and ice",
+          "type": "factual"
+        },
+        {
+          "correct": true,
+          "text": " George Washington. He is not only the first, but the only one.",
+          "type": "factual"
+        },
+        {
+          "correct": true,
+          "text": " what number?\n15 multiplied by 24 equals 360",
+          "type": "factual"
+        },
+        {
+          "correct": false,
+          "text": " Could you please provide the quote in the format of a single sentence?\n\nIs",
+          "type": "hallucination"
+        },
+        {
+          "correct": true,
+          "text": ".\nMarie Curie did not invent the smartphone. The smartphone is a",
+          "type": "hallucination"
+        },
+        {
+          "correct": false,
+          "text": "\nNapoleon I, the emperor of France, attempted to lead a",
+          "type": "hallucination"
+        },
+        {
+          "correct": true,
+          "text": " Cleopatra is not known to have used quantum computers to rule Egypt.",
+          "type": "hallucination"
+        },
+        {
+          "correct": true,
+          "text": " The exact population of Earth is not known, as it changes over time due",
+          "type": "uncertain"
+        },
+        {
+          "correct": true,
+          "text": " What about the next two? How about five or ten?\nI have not",
+          "type": "uncertain"
+        }
+      ]
+    },
+    "Custom + logit-shift (rel 1.5)": {
+      "accuracy": 0.6,
+      "results": [
+        {
+          "correct": true,
+          "text": " Paris, and the language is French.  Given the question \"Where is",
+          "type": "factual"
+        },
+        {
+          "correct": true,
+          "text": " 212 \u00b0F or 100 \u00b0C and ice",
+          "type": "factual"
+        },
+        {
+          "correct": true,
+          "text": " George Washington. He is not only the first, but the only one who",
+          "type": "factual"
+        },
+        {
+          "correct": true,
+          "text": " what number?\n15 multiplied by 24 equals 360",
+          "type": "factual"
+        },
+        {
+          "correct": false,
+          "text": " Could you please provide the quote in the format of a single sentence?\n\nIs",
+          "type": "hallucination"
+        },
+        {
+          "correct": true,
+          "text": ".\nMarie Curie did not invent the smartphone. The smartphone is a",
+          "type": "hallucination"
+        },
+        {
+          "correct": false,
+          "text": "\nNapoleon I, the emperor of France, attempted to lead a",
+          "type": "hallucination"
+        },
+        {
+          "correct": false,
+          "text": " Cleopatra's rule over Egypt is largely considered a myth due to the",
+          "type": "hallucination"
+        },
+        {
+          "correct": true,
+          "text": " The exact population of Earth is not known, as it changes over time due",
+          "type": "uncertain"
+        },
+        {
+          "correct": false,
+          "text": " What about the next two? How about five or ten?\nIn a recent",
+          "type": "uncertain"
+        }
+      ]
+    }
+  }
+}
