@@ -26,7 +26,8 @@ tqdm
 matplotlib
 
 # Optional: sentence embeddings for self-consistency checks
-# sentence-transformers  # Uncomment if using semantic similarity
+nltk>=3.9
+sentence-transformers>=3.0
 
 # Dev
 pytest

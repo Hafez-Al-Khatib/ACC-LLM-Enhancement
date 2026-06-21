@@ -27,7 +27,7 @@ os.environ["TRANSFORMERS_NO_ADVISORY_WARNINGS"] = "1"
 
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from datasets import load_dataset
-from src.baselines import DoLaDetector, SAPLMADetector, EntropyDetector
+from src.baselines import DoLaDetector, SAPLMADetector, EntropyDetector, SelfCheckGPTDetector
 from src.halueval_detector import HaluEvalDetector
 from src.acc_intervention import ACCInterventionEngine
 
@@ -157,40 +157,20 @@ def generate_entropy_intervention(model, tokenizer, prompt: str, max_new_tokens:
     return text
 
 
-def generate_dola_intervention(model, tokenizer, prompt: str, max_new_tokens: int, device: str, seed: int, detector: DoLaDetector) -> str:
-    """Generate with DoLa-based intervention."""
-    torch.manual_seed(seed)
-    inputs = tokenizer(prompt, return_tensors="pt").to(device)
-    input_ids = inputs["input_ids"]
-    flagged = False
-    with torch.no_grad():
-        for _ in range(max_new_tokens):
-            outputs = model(input_ids, output_hidden_states=True)
-            mature_logits = outputs.logits[0, -1, :]
-            premature_logits_list = []
-            for layer_idx in detector.premature_layers:
-                h = outputs.hidden_states[layer_idx][:, -1, :]
-                logits = model.lm_head(h)[0]
-                premature_logits_list.append(logits)
-            premature_logits = torch.stack(premature_logits_list).mean(dim=0)
-            p_prem = F.softmax(premature_logits, dim=-1)
-            p_mat = F.softmax(mature_logits, dim=-1)
-            m = 0.5 * (p_prem + p_mat)
-            kl_pm = F.kl_div(m.log(), p_prem, reduction="sum")
-            kl_mm = F.kl_div(m.log(), p_mat, reduction="sum")
-            js_div = 0.5 * (kl_pm + kl_mm)
-            if js_div.item() > detector.threshold:
-                flagged = True
-                break
-            probs = F.softmax(mature_logits / 0.8, dim=-1)
-            next_token = torch.multinomial(probs, num_samples=1)
-            input_ids = torch.cat([input_ids, next_token.unsqueeze(0)], dim=1)
-            if next_token.item() == tokenizer.eos_token_id:
-                break
-    text = tokenizer.decode(input_ids[0, inputs["input_ids"].shape[1]:], skip_special_tokens=True)
-    if flagged:
-        return generate_with_uncertainty_prefix(model, tokenizer, prompt, max_new_tokens, device, seed + 999)
-    return text
+def generate_dola_contrastive(model, tokenizer, prompt: str, max_new_tokens: int, device: str, seed: int, detector: DoLaDetector) -> str:
+    """Generate with DoLa contrastive decoding."""
+    return DoLaDetector.generate_contrastive(
+        model=model,
+        tokenizer=tokenizer,
+        prompt=prompt,
+        max_new_tokens=max_new_tokens,
+        device=device,
+        seed=seed,
+        premature_layers=detector.premature_layers,
+        mature_layers=detector.mature_layers,
+        alpha=0.1,
+        temperature=0.8,
+    )
 
 
 def generate_saplma_intervention(model, tokenizer, prompt: str, max_new_tokens: int, device: str, seed: int, detector: SAPLMADetector) -> str:
@@ -203,9 +183,8 @@ def generate_saplma_intervention(model, tokenizer, prompt: str, max_new_tokens: 
         for _ in range(max_new_tokens):
             outputs = model(input_ids, output_hidden_states=True)
             last_hidden = outputs.hidden_states[-1][0, -1, :].cpu().float()
-            logit = detector.forward(last_hidden.to(detector.device))
-            prob = torch.sigmoid(logit)
-            if prob.item() > 0.5:
+            prob = detector.predict_from_hidden(last_hidden)
+            if prob > 0.5:
                 flagged = True
                 break
             logits = outputs.logits[0, -1, :]
@@ -220,36 +199,75 @@ def generate_saplma_intervention(model, tokenizer, prompt: str, max_new_tokens: 
     return text
 
 
-def generate_selfcheckgpt_samples(model, tokenizer, prompt: str, max_new_tokens: int, device: str, seed: int, n_samples: int = 5) -> List[str]:
-    """Generate N samples for SelfCheckGPT consistency check."""
-    texts = []
-    for i in range(n_samples):
-        text = generate_baseline(model, tokenizer, prompt, max_new_tokens, device, seed + i * 1000)
-        texts.append(text)
-    return texts
+def build_saplma_train_set(
+    samples: List[Dict],
+    n_per_class: int = 32,
+    seed: int = 42,
+    min_eval_total: int = 5,
+) -> Tuple[List[Dict], List[Dict]]:
+    """Split ``samples`` into a SAPLMA training set and an evaluation set.
 
+    The training set is balanced between factual prompts (label=0) and
+    adversarial/hallucination-prone prompts (label=1). Samples selected for
+    training are removed from the evaluation set to avoid data leakage.
 
-def selfcheckgpt_score(texts: List[str]) -> float:
-    """Compute simple SelfCheckGPT score via n-gram overlap across samples.
-    Lower score = more consistent = less likely hallucination.
-    Returns consistency score in [0, 1]."""
-    if len(texts) < 2:
-        return 1.0
+    If the loaded samples are too few or are single-class (e.g. a tiny
+    HaluEval-only run), an empty training set is returned and the caller
+    should fall back to generic detector training examples.
 
-    def ngrams(text, n=2):
-        words = text.lower().split()
-        return set(zip(*[words[i:] for i in range(n)]))
+    Returns:
+        (train_samples, eval_samples)
+    """
+    rng = np.random.RandomState(seed)
+    factual = [s for s in samples if s["type"] == "factual"]
+    adversarial = [s for s in samples if s["type"] == "adversarial"]
 
-    scores = []
-    for i in range(len(texts)):
-        others = [texts[j] for j in range(len(texts)) if j != i]
-        ng_i = ngrams(texts[i])
-        if not ng_i:
-            continue
-        overlaps = [len(ng_i & ngrams(other)) / len(ng_i) for other in others]
-        scores.append(np.mean(overlaps))
+    # Deterministic shuffle so repeated runs are reproducible.
+    for subset in (factual, adversarial):
+        rng.shuffle(subset)
 
-    return np.mean(scores) if scores else 0.0
+    # We need both classes and enough total samples to leave a meaningful eval set.
+    if len(factual) < 2 or len(adversarial) < 2 or len(samples) < min_eval_total + 4:
+        logger.info(
+            "Too few or single-class samples for benchmark-derived SAPLMA training (factual=%d, adversarial=%d, total=%d); using fallback.",
+            len(factual), len(adversarial), len(samples),
+        )
+        return [], samples
+
+    # Reserve up to n_per_class of each class while leaving a reasonable eval set.
+    min_eval_per_class = max(1, min_eval_total // 2)
+    train_factual_count = min(n_per_class, max(0, len(factual) - min_eval_per_class))
+    train_adversarial_count = min(n_per_class, max(0, len(adversarial) - min_eval_per_class))
+
+    # Ensure the overall eval set is not smaller than min_eval_total.
+    while (len(factual) - train_factual_count + len(adversarial) - train_adversarial_count) < min_eval_total:
+        if train_factual_count > train_adversarial_count:
+            train_factual_count = max(0, train_factual_count - 1)
+        else:
+            train_adversarial_count = max(0, train_adversarial_count - 1)
+        if train_factual_count == 0 and train_adversarial_count == 0:
+            break
+
+    if train_factual_count == 0 and train_adversarial_count == 0:
+        return [], samples
+
+    train_factual = factual[:train_factual_count]
+    train_adversarial = adversarial[:train_adversarial_count]
+
+    train_samples = []
+    for s in train_factual:
+        train_samples.append({"prompt": s["prompt"], "label": 0})
+    for s in train_adversarial:
+        train_samples.append({"prompt": s["prompt"], "label": 1})
+
+    held_out_prompts = {s["prompt"] for s in train_samples}
+    eval_samples = [s for s in samples if s["prompt"] not in held_out_prompts]
+
+    logger.info(
+        "SAPLMA training set: %d factual + %d adversarial = %d samples; evaluation: %d samples",
+        len(train_factual), len(train_adversarial), len(train_samples), len(eval_samples),
+    )
+    return train_samples, eval_samples
 
 
 def llm_as_judge(judge_model, judge_tokenizer, prompt: str, response: str, expected: str, q_type: str, device: str) -> Dict:
@@ -342,6 +360,8 @@ def main():
     parser.add_argument("--output", default="results/benchmark_evaluation.json")
     parser.add_argument("--use-llm-judge", action="store_true", help="Use LLM-as-judge for labels")
     parser.add_argument("--no-selfcheckgpt", action="store_true", help="Skip SelfCheckGPT baseline")
+    parser.add_argument("--saplma-train-per-class", type=int, default=32,
+                        help="Number of samples per class held out for SAPLMA training")
     args = parser.parse_args()
 
     if torch.cuda.is_available():
@@ -399,14 +419,25 @@ def main():
     logger.info("Initializing detectors...")
     dola = DoLaDetector(model, threshold=0.1, device=device)
 
-    saplma = SAPLMADetector(hidden_dim=model.config.hidden_size, device=device)
-    saplma.train_on_examples(
-        model, tokenizer,
-        factual_prompts=["The capital of Italy is", "The chemical symbol for oxygen is"],
-        hallucinated_prompts=["How did Beethoven use machine learning to compose symphonies?",
-                              "Explain how the ancient Egyptians built smartphones."],
-        max_new_tokens=10, epochs=30,
+    saplma_train_samples, eval_samples = build_saplma_train_set(
+        samples, n_per_class=args.saplma_train_per_class, seed=args.seed
     )
+
+    saplma = SAPLMADetector(hidden_dim=model.config.hidden_size, device=device)
+    if len(saplma_train_samples) >= 4:
+        saplma.train_on_data(
+            model, tokenizer, saplma_train_samples,
+            epochs=30, lr=1e-3, val_split=0.2, batch_size=4,
+        )
+    else:
+        logger.warning("Too few samples for SAPLMA train/val split; using tiny fallback examples.")
+        saplma.train_on_examples(
+            model, tokenizer,
+            factual_prompts=["The capital of Italy is", "The chemical symbol for oxygen is"],
+            hallucinated_prompts=["How did Beethoven use machine learning to compose symphonies?",
+                                  "Explain how the ancient Egyptians built smartphones."],
+            max_new_tokens=10, epochs=30,
+        )
 
     entropy_det = EntropyDetector(threshold=3.9)
 
@@ -427,6 +458,14 @@ def main():
         top_p_reduce=0.1,
     )
 
+    selfcheck_detector = SelfCheckGPTDetector(
+        model=model,
+        tokenizer=tokenizer,
+        n_samples=5,
+        temperature=0.8,
+        device=device,
+    )
+
     # Results
     results = {
         "Baseline": [],
@@ -437,13 +476,13 @@ def main():
         "ACC": [],
     }
 
-    for i, sample in enumerate(samples, 1):
+    for i, sample in enumerate(eval_samples, 1):
         prompt = sample["prompt"]
         expected = sample["expected"]
         q_type = sample["type"]
         seed = args.seed + i
 
-        logger.info("[%d/%d] %s", i, len(samples), prompt[:60])
+        logger.info("[%d/%d] %s", i, len(eval_samples), prompt[:60])
 
         # Baseline
         base_text = generate_baseline(model, tokenizer, prompt, args.max_new_tokens, device, seed)
@@ -453,8 +492,8 @@ def main():
         ent_text = generate_entropy_intervention(model, tokenizer, prompt, args.max_new_tokens, device, seed, entropy_det)
         results["Entropy"].append({"sample": sample, "text": ent_text})
 
-        # DoLa
-        dola_text = generate_dola_intervention(model, tokenizer, prompt, args.max_new_tokens, device, seed, dola)
+        # DoLa (contrastive decoding)
+        dola_text = generate_dola_contrastive(model, tokenizer, prompt, args.max_new_tokens, device, seed, dola)
         results["DoLa"].append({"sample": sample, "text": dola_text})
 
         # SAPLMA
@@ -463,8 +502,10 @@ def main():
 
         # SelfCheckGPT
         if not args.no_selfcheckgpt:
-            sc_texts = generate_selfcheckgpt_samples(model, tokenizer, prompt, args.max_new_tokens, device, seed)
-            results["SelfCheckGPT"].append({"sample": sample, "texts": sc_texts})
+            sc_result = selfcheck_detector.detect_sequence(
+                model, tokenizer, prompt, args.max_new_tokens, device, seed
+            )
+            results["SelfCheckGPT"].append({"sample": sample, "selfcheck": sc_result})
 
         # ACC
         acc_result = acc_engine.generate_with_logit_shift(
@@ -474,6 +515,11 @@ def main():
 
         if device == "cuda" and i % 5 == 0:
             torch.cuda.empty_cache()
+        elif device == "xpu" and i % 5 == 0:
+            try:
+                torch.xpu.empty_cache()
+            except Exception:
+                pass
 
     # Labeling
     logger.info("\nLabeling responses...")
@@ -482,7 +528,7 @@ def main():
             sample = item["sample"]
             if method_name == "SelfCheckGPT":
                 # SelfCheckGPT gets consistency score, not text label
-                score = selfcheckgpt_score(item["texts"])
+                score = item["selfcheck"]["consistency"]
                 # Convert consistency score to correctness: high consistency AND no hallucination markers
                 # For simplicity, use heuristic: if consistency < 0.3, mark as incorrect/uncertain
                 item["consistency"] = score
@@ -576,14 +622,25 @@ def main():
     for method_name, method_results in results.items():
         serializable_results[method_name] = []
         for item in method_results:
-            new_item = {k: bool(v) if isinstance(v, (np.bool_, torch.Tensor)) else v for k, v in item.items()}
+            new_item = {}
+            for k, v in item.items():
+                if isinstance(v, (np.bool_, torch.Tensor)):
+                    new_item[k] = bool(v)
+                elif isinstance(v, np.floating):
+                    new_item[k] = float(v)
+                elif isinstance(v, np.integer):
+                    new_item[k] = int(v)
+                elif isinstance(v, np.ndarray):
+                    new_item[k] = v.tolist()
+                else:
+                    new_item[k] = v
             serializable_results[method_name].append(new_item)
 
     with open(out_path, "w") as f:
         json.dump({
             "config": vars(args),
             "summary": summary,
-            "samples": [{"prompt": s["prompt"], "expected": s["expected"], "type": s["type"], "source": s["source"]} for s in samples],
+            "samples": [{"prompt": s["prompt"], "expected": s["expected"], "type": s["type"], "source": s["source"]} for s in eval_samples],
             "results": serializable_results,
         }, f, indent=2)
 
