@@ -30,6 +30,7 @@ from datasets import load_dataset
 from src.baselines import DoLaDetector, SAPLMADetector, EntropyDetector, SelfCheckGPTDetector
 from src.halueval_detector import HaluEvalDetector
 from src.acc_intervention import ACCInterventionEngine
+from src.judge import get_judge
 
 logging.basicConfig(level=logging.INFO, format="%(message)s")
 logger = logging.getLogger(__name__)
@@ -359,6 +360,10 @@ def main():
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--output", default="results/benchmark_evaluation.json")
     parser.add_argument("--use-llm-judge", action="store_true", help="Use LLM-as-judge for labels")
+    parser.add_argument("--judge-type", default="local", choices=["local", "openai", "anthropic"],
+                        help="Judge backend (local model or API)")
+    parser.add_argument("--openai-model", default="gpt-4o-mini", help="OpenAI judge model")
+    parser.add_argument("--anthropic-model", default="claude-3-5-sonnet-20241022", help="Anthropic judge model")
     parser.add_argument("--no-selfcheckgpt", action="store_true", help="Skip SelfCheckGPT baseline")
     parser.add_argument("--saplma-train-per-class", type=int, default=32,
                         help="Number of samples per class held out for SAPLMA training")
@@ -399,21 +404,34 @@ def main():
     )
     logger.info("Model loaded on %s", next(model.parameters()).device)
 
-    # Load judge model
-    judge_model = None
-    judge_tokenizer = None
+    # Load judge
+    judge_fn = None
     if args.use_llm_judge:
-        judge_name = args.judge_model or args.model
-        logger.info("Loading judge model: %s", judge_name)
-        judge_tokenizer = AutoTokenizer.from_pretrained(judge_name, trust_remote_code=True)
-        judge_tokenizer.pad_token = judge_tokenizer.eos_token
-        judge_model = AutoModelForCausalLM.from_pretrained(
-            judge_name,
-            torch_dtype=torch.float16,
-            device_map="auto",
-            trust_remote_code=True,
-        )
-        logger.info("Judge model loaded")
+        if args.judge_type == "local":
+            judge_name = args.judge_model or args.model
+            logger.info("Loading local judge model: %s", judge_name)
+            judge_tokenizer = AutoTokenizer.from_pretrained(judge_name, trust_remote_code=True)
+            judge_tokenizer.pad_token = judge_tokenizer.eos_token
+            judge_model = AutoModelForCausalLM.from_pretrained(
+                judge_name,
+                torch_dtype=torch.float16,
+                device_map="auto",
+                trust_remote_code=True,
+            )
+            logger.info("Judge model loaded")
+            judge_fn = get_judge("local", judge_model, judge_tokenizer, device)
+        elif args.judge_type == "openai":
+            logger.info("Using OpenAI judge: %s", args.openai_model)
+            judge_fn = get_judge("openai")
+            # Bind model name
+            import functools
+            from src.judge import openai_judge
+            judge_fn = functools.partial(openai_judge, model=args.openai_model)
+        elif args.judge_type == "anthropic":
+            logger.info("Using Anthropic judge: %s", args.anthropic_model)
+            import functools
+            from src.judge import anthropic_judge
+            judge_fn = functools.partial(anthropic_judge, model=args.anthropic_model)
 
     # Initialize detectors
     logger.info("Initializing detectors...")
@@ -533,15 +551,15 @@ def main():
                 # For simplicity, use heuristic: if consistency < 0.3, mark as incorrect/uncertain
                 item["consistency"] = score
                 item["correct"] = score > 0.3  # Simple threshold
-            elif args.use_llm_judge and judge_model is not None:
+            elif args.use_llm_judge and judge_fn is not None:
                 text = item["text"]
-                judge_result = llm_as_judge(
-                    judge_model, judge_tokenizer, sample["prompt"], text,
-                    sample["expected"], sample["type"], device
+                judge_result = judge_fn(
+                    sample["prompt"], text, sample["expected"], sample["type"]
                 )
                 item["correct"] = judge_result["correct"]
                 item["judge_label"] = judge_result["label"]
                 item["judge_reason"] = judge_result["reason"]
+                item["judge_backend"] = judge_result.get("judge_type", "unknown")
             else:
                 # Fallback substring judge
                 text = item["text"].lower()
